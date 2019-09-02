@@ -20,7 +20,7 @@ while True:
     pts2 = np.float32([[0, 0], [500, 0], [0, 500], [500, 500]])
     matrix = cv2.getPerspectiveTransform(pts1, pts2)
 
-    result = cv2.warpPerspective(frame, matrix, (500, 500))
+    result = cv2.warpPerspective(frame, matrix, (500, 505))
 
     cv2.imshow("Frame", frame)
     cv2.imshow("Perspective transformation", result)
@@ -28,6 +28,7 @@ while True:
     key = cv2.waitKey(1)
     if key == 27:
         break
+
 
 cap.release()
 cv2.destroyAllWindows()
