@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(0)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1000)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 760)
 
@@ -77,8 +77,8 @@ while True:
     yellow = cv2.dilate(yellow, kernal)
     res_yellow = cv2.bitwise_and(result, result, mask=yellow)
 
-    white = cv2.dilate(white, kernal)
-    res_white = cv2.bitwise_and(result, result, mask=white)
+    # white = cv2.dilate(white, kernal)
+    # res_white = cv2.bitwise_and(result, result, mask=white)
 
     green = cv2.dilate(green, kernal)
     res_green = cv2.bitwise_and(result, result, mask=green)
@@ -91,7 +91,7 @@ while True:
         red, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     for pic, contour in enumerate(contours):
         area = cv2.contourArea(contour)
-        if(area > 300):
+        if(area > 700):
             x, y, w, h = cv2.boundingRect(contour)
             result = cv2.rectangle(
                 result, (x, y), (x + w, y + h), (0, 0, 255), 2)
@@ -103,7 +103,7 @@ while True:
         blue, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     for pic, contour in enumerate(contours):
         area = cv2.contourArea(contour)
-        if(area > 300):
+        if(area > 700):
             x, y, w, h = cv2.boundingRect(contour)
             result = cv2.rectangle(
                 result, (x, y), (x + w, y + h), (255, 0, 0), 2)
@@ -115,7 +115,7 @@ while True:
         yellow, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     for pic, contour in enumerate(contours):
         area = cv2.contourArea(contour)
-        if(area > 300):
+        if(area > 700):
             x, y, w, h = cv2.boundingRect(contour)
             result = cv2.rectangle(
                 result, (x, y), (x + w, y + h), (255, 242, 0), 2)
@@ -123,23 +123,23 @@ while True:
                         cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 255, 0))
 
     # Tracking white
-    (contours, hierarchy) = cv2.findContours(
-        white, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-    for pic, contour in enumerate(contours):
-        area = cv2.contourArea(contour)
-        if(area > 300):
-            x, y, w, h = cv2.boundingRect(contour)
-            result = cv2.rectangle(
-                result, (x, y), (x + w, y + h), (255, 255, 255), 2)
-            cv2.putText(result, "White Colour", (x, y),
-                        cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 255, 255))
+    # (contours, hierarchy) = cv2.findContours(
+    #     white, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    # for pic, contour in enumerate(contours):
+    #     area = cv2.contourArea(contour)
+    #     if(area > 700):
+    #         x, y, w, h = cv2.boundingRect(contour)
+    #         result = cv2.rectangle(
+    #             result, (x, y), (x + w, y + h), (255, 255, 255), 2)
+    #         cv2.putText(result, "White Colour", (x, y),
+    #                     cv2.FONT_HERSHEY_SIMPLEX, 1.0, (255, 255, 255))
 
     # Tracking green
     (contours, hierarchy) = cv2.findContours(
         green, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     for pic, contour in enumerate(contours):
         area = cv2.contourArea(contour)
-        if(area > 300):
+        if(area > 700):
             x, y, w, h = cv2.boundingRect(contour)
             result = cv2.rectangle(
                 result, (x, y), (x + w, y + h), (25, 255, 0), 2)
@@ -151,7 +151,7 @@ while True:
         black, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     for pic, contour in enumerate(contours):
         area = cv2.contourArea(contour)
-        if(area > 300):
+        if(area > 700):
             x, y, w, h = cv2.boundingRect(contour)
             result = cv2.rectangle(
                 result, (x, y), (x + w, y + h), (0, 0, 0), 2)
