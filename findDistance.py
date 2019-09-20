@@ -8,7 +8,7 @@ from imutils import perspective
 from imutils import contours
 
 # using cam built-in to computer
-cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(0)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1000)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 760)
 # cap.set(3, 640)
@@ -113,7 +113,7 @@ while(showLive):
     # largest area contour is usually the viewing window itself, why?
     cnt = contours[max_area_index - 1]
 
-    cv2.drawContours(closing, [cnt], 0, (0, 0, 255), 1)
+    cv2.drawContours(closing, [cnt], 0, (0, 0, 255), 4)
 
     def midpoint(ptA, ptB):
         return ((ptA[0] + ptB[0]) * 0.5, (ptA[1] + ptB[1]) * 0.5)
@@ -129,7 +129,7 @@ while(showLive):
     # order, then draw the outline of the rotated bounding
     # box
     box = perspective.order_points(box)
-    cv2.drawContours(orig, [box.astype("int")], -1, (0, 255, 0), 1)
+    cv2.drawContours(orig, [box.astype("int")], -1, (0, 255, 0), 4)
 
     # loop over the original points and draw them
     for (x, y) in box:
@@ -148,17 +148,17 @@ while(showLive):
     (trbrX, trbrY) = midpoint(tr, br)
 
     # draw the midpoints on the image
-    cv2.circle(orig, (int(tltrX), int(tltrY)), 5, (255, 0, 0), -1)
-    cv2.circle(orig, (int(blbrX), int(blbrY)), 5, (255, 0, 0), -1)
-    cv2.circle(orig, (int(tlblX), int(tlblY)), 5, (255, 0, 0), -1)
-    cv2.circle(orig, (int(trbrX), int(trbrY)), 5, (255, 0, 0), -1)
+    # cv2.circle(orig, (int(tltrX), int(tltrY)), 5, (255, 0, 0), -1)
+    # cv2.circle(orig, (int(blbrX), int(blbrY)), 5, (255, 0, 0), -1)
+    # cv2.circle(orig, (int(tlblX), int(tlblY)), 5, (255, 0, 0), -1)
+    # cv2.circle(orig, (int(trbrX), int(trbrY)), 5, (255, 0, 0), -1)
 
     # draw lines between the midpoints
-    cv2.line(orig, (int(tltrX), int(tltrY)),
-             (int(blbrX), int(blbrY)), (255, 0, 255), 1)
-    cv2.line(orig, (int(tlblX), int(tlblY)),
-             (int(trbrX), int(trbrY)), (255, 0, 255), 1)
-    cv2.drawContours(orig, [cnt], 0, (0, 0, 255), 1)
+    # cv2.line(orig, (int(tltrX), int(tltrY)),
+    #          (int(blbrX), int(blbrY)), (255, 0, 255), 1)
+    # cv2.line(orig, (int(tlblX), int(tlblY)),
+    #          (int(trbrX), int(trbrY)), (255, 0, 255), 1)
+    # cv2.drawContours(orig, [cnt], 0, (0, 0, 255), 1)
 
     # compute the Euclidean distance between the midpoints
     dA = dist.euclidean((tltrX, tltrY), (blbrX, blbrY))
