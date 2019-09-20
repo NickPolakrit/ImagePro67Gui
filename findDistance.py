@@ -1,3 +1,4 @@
+
 import cv2
 import pandas as pd
 import numpy as np
@@ -10,6 +11,8 @@ from imutils import contours
 cap = cv2.VideoCapture(1)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1000)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 760)
+# cap.set(3, 640)
+# cap.set(4, 480)
 
 
 def safe_div(x, y):  # so we don't crash so often
@@ -167,11 +170,11 @@ while(showLive):
     dimA = dA / pixelsPerMetric
     dimB = dB / pixelsPerMetric
 
-    # draw the object sizes on the image
-    cv2.putText(orig, "{:.1f}mm".format(dimA), (int(
-        tltrX - 15), int(tltrY - 10)), cv2.FONT_HERSHEY_SIMPLEX, 0.65, (255, 255, 255), 2)
-    cv2.putText(orig, "{:.1f}mm".format(dimB), (int(
-        trbrX + 10), int(trbrY)), cv2.FONT_HERSHEY_SIMPLEX, 0.65, (255, 255, 255), 2)
+    # draw the object sizes on the image , text size card
+    # cv2.putText(orig, "{:.1f}mm".format(dimA), (int(
+    #     tltrX - 15), int(tltrY - 10)), cv2.FONT_HERSHEY_SIMPLEX, 0.65, (255, 255, 255), 2)
+    # cv2.putText(orig, "{:.1f}mm".format(dimB), (int(
+    #     trbrX + 10), int(trbrY)), cv2.FONT_HERSHEY_SIMPLEX, 0.65, (255, 255, 255), 2)
 
     # compute the center of the contour
     M = cv2.moments(cnt)
