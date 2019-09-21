@@ -56,9 +56,14 @@ while True:
     contoursRed, _ = cv2.findContours(
         red_mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
     biggest_contourRed = max(contoursRed, key=cv2.contourArea)
-    # for contour in biggest_contourRed:
     (x, y, w, h) = cv2.boundingRect(biggest_contourRed)
     cv2.rectangle(result, (x, y), (x+w, y+h), (0, 0, 255), 2)
+
+    contoursBlue, _ = cv2.findContours(
+        blue_mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+    biggest_contourBlue = max(contoursBlue, key=cv2.contourArea)
+    (x, y, w, h) = cv2.boundingRect(biggest_contourBlue)
+    cv2.rectangle(result, (x, y), (x+w, y+h), (255, 0, 0), 2)
     # contour_sizes = [(cv2.contourArea(contour), contour)
     #                  for contour in contoursRed]
     # biggest_contour = max(contour_sizes, key=lambda x: x[0])[1]

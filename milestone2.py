@@ -102,6 +102,10 @@ while(showLive):
     Mblurred = cv2.medianBlur(Gblurred, 5)
     hsv_frame = cv2.cvtColor(Mblurred, cv2.COLOR_BGR2HSV)
 
+    # gray = cv2.cvtColor(Gblurred, cv2.COLOR_BGR2GRAY)
+    # edged = cv2.Canny(gray, 10, 250)
+    # cv2.imshow("Edged", edged)
+
     # both = np.concatenate((frame, result), axis=1)
     # cv2.imshow('Frame', both)
 
@@ -140,9 +144,16 @@ while(showLive):
         ar = cv2.contourArea(contour)
         areas.append(ar)
 
-    max_area = max(areas)
+    try:
+        max_area = max(areas)
+    except:
+        pass
     # index of the list element with largest area
-    max_area_index = areas.index(max_area)
+
+    try:
+        max_area_index = areas.index(max_area)
+    except:
+        pass
 
     # largest area contour is usually the viewing window itself, why?
     cnt = contours[max_area_index - 1]
@@ -244,8 +255,8 @@ while(showLive):
     yellow = cv2.bitwise_and(resultWarp, resultWarp, mask=yellow_mask)
 
     # Black color
-    low_black = np.array([80, 173, 91])
-    high_black = np.array([115, 255, 165])
+    low_black = np.array([79, 0, 0])
+    high_black = np.array([130, 197, 197])
     black_mask = cv2.inRange(hsv_frame, low_black, high_black)
     black = cv2.bitwise_and(resultWarp, resultWarp, mask=black_mask)
 
@@ -256,25 +267,61 @@ while(showLive):
     result = cv2.bitwise_and(resultWarp, resultWarp, mask=mask)
 
     # # Contour Red
-    # contoursRed, _ = cv2.findContours(
-    #     red_mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
-    # biggest_contourRed = max(contoursRed, key=cv2.contourArea)
-    # (x, y, w, h) = cv2.boundingRect(biggest_contourRed)
-    # cv2.rectangle(result, (x, y), (x+w, y+h), (0, 0, 255), 2)
-    # contoursRed, _ = cv2.findContours(
-    #     red_mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
-    # contour_sizes = [(cv2.contourArea(contour), contour)
-    #                  for contour in contoursRed]
-    # biggest_contour = max(contour_sizes, key=lambda x: x[0])[1]
-    # for contour in contoursRed:
-    #     cv2.drawContours(orig, [biggest_contour], -1, (0, 0, 255), 2)
+    contoursRed, _ = cv2.findContours(
+        red_mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+
+    try:
+        biggest_contourRed = max(contoursRed, key=cv2.contourArea)
+        (x, y, w, h) = cv2.boundingRect(biggest_contourRed)
+        cv2.rectangle(resultWarp, (x, y), (x+w, y+h), (0, 0, 255), 2)
+    except:
+        pass
+
+    contoursBlue, _ = cv2.findContours(
+        blue_mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+    try:
+        biggest_contoursBlue = max(contoursBlue, key=cv2.contourArea)
+        (x, y, w, h) = cv2.boundingRect(biggest_contoursBlue)
+        cv2.rectangle(resultWarp, (x, y), (x+w, y+h), (255, 0, 0), 2)
+    except:
+        pass
+
+    contoursGreen, _ = cv2.findContours(
+        green_mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+    try:
+        biggest_contoursGreen = max(contoursGreen, key=cv2.contourArea)
+        (x, y, w, h) = cv2.boundingRect(biggest_contoursGreen)
+        cv2.rectangle(resultWarp, (x, y), (x+w, y+h), (0, 255, 0), 2)
+    except:
+        pass
+
+    contoursYellow, _ = cv2.findContours(
+        yellow_mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+
+    try:
+        biggest_contoursYellow = max(contoursYellow, key=cv2.contourArea)
+        (x, y, w, h) = cv2.boundingRect(biggest_contoursYellow)
+        cv2.rectangle(resultWarp, (x, y), (x+w, y+h), (0, 255, 255), 2)
+    except:
+        pass
+
+    contoursBlack, _ = cv2.findContours(
+        black_mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+
+    try:
+        biggest_contoursBlack = max(contoursBlack, key=cv2.contourArea)
+        (x, y, w, h) = cv2.boundingRect(biggest_contoursBlack)
+        cv2.rectangle(resultWarp, (x, y), (x+w, y+h), (0, 0, 0), 2)
+    except:
+        pass
+
     # ------ COLOR ------------
     # cv2.imshow(windowName, orig)
     # cv2.imshow('', closing)
-    # cv2.imshow('Color', closing)
+    cv2.imshow('Color', closing)
     frame2 = np.concatenate((orig, closing), axis=1)
     # cv2.imshow('window', frame2)
-    cv2.imshow('frame', frame)
+    cv2.imshow('result', orig)
     cv2.imshow('Red', red)
     frame3 = np.concatenate((black, yellow), axis=1)
     # frame2 = np.concatenate((frame, red), axis=1)
@@ -283,12 +330,15 @@ while(showLive):
     # cv2.imshow('Frame, Red', frame2)
     cv2.imshow('Blue, Green', frame1)
     cv2.imshow('Black, Yellow', frame3)
-    # cv2.imshow("Frame", frame)
+    cv2.imshow("Frame", frame)
     cv2.imshow("Output", resultWarp)
     cv2.imshow("Output Blurre", Mblurred)
 
-    if cv2.waitKey(30) >= 0:
-        showLive = False
+    # if cv2.waitKey(30) >= 0:
+    #     showLive = False
+    key = cv2.waitKey(1)
+    if key == 27:
+        break
 
 
 cap.release()
