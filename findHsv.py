@@ -69,6 +69,7 @@ while True:
                 cv2.putText(frame, "Circle", (x, y), font, 1, (0, 0, 0))
 
     cv2.imshow("Frame", frame)
+    cv2.imshow("Mblurred", Mblurred)
     cv2.imshow("Mask", mask)
 
     key = cv2.waitKey(1)
