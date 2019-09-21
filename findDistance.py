@@ -64,6 +64,8 @@ while(showLive):
 
     result = cv2.warpPerspective(frame, matrix, (500, 500))
 
+    # both = np.concatenate((frame, result), axis=1)
+    # cv2.imshow('Frame', both)
     cv2.imshow("Frame", frame)
     cv2.imshow("Output", result)
 
@@ -113,7 +115,7 @@ while(showLive):
     # largest area contour is usually the viewing window itself, why?
     cnt = contours[max_area_index - 1]
 
-    cv2.drawContours(closing, [cnt], 0, (0, 0, 255), 4)
+    # cv2.drawContours(closing, [cnt], 0, (0, 0, 255), 4)
 
     def midpoint(ptA, ptB):
         return ((ptA[0] + ptB[0]) * 0.5, (ptA[1] + ptB[1]) * 0.5)
@@ -182,12 +184,14 @@ while(showLive):
     cY = int(safe_div(M["m01"], M["m00"]))
 
     # draw the contour and center of the shape on the image
-    cv2.circle(orig, (cX, cY), 5, (255, 255, 255), -1)
-    cv2.putText(orig, "center", (cX - 20, cY - 20),
-                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+    # cv2.circle(orig, (cX, cY), 5, (255, 255, 255), -1)
+    # cv2.putText(orig, "center", (cX - 20, cY - 20),
+    #             cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
 
-    cv2.imshow(windowName, orig)
-    cv2.imshow('', closing)
+    # cv2.imshow(windowName, orig)
+    # cv2.imshow('', closing)
+    frame2 = np.concatenate((orig, closing), axis=1)
+    cv2.imshow('window', frame2)
     if cv2.waitKey(30) >= 0:
         showLive = False
 

@@ -1,78 +1,76 @@
+import cv2
 import numpy as np
-import cv2 as cv
-import time
-
-img = cv.imread('./test.jpg', cv.IMREAD_COLOR)
-img = cv.medianBlur(img, 5)
-
-# Convert BGR to HSV
-hsv = cv.cvtColor(img, cv.COLOR_BGR2HSV)
-
-uh = 130
-us = 255
-uv = 255
-lh = 110
-ls = 50
-lv = 50
-lower_hsv = np.array([lh, ls, lv])
-upper_hsv = np.array([uh, us, uv])
-# Threshold the HSV image to get only blue colors
-mask = cv.inRange(hsv, lower_hsv, upper_hsv)
-window_name = "HSV Calibrator"
-cv.namedWindow(window_name)
 
 
 def nothing(x):
-    print("Trackbar value: " + str(x))
+    # any operation
     pass
 
 
-# create trackbars for Upper HSV
-cv.createTrackbar('UpperH', window_name, 0, 255, nothing)
-cv.setTrackbarPos('UpperH', window_name, uh)
+cap = cv2.VideoCapture(0)
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1000)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 760)
 
-cv.createTrackbar('UpperS', window_name, 0, 255, nothing)
-cv.setTrackbarPos('UpperS', window_name, us)
+cv2.namedWindow("Trackbars")
+cv2.createTrackbar("L-H", "Trackbars", 0, 180, nothing)
+cv2.createTrackbar("L-S", "Trackbars", 66, 255, nothing)
+cv2.createTrackbar("L-V", "Trackbars", 134, 255, nothing)
+cv2.createTrackbar("U-H", "Trackbars", 180, 180, nothing)
+cv2.createTrackbar("U-S", "Trackbars", 255, 255, nothing)
+cv2.createTrackbar("U-V", "Trackbars", 243, 255, nothing)
 
-cv.createTrackbar('UpperV', window_name, 0, 255, nothing)
-cv.setTrackbarPos('UpperV', window_name, uv)
+font = cv2.FONT_HERSHEY_COMPLEX
 
-# create trackbars for Lower HSV
-cv.createTrackbar('LowerH', window_name, 0, 255, nothing)
-cv.setTrackbarPos('LowerH', window_name, lh)
+while True:
+    _, frame = cap.read()
+    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
-cv.createTrackbar('LowerS', window_name, 0, 255, nothing)
-cv.setTrackbarPos('LowerS', window_name, ls)
+    l_h = cv2.getTrackbarPos("L-H", "Trackbars")
+    l_s = cv2.getTrackbarPos("L-S", "Trackbars")
+    l_v = cv2.getTrackbarPos("L-V", "Trackbars")
+    u_h = cv2.getTrackbarPos("U-H", "Trackbars")
+    u_s = cv2.getTrackbarPos("U-S", "Trackbars")
+    u_v = cv2.getTrackbarPos("U-V", "Trackbars")
 
-cv.createTrackbar('LowerV', window_name, 0, 255, nothing)
-cv.setTrackbarPos('LowerV', window_name, lv)
+    lower_red = np.array([l_h, l_s, l_v])
+    upper_red = np.array([u_h, u_s, u_v])
 
-font = cv.FONT_HERSHEY_SIMPLEX
-while(1):
-    # Threshold the HSV image to get only blue colors
-    mask = cv.inRange(hsv, lower_hsv, upper_hsv)
-    cv.putText(mask, 'Lower HSV: [' + str(lh) + ',' + str(ls) + ',' +
-               str(lv) + ']', (10, 30), font, 0.5, (200, 255, 155), 1, cv.LINE_AA)
-    cv.putText(mask, 'Upper HSV: [' + str(uh) + ',' + str(us) + ',' +
-               str(uv) + ']', (10, 60), font, 0.5, (200, 255, 155), 1, cv.LINE_AA)
+    mask = cv2.inRange(hsv, lower_red, upper_red)
+    kernel = np.ones((5, 5), np.uint8)
+    mask = cv2.erode(mask, kernel)
 
-    cv.imshow(window_name, mask)
+    # Contours detection
+    if int(cv2.__version__[0]) > 3:
+        # Opencv 4.x.x
+        contours, _ = cv2.findContours(
+            mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    else:
+        # Opencv 3.x.x
+        _, contours, _ = cv2.findContours(
+            mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
-    k = cv.waitKey(1) & 0xFF
-    if k == 27:
+    for cnt in contours:
+        area = cv2.contourArea(cnt)
+        approx = cv2.approxPolyDP(cnt, 0.02*cv2.arcLength(cnt, True), True)
+        x = approx.ravel()[0]
+        y = approx.ravel()[1]
+
+        if area > 400:
+            cv2.drawContours(frame, [approx], 0, (0, 0, 0), 5)
+
+            if len(approx) == 3:
+                cv2.putText(frame, "Triangle", (x, y), font, 1, (0, 0, 0))
+            elif len(approx) == 4:
+                cv2.putText(frame, "Rectangle", (x, y), font, 1, (0, 0, 0))
+            elif 10 < len(approx) < 20:
+                cv2.putText(frame, "Circle", (x, y), font, 1, (0, 0, 0))
+
+    cv2.imshow("Frame", frame)
+    cv2.imshow("Mask", mask)
+
+    key = cv2.waitKey(1)
+    if key == 27:
         break
-    # get current positions of Upper HSV trackbars
-    uh = cv.getTrackbarPos('UpperH', window_name)
-    us = cv.getTrackbarPos('UpperS', window_name)
-    uv = cv.getTrackbarPos('UpperV', window_name)
-    upper_blue = np.array([uh, us, uv])
-    # get current positions of Lower HSCV trackbars
-    lh = cv.getTrackbarPos('LowerH', window_name)
-    ls = cv.getTrackbarPos('LowerS', window_name)
-    lv = cv.getTrackbarPos('LowerV', window_name)
-    upper_hsv = np.array([uh, us, uv])
-    lower_hsv = np.array([lh, ls, lv])
 
-    time.sleep(.1)
-
-cv.destroyAllWindows()
+cap.release()
+cv2.destroyAllWindows()
