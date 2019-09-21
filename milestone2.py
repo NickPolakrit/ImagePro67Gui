@@ -328,13 +328,14 @@ while(showLive):
     #     if area > 1000:
     #         count = count + 1  # นับ object ที่มีพื้นที่มากกว่า 1000 pixel
     #         cv2.rectangle(resultWarp, (x, y), (x+w, y+h),  5)
-    cv2.rectangle(resultWarp, (0, 0), (200, 120), (0, 0, 0), -1)
-    cv2.putText(resultWarp, 'Red Count : ' + str(len(contoursRed)),
-                (10, 50),                  # bottomLeftCornerOfText
-                cv2.FONT_HERSHEY_SIMPLEX,  # font
-                0.5,                      # fontScale
-                (0, 0, 255),            # fontColor
-                1)                        # lineType
+    # cv2.rectangle(resultWarp, (0, 0), (200, 120), (0, 0, 0), -1)
+    # cv2.putText(resultWarp, 'Red Count : ' + str(len(contoursRed)),
+    #             (10, 50),                  # bottomLeftCornerOfText
+    #             cv2.FONT_HERSHEY_SIMPLEX,  # font
+    #             0.5,                      # fontScale
+    #             (0, 0, 255),            # fontColor
+    #             1)                        # lineType
+
     # cv2.putText(resultWarp, "Red : " + countRed, (int(
     #     tltrX - 0), int(tltrY - 0)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
     # countBlue = str(len(biggest_contoursBlue))
