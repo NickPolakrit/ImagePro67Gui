@@ -156,7 +156,10 @@ while(showLive):
         pass
 
     # largest area contour is usually the viewing window itself, why?
-    cnt = contours[max_area_index - 1]
+    try:
+        cnt = contours[max_area_index - 1]
+    except:
+        pass
 
     # cv2.drawContours(closing, [cnt], 0, (0, 0, 255), 4)
 
@@ -271,8 +274,8 @@ while(showLive):
         red_mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
 
     try:
-        biggest_contourRed = max(contoursRed, key=cv2.contourArea)
-        (x, y, w, h) = cv2.boundingRect(biggest_contourRed)
+        biggest_contoursRed = max(contoursRed, key=cv2.contourArea)
+        (x, y, w, h) = cv2.boundingRect(biggest_contoursRed)
         cv2.rectangle(resultWarp, (x, y), (x+w, y+h), (0, 0, 255), 2)
     except:
         pass
@@ -316,6 +319,37 @@ while(showLive):
         pass
 
     # ------ COLOR ------------
+    # countRed = str(len(contoursRed))
+    # count = 0
+    # for c in contoursRed:
+    #     rect = cv2.boundingRect(c)
+    #     x, y, w, h = rect
+    #     area = w * h
+    #     if area > 1000:
+    #         count = count + 1  # นับ object ที่มีพื้นที่มากกว่า 1000 pixel
+    #         cv2.rectangle(resultWarp, (x, y), (x+w, y+h),  5)
+    cv2.rectangle(resultWarp, (0, 0), (200, 120), (0, 0, 0), -1)
+    cv2.putText(resultWarp, 'Red Count : ' + str(len(contoursRed)),
+                (10, 50),                  # bottomLeftCornerOfText
+                cv2.FONT_HERSHEY_SIMPLEX,  # font
+                0.5,                      # fontScale
+                (0, 0, 255),            # fontColor
+                1)                        # lineType
+    # cv2.putText(resultWarp, "Red : " + countRed, (int(
+    #     tltrX - 0), int(tltrY - 0)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
+    # countBlue = str(len(biggest_contoursBlue))
+    # cv2.putText(resultWarp, "Blue : " + countBlue, (int(
+    #     tltrX - 20), int(tltrY - 10)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
+    # countGreen = str(len(biggest_contoursGreen))
+    # cv2.putText(resultWarp, "Red : " + countGreen, (int(
+    #     tltrX - 30), int(tltrY - 20)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+    # countYellow = str(len(biggest_contoursYellow))
+    # cv2.putText(resultWarp, "Yellow : " + countYellow, (int(
+    #     tltrX - 40), int(tltrY - 30)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 255), 2)
+    # countBlack = str(len(biggest_contoursBlack))
+    # cv2.putText(resultWarp, "Black : " + countBlack, (int(
+    #     tltrX - 50), int(tltrY - 40)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 2)
+
     # cv2.imshow(windowName, orig)
     # cv2.imshow('', closing)
     cv2.imshow('Color', closing)
