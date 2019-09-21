@@ -6,6 +6,11 @@ cap = cv2.VideoCapture(0)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1000)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 760)
 
+
+def nothing(x):
+    pass
+
+
 cv2.namedWindow('xyPosition')
 cv2.createTrackbar('X1', 'xyPosition', 0, 1022, nothing)
 cv2.createTrackbar('Y1', 'xyPosition', 0, 575, nothing)
@@ -21,18 +26,27 @@ while True:
     _, frame = cap.read()
 
     x1 = cv2.getTrackbarPos('X1', 'xyPosition')
-    y1 = cv2.getTrackbarPos('Y2', 'xyPosition')
+    y1 = cv2.getTrackbarPos('Y1', 'xyPosition')
     x2 = cv2.getTrackbarPos('X2', 'xyPosition')
     y2 = cv2.getTrackbarPos('Y2', 'xyPosition')
     x3 = cv2.getTrackbarPos('X3', 'xyPosition')
     y3 = cv2.getTrackbarPos('Y3', 'xyPosition')
     x4 = cv2.getTrackbarPos('X4', 'xyPosition')
-    y4 = cv2.getTrackbarPos('X4', 'xyPosition')
+    y4 = cv2.getTrackbarPos('Y4', 'xyPosition')
+
+    cv2.setTrackbarPos("X1", "xyPosition", 219)
+    cv2.setTrackbarPos("Y1", "xyPosition", 0)
+    cv2.setTrackbarPos("X2", "xyPosition", 803)
+    cv2.setTrackbarPos("Y2", "xyPosition", 0)
+    cv2.setTrackbarPos("X3", "xyPosition", 26)
+    cv2.setTrackbarPos("Y3", "xyPosition", 575)
+    cv2.setTrackbarPos("X4", "xyPosition", 970)
+    cv2.setTrackbarPos("Y4", "xyPosition", 575)
 
     cv2.circle(frame, (x1, y1), 5, (0, 0, 255), -1)
     cv2.circle(frame, (x2, y2), 5, (0, 0, 255), -1)
     cv2.circle(frame, (x3, y3), 5, (0, 0, 255), -1)
-    cv2.circle(frame, (994, 533), 5, (0, 0, 255), -1)
+    cv2.circle(frame, (x4, y4), 5, (0, 0, 255), -1)
     pts1 = np.float32([[x1, y1],
                        [x2, y2],
                        [x3, y3],
@@ -70,8 +84,8 @@ while True:
         peri = cv2.arcLength(c, True)
         approx = cv2.approxPolyDP(c, 0.02 * peri, True)
 
-    if len(approx) == 4:
-        cv2.drawContours(result, [approx], -1, (0, 255, 0), 4)
+        if len(approx) == 4:
+            cv2.drawContours(result, [approx], -1, (0, 255, 0), 4)
         total += 1
 
     cv2.imshow("Frame", frame)
