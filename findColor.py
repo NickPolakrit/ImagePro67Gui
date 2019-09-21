@@ -1,9 +1,9 @@
 import cv2
 import numpy as np
 
-cap = cv2.VideoCapture(0)
-cap.set(cv2.CAP_PROP_FRAME_WIDTH, 800)
-cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 600)
+cap = cv2.VideoCapture(1)
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1000)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 760)
 
 while True:
     _, frame = cap.read()
@@ -24,8 +24,8 @@ while True:
     blue = cv2.bitwise_and(frame, frame, mask=blue_mask)
 
     # Green color
-    low_green = np.array([25, 52, 72])
-    high_green = np.array([90, 255, 166])
+    low_green = np.array([23, 38, 57])
+    high_green = np.array([90, 255, 195])
     green_mask = cv2.inRange(hsv_frame, low_green, high_green)
     green = cv2.bitwise_and(frame, frame, mask=green_mask)
 

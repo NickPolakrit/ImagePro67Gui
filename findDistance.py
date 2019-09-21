@@ -8,21 +8,32 @@ from imutils import perspective
 from imutils import contours
 
 # using cam built-in to computer
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(1)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1000)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 760)
 # cap.set(3, 640)
 # cap.set(4, 480)
 
 
+def nothing(x):  # for trackbar
+    pass
+
+
+cv2.namedWindow('xyPosition')
+cv2.createTrackbar('X1', 'xyPosition', 0, 1022, nothing)
+cv2.createTrackbar('Y1', 'xyPosition', 0, 575, nothing)
+cv2.createTrackbar('X2', 'xyPosition', 0, 1022, nothing)
+cv2.createTrackbar('Y2', 'xyPosition', 0, 575, nothing)
+cv2.createTrackbar('X3', 'xyPosition', 0, 1022, nothing)
+cv2.createTrackbar('Y3', 'xyPosition', 0, 575, nothing)
+cv2.createTrackbar('X4', 'xyPosition', 0, 1022, nothing)
+cv2.createTrackbar('Y4', 'xyPosition', 0, 575, nothing)
+
+
 def safe_div(x, y):  # so we don't crash so often
     if y == 0:
         return 0
     return x/y
-
-
-def nothing(x):  # for trackbar
-    pass
 
 
 def rescale_result(result, percent=80):  # make the video windows a bit smaller
@@ -39,26 +50,48 @@ if not cap.isOpened():
 windowName = "Result"
 
 cv2.namedWindow(windowName)
-
-# Sliders to adjust image
-# https://medium.com/@manivannan_data/set-trackbar-on-image-using-opencv-python-58c57fbee1ee
 cv2.createTrackbar("threshold", windowName, 75, 255, nothing)
 cv2.createTrackbar("kernel", windowName, 5, 30, nothing)
 cv2.createTrackbar("iterations", windowName, 1, 10, nothing)
+
+cv2.setTrackbarPos("threshold", windowName, 210)
+cv2.setTrackbarPos("kernel", windowName, 13)
+cv2.setTrackbarPos("iterations", windowName, 1)
+# Sliders to adjust image
+# https://medium.com/@manivannan_data/set-trackbar-on-image-using-opencv-python-58c57fbee1ee
+
 
 showLive = True
 while(showLive):
 
     ret, frame = cap.read()
 
-    cv2.circle(frame, (247, 92), 5, (0, 0, 255), -1)
-    cv2.circle(frame, (734, 93), 5, (0, 0, 255), -1)
-    cv2.circle(frame, (23, 533), 5, (0, 0, 255), -1)
-    cv2.circle(frame, (994, 533), 5, (0, 0, 255), -1)
-    pts1 = np.float32([[247, 92],
-                       [734, 93],
-                       [23, 533],
-                       [994, 533]])
+    x1 = cv2.getTrackbarPos('X1', 'xyPosition')
+    y1 = cv2.getTrackbarPos('Y1', 'xyPosition')
+    x2 = cv2.getTrackbarPos('X2', 'xyPosition')
+    y2 = cv2.getTrackbarPos('Y2', 'xyPosition')
+    x3 = cv2.getTrackbarPos('X3', 'xyPosition')
+    y3 = cv2.getTrackbarPos('Y3', 'xyPosition')
+    x4 = cv2.getTrackbarPos('X4', 'xyPosition')
+    y4 = cv2.getTrackbarPos('Y4', 'xyPosition')
+
+    cv2.setTrackbarPos("X1", "xyPosition", 219)
+    cv2.setTrackbarPos("Y1", "xyPosition", 0)
+    cv2.setTrackbarPos("X2", "xyPosition", 803)
+    cv2.setTrackbarPos("Y2", "xyPosition", 0)
+    cv2.setTrackbarPos("X3", "xyPosition", 26)
+    cv2.setTrackbarPos("Y3", "xyPosition", 575)
+    cv2.setTrackbarPos("X4", "xyPosition", 970)
+    cv2.setTrackbarPos("Y4", "xyPosition", 575)
+
+    cv2.circle(frame, (x1, y1), 5, (0, 0, 255), -1)
+    cv2.circle(frame, (x2, y2), 5, (0, 0, 255), -1)
+    cv2.circle(frame, (x3, y3), 5, (0, 0, 255), -1)
+    cv2.circle(frame, (x4, y4), 5, (0, 0, 255), -1)
+    pts1 = np.float32([[x1, y1],
+                       [x2, y2],
+                       [x3, y3],
+                       [x4, y4]])
     pts2 = np.float32([[0, 0], [500, 0], [0, 500], [500, 500]])
     matrix = cv2.getPerspectiveTransform(pts1, pts2)
 
@@ -173,10 +206,10 @@ while(showLive):
     dimB = dB / pixelsPerMetric
 
     # draw the object sizes on the image , text size card
-    # cv2.putText(orig, "{:.1f}mm".format(dimA), (int(
-    #     tltrX - 15), int(tltrY - 10)), cv2.FONT_HERSHEY_SIMPLEX, 0.65, (255, 255, 255), 2)
-    # cv2.putText(orig, "{:.1f}mm".format(dimB), (int(
-    #     trbrX + 10), int(trbrY)), cv2.FONT_HERSHEY_SIMPLEX, 0.65, (255, 255, 255), 2)
+    cv2.putText(orig, "{:.1f}mm".format(dimA), (int(
+        tltrX - 15), int(tltrY - 10)), cv2.FONT_HERSHEY_SIMPLEX, 0.65, (255, 255, 255), 2)
+    cv2.putText(orig, "{:.1f}mm".format(dimB), (int(
+        trbrX + 10), int(trbrY)), cv2.FONT_HERSHEY_SIMPLEX, 0.65, (255, 255, 255), 2)
 
     # compute the center of the contour
     M = cv2.moments(cnt)
