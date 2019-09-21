@@ -1,13 +1,21 @@
-import numpy as np
+
 import cv2
+import pandas as pd
+import numpy as np
+import imutils
+from scipy.spatial import distance as dist
+from imutils import perspective
+from imutils import contours
 
-
+# using cam built-in to computer
 cap = cv2.VideoCapture(1)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1000)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 760)
+# cap.set(3, 640)
+# cap.set(4, 480)
 
 
-def nothing(x):
+def nothing(x):  # for trackbar
     pass
 
 
@@ -21,18 +29,42 @@ cv2.createTrackbar('Y3', 'xyPosition', 0, 575, nothing)
 cv2.createTrackbar('X4', 'xyPosition', 0, 1022, nothing)
 cv2.createTrackbar('Y4', 'xyPosition', 0, 575, nothing)
 
-cv2.setTrackbarPos("X1", "xyPosition", 219)
-cv2.setTrackbarPos("Y1", "xyPosition", 0)
-cv2.setTrackbarPos("X2", "xyPosition", 803)
-cv2.setTrackbarPos("Y2", "xyPosition", 0)
-cv2.setTrackbarPos("X3", "xyPosition", 26)
-cv2.setTrackbarPos("Y3", "xyPosition", 575)
-cv2.setTrackbarPos("X4", "xyPosition", 970)
-cv2.setTrackbarPos("Y4", "xyPosition", 575)
+
+def safe_div(x, y):  # so we don't crash so often
+    if y == 0:
+        return 0
+    return x/y
 
 
-while True:
-    _, frame = cap.read()
+def rescale_result(result, percent=80):  # make the video windows a bit smaller
+    width = int(result.shape[1] * percent / 100)
+    height = int(result.shape[0] * percent / 100)
+    dim = (width, height)
+    return cv2.resize(result, dim, interpolation=cv2.INTER_AREA)
+
+
+if not cap.isOpened():
+    print("can't open camera")
+    exit()
+
+windowName = "Result"
+
+cv2.namedWindow(windowName)
+cv2.createTrackbar("threshold", windowName, 75, 255, nothing)
+cv2.createTrackbar("kernel", windowName, 5, 30, nothing)
+cv2.createTrackbar("iterations", windowName, 1, 10, nothing)
+
+cv2.setTrackbarPos("threshold", windowName, 210)
+cv2.setTrackbarPos("kernel", windowName, 13)
+cv2.setTrackbarPos("iterations", windowName, 1)
+# Sliders to adjust image
+# https://medium.com/@manivannan_data/set-trackbar-on-image-using-opencv-python-58c57fbee1ee
+
+
+showLive = True
+while(showLive):
+
+    ret, frame = cap.read()
 
     x1 = cv2.getTrackbarPos('X1', 'xyPosition')
     y1 = cv2.getTrackbarPos('Y1', 'xyPosition')
@@ -42,6 +74,15 @@ while True:
     y3 = cv2.getTrackbarPos('Y3', 'xyPosition')
     x4 = cv2.getTrackbarPos('X4', 'xyPosition')
     y4 = cv2.getTrackbarPos('Y4', 'xyPosition')
+
+    cv2.setTrackbarPos("X1", "xyPosition", 219)
+    cv2.setTrackbarPos("Y1", "xyPosition", 0)
+    cv2.setTrackbarPos("X2", "xyPosition", 803)
+    cv2.setTrackbarPos("Y2", "xyPosition", 0)
+    cv2.setTrackbarPos("X3", "xyPosition", 26)
+    cv2.setTrackbarPos("Y3", "xyPosition", 575)
+    cv2.setTrackbarPos("X4", "xyPosition", 970)
+    cv2.setTrackbarPos("Y4", "xyPosition", 575)
 
     cv2.circle(frame, (x1, y1), 5, (0, 0, 255), -1)
     cv2.circle(frame, (x2, y2), 5, (0, 0, 255), -1)
@@ -54,104 +95,200 @@ while True:
     pts2 = np.float32([[0, 0], [500, 0], [0, 500], [500, 500]])
     matrix = cv2.getPerspectiveTransform(pts1, pts2)
 
-    result = cv2.warpPerspective(frame, matrix, (500, 500))
+    resultWarp = cv2.warpPerspective(frame, matrix, (500, 500))
 
-    gray = cv2.cvtColor(result, cv2.COLOR_BGR2GRAY)
-    gray = cv2.GaussianBlur(gray, (3, 3), 0)
-    Bblurred = cv2.bilateralFilter(gray, 9, 75, 75)
-    Mblurred = cv2.medianBlur(Bblurred, 5)
-    cv2.imshow("Gray", gray)
-
-    # detect edges in the image
-    edged = cv2.Canny(Mblurred, 10, 250)
-    cv2.imshow("Edged", edged)
-
-    # construct and apply a closing kernel to 'close' gaps between 'white'
-    # pixels
-    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7, 7))
-    closed = cv2.morphologyEx(edged, cv2.MORPH_CLOSE, kernel)
-    cv2.imshow("Closed", closed)
-
-    # find contours (i.e. the 'outlines') in the image and initialize the
-    # total number of books found
-    (cnts, _) = cv2.findContours(closed.copy(),
-                                 cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    total = 0
-
-    # loop over the contours
-    for c in cnts:
-        # approximate the contour
-        peri = cv2.arcLength(c, True)
-        approx = cv2.approxPolyDP(c, 0.02 * peri, True)
-
-        if len(approx) == 4:
-            cv2.drawContours(result, [approx], -1, (0, 255, 0), 4)
-        total += 1
-
-    cv2.imshow("Frame", frame)
-    cv2.imshow("Perspective transformation", result)
-
-    #######################################################
-    # Gblurred = cv2.GaussianBlur(result, (5, 5), 0)
+    Gblurred = cv2.GaussianBlur(resultWarp, (5, 5), 0)
     # Bblurred = cv2.bilateralFilter(Gblurred, 9, 75, 75)
-    # Mblurred = cv2.medianBlur(Bblurred, 5)
-    # hsv_frame = cv2.cvtColor(Mblurred, cv2.COLOR_BGR2HSV)
+    Mblurred = cv2.medianBlur(Gblurred, 5)
+    hsv_frame = cv2.cvtColor(Mblurred, cv2.COLOR_BGR2HSV)
 
-    # # Red color
-    # low_red = np.array([105, 0, 0])
-    # high_red = np.array([180, 255, 255])
-    # red_mask = cv2.inRange(hsv_frame, low_red, high_red)
-    # red = cv2.bitwise_and(frame, frame, mask=red_mask)
-    # # Blue color
-    # low_blue = np.array([94, 80, 2])
-    # high_blue = np.array([126, 255, 255])
-    # blue_mask = cv2.inRange(hsv_frame, low_blue, high_blue)
-    # blue = cv2.bitwise_and(frame, frame, mask=blue_mask)
+    # both = np.concatenate((frame, result), axis=1)
+    # cv2.imshow('Frame', both)
 
-    # # Green color
-    # low_green = np.array([25, 52, 72])
-    # high_green = np.array([90, 255, 166])
-    # green_mask = cv2.inRange(hsv_frame, low_green, high_green)
-    # green = cv2.bitwise_and(frame, frame, mask=green_mask)
+    result_resize = rescale_result(resultWarp)
+    if not ret:
+        print("cannot capture the frame")
+        exit()
 
-    # # Yellow color
-    # low_yellow = np.array([0, 0, 191])
-    # high_yellow = np.array([64, 255, 255])
-    # yellow_mask = cv2.inRange(hsv_frame, low_yellow, high_yellow)
-    # yellow = cv2.bitwise_and(frame, frame, mask=yellow_mask)
+    thresh = cv2.getTrackbarPos("threshold", windowName)
+    ret, thresh1 = cv2.threshold(result_resize, thresh, 255, cv2.THRESH_BINARY)
 
-    # # Black color
-    # low_black = np.array([0, 0, 0])
-    # high_black = np.array([180, 90, 160])
-    # black_mask = cv2.inRange(hsv_frame, low_black, high_black)
-    # black = cv2.bitwise_and(frame, frame, mask=black_mask)
+    kern = cv2.getTrackbarPos("kernel", windowName)
+    # square image kernel used for erosion
+    kernel = np.ones((kern, kern), np.uint8)
 
-    # # Every color except white
-    # low = np.array([0, 42, 0])
-    # high = np.array([179, 255, 255])
-    # mask = cv2.inRange(hsv_frame, low, high)
-    # result2 = cv2.bitwise_and(frame, frame, mask=mask)
-    # contours, _ = cv2.findContours(
+    itera = cv2.getTrackbarPos("iterations", windowName)
+    dilation = cv2.dilate(thresh1, kernel, iterations=itera)
+    # refines all edges in the binary image
+    erosion = cv2.erode(dilation, kernel, iterations=itera)
+
+    opening = cv2.morphologyEx(erosion, cv2.MORPH_OPEN, kernel)
+    closing = cv2.morphologyEx(opening, cv2.MORPH_CLOSE, kernel)
+    closing = cv2.cvtColor(closing, cv2.COLOR_BGR2GRAY)
+
+    # find contours with simple approximation cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE
+    contours, hierarchy = cv2.findContours(
+        closing, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+
+    closing = cv2.cvtColor(closing, cv2.COLOR_GRAY2RGB)
+    cv2.drawContours(closing, contours, -1, (128, 255, 0), 1)
+
+    # focus on only the largest outline by area
+    areas = []  # list to hold all areas
+
+    for contour in contours:
+        ar = cv2.contourArea(contour)
+        areas.append(ar)
+
+    max_area = max(areas)
+    # index of the list element with largest area
+    max_area_index = areas.index(max_area)
+
+    # largest area contour is usually the viewing window itself, why?
+    cnt = contours[max_area_index - 1]
+
+    # cv2.drawContours(closing, [cnt], 0, (0, 0, 255), 4)
+
+    def midpoint(ptA, ptB):
+        return ((ptA[0] + ptB[0]) * 0.5, (ptA[1] + ptB[1]) * 0.5)
+
+    # compute the rotated bounding box of the contour
+    orig = result_resize.copy()
+    box = cv2.minAreaRect(cnt)
+    box = cv2.cv.BoxPoints(box) if imutils.is_cv2() else cv2.boxPoints(box)
+    box = np.array(box, dtype="int")
+
+    # order the points in the contour such that they appear
+    # in top-left, top-right, bottom-right, and bottom-left
+    # order, then draw the outline of the rotated bounding
+    # box
+    box = perspective.order_points(box)
+    cv2.drawContours(orig, [box.astype("int")], -1, (0, 255, 0), 4)
+
+    # loop over the original points and draw them
+    for (x, y) in box:
+        cv2.circle(orig, (int(x), int(y)), 5, (0, 0, 255), -1)
+
+    # unpack the ordered bounding box, then compute the midpoint
+    # between the top-left and top-right coordinates, followed by
+    # the midpoint between bottom-left and bottom-right coordinates
+    (tl, tr, br, bl) = box
+    (tltrX, tltrY) = midpoint(tl, tr)
+    (blbrX, blbrY) = midpoint(bl, br)
+
+    # compute the midpoint between the top-left and top-right points,
+    # followed by the midpoint between the top-righ and bottom-right
+    (tlblX, tlblY) = midpoint(tl, bl)
+    (trbrX, trbrY) = midpoint(tr, br)
+
+    # draw the midpoints on the image
+    # cv2.circle(orig, (int(tltrX), int(tltrY)), 5, (255, 0, 0), -1)
+    # cv2.circle(orig, (int(blbrX), int(blbrY)), 5, (255, 0, 0), -1)
+    # cv2.circle(orig, (int(tlblX), int(tlblY)), 5, (255, 0, 0), -1)
+    # cv2.circle(orig, (int(trbrX), int(trbrY)), 5, (255, 0, 0), -1)
+
+    # draw lines between the midpoints
+    # cv2.line(orig, (int(tltrX), int(tltrY)),
+    #          (int(blbrX), int(blbrY)), (255, 0, 255), 1)
+    # cv2.line(orig, (int(tlblX), int(tlblY)),
+    #          (int(trbrX), int(trbrY)), (255, 0, 255), 1)
+    # cv2.drawContours(orig, [cnt], 0, (0, 0, 255), 1)
+
+    # compute the Euclidean distance between the midpoints
+    dA = dist.euclidean((tltrX, tltrY), (blbrX, blbrY))
+    dB = dist.euclidean((tlblX, tlblY), (trbrX, trbrY))
+
+    # compute the size of the object
+    # more to do here to get actual measurements that have meaning in the real world
+    pixelsPerMetric = 1
+    dimA = dA / pixelsPerMetric
+    dimB = dB / pixelsPerMetric
+
+    # draw the object sizes on the image , text size card
+    cv2.putText(orig, "{:.1f}mm".format(dimA), (int(
+        tltrX - 15), int(tltrY - 10)), cv2.FONT_HERSHEY_SIMPLEX, 0.65, (255, 255, 255), 2)
+    cv2.putText(orig, "{:.1f}mm".format(dimB), (int(
+        trbrX + 10), int(trbrY)), cv2.FONT_HERSHEY_SIMPLEX, 0.65, (255, 255, 255), 2)
+
+    # compute the center of the contour
+    M = cv2.moments(cnt)
+    cX = int(safe_div(M["m10"], M["m00"]))
+    cY = int(safe_div(M["m01"], M["m00"]))
+    # draw the contour and center of the shape on the image
+    # cv2.circle(orig, (cX, cY), 5, (255, 255, 255), -1)
+    # cv2.putText(orig, "center", (cX - 20, cY - 20),
+    #             cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+
+    # ------ COLOR ------------
+    # Red color
+    low_red = np.array([106, 136, 0])
+    high_red = np.array([180, 255, 255])
+    red_mask = cv2.inRange(hsv_frame, low_red, high_red)
+    red = cv2.bitwise_and(resultWarp, resultWarp, mask=red_mask)
+    # Blue color
+    low_blue = np.array([94, 189, 2])
+    high_blue = np.array([126, 255, 255])
+    blue_mask = cv2.inRange(hsv_frame, low_blue, high_blue)
+    blue = cv2.bitwise_and(resultWarp, resultWarp, mask=blue_mask)
+
+    # Green color
+    low_green = np.array([69, 32, 0])
+    high_green = np.array([94, 255, 234])
+    green_mask = cv2.inRange(hsv_frame, low_green, high_green)
+    green = cv2.bitwise_and(resultWarp, resultWarp, mask=green_mask)
+
+    # Yellow color
+    low_yellow = np.array([15, 0, 180])
+    high_yellow = np.array([80, 255, 255])
+    yellow_mask = cv2.inRange(hsv_frame, low_yellow, high_yellow)
+    yellow = cv2.bitwise_and(resultWarp, resultWarp, mask=yellow_mask)
+
+    # Black color
+    low_black = np.array([80, 173, 91])
+    high_black = np.array([115, 255, 165])
+    black_mask = cv2.inRange(hsv_frame, low_black, high_black)
+    black = cv2.bitwise_and(resultWarp, resultWarp, mask=black_mask)
+
+    # Every color except white
+    low = np.array([0, 42, 0])
+    high = np.array([179, 255, 255])
+    mask = cv2.inRange(hsv_frame, low, high)
+    result = cv2.bitwise_and(resultWarp, resultWarp, mask=mask)
+
+    # # Contour Red
+    # contoursRed, _ = cv2.findContours(
     #     red_mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
-    # for contour in contours:
-    #     cv2.drawContours(frame, contour, -1, (0, 0, 255), 2)
-
-    # # GBR
-    # cv2.imshow("Output Blurre", Mblurred)
-    # cv2.imshow("Result2", result2)
-    # frame3 = np.concatenate((black, yellow), axis=1)
+    # biggest_contourRed = max(contoursRed, key=cv2.contourArea)
+    # (x, y, w, h) = cv2.boundingRect(biggest_contourRed)
+    # cv2.rectangle(result, (x, y), (x+w, y+h), (0, 0, 255), 2)
+    # contoursRed, _ = cv2.findContours(
+    #     red_mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+    # contour_sizes = [(cv2.contourArea(contour), contour)
+    #                  for contour in contoursRed]
+    # biggest_contour = max(contour_sizes, key=lambda x: x[0])[1]
+    # for contour in contoursRed:
+    #     cv2.drawContours(orig, [biggest_contour], -1, (0, 0, 255), 2)
+    # ------ COLOR ------------
+    # cv2.imshow(windowName, orig)
+    # cv2.imshow('', closing)
+    # cv2.imshow('Color', closing)
+    frame2 = np.concatenate((orig, closing), axis=1)
+    # cv2.imshow('window', frame2)
+    cv2.imshow('frame', frame)
+    cv2.imshow('Red', red)
+    frame3 = np.concatenate((black, yellow), axis=1)
     # frame2 = np.concatenate((frame, red), axis=1)
-    # frame1 = np.concatenate((blue, green), axis=1)
+    frame1 = np.concatenate((blue, green), axis=1)
 
     # cv2.imshow('Frame, Red', frame2)
-    # cv2.imshow('Blue, Green', frame1)
-    # cv2.imshow('Black, Yellow', frame3)
+    cv2.imshow('Blue, Green', frame1)
+    cv2.imshow('Black, Yellow', frame3)
+    # cv2.imshow("Frame", frame)
+    cv2.imshow("Output", resultWarp)
+    cv2.imshow("Output Blurre", Mblurred)
 
-    #######################################################
-
-    key = cv2.waitKey(1)
-    if key == 27:
-        break
+    if cv2.waitKey(30) >= 0:
+        showLive = False
 
 
 cap.release()
