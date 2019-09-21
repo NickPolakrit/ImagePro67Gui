@@ -23,7 +23,10 @@ font = cv2.FONT_HERSHEY_COMPLEX
 
 while True:
     _, frame = cap.read()
-    hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+    Gblurred = cv2.GaussianBlur(frame, (5, 5), 0)
+    Bblurred = cv2.bilateralFilter(Gblurred, 9, 75, 75)
+    Mblurred = cv2.medianBlur(Bblurred, 5)
+    hsv = cv2.cvtColor(Mblurred, cv2.COLOR_BGR2HSV)
 
     l_h = cv2.getTrackbarPos("L-H", "Trackbars")
     l_s = cv2.getTrackbarPos("L-S", "Trackbars")

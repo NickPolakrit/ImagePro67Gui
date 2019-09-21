@@ -7,10 +7,14 @@ cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 600)
 
 while True:
     _, frame = cap.read()
-    hsv_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
+    Gblurred = cv2.GaussianBlur(frame, (5, 5), 0)
+    Bblurred = cv2.bilateralFilter(Gblurred, 9, 75, 75)
+    Mblurred = cv2.medianBlur(Bblurred, 5)
+    hsv_frame = cv2.cvtColor(Mblurred, cv2.COLOR_BGR2HSV)
+
     # Red color
-    low_red = np.array([161, 155, 84])
-    high_red = np.array([179, 255, 255])
+    low_red = np.array([105, 0, 0])
+    high_red = np.array([180, 255, 255])
     red_mask = cv2.inRange(hsv_frame, low_red, high_red)
     red = cv2.bitwise_and(frame, frame, mask=red_mask)
     # Blue color
@@ -21,7 +25,7 @@ while True:
 
     # Green color
     low_green = np.array([25, 52, 72])
-    high_green = np.array([102, 255, 255])
+    high_green = np.array([90, 255, 166])
     green_mask = cv2.inRange(hsv_frame, low_green, high_green)
     green = cv2.bitwise_and(frame, frame, mask=green_mask)
 
@@ -46,7 +50,13 @@ while True:
     # cv2.imshow("Red", red)
     # cv2.imshow("Blue", blue)
     # cv2.imshow("Green", green)
+    contours, _ = cv2.findContours(
+        red_mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+    for contour in contours:
+        cv2.drawContours(frame, contour, -1, (0, 0, 255), 2)
 
+    # GBR
+    # cv2.imshow("Output Blurre", Mblurred)
     cv2.imshow("Result", result)
     frame3 = np.concatenate((black, yellow), axis=1)
     frame2 = np.concatenate((frame, red), axis=1)
