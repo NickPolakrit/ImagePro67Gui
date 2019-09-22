@@ -217,9 +217,9 @@ while(showLive):
     cY = int(safe_div(M["m01"], M["m00"]))
 
     # draw the contour and center of the shape on the image
-    # cv2.circle(orig, (cX, cY), 5, (255, 255, 255), -1)
-    # cv2.putText(orig, "center", (cX - 20, cY - 20),
-    #             cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
+    cv2.circle(orig, (cX, cY), 5, (255, 255, 255), -1)
+    cv2.putText(orig, "center", (cX - 20, cY - 20),
+                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
 
     # cv2.imshow(windowName, orig)
     # cv2.imshow('', closing)

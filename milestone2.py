@@ -29,6 +29,15 @@ cv2.createTrackbar('Y3', 'xyPosition', 0, 575, nothing)
 cv2.createTrackbar('X4', 'xyPosition', 0, 1022, nothing)
 cv2.createTrackbar('Y4', 'xyPosition', 0, 575, nothing)
 
+cv2.setTrackbarPos("X1", "xyPosition", 219)
+cv2.setTrackbarPos("Y1", "xyPosition", 0)
+cv2.setTrackbarPos("X2", "xyPosition", 803)
+cv2.setTrackbarPos("Y2", "xyPosition", 0)
+cv2.setTrackbarPos("X3", "xyPosition", 26)
+cv2.setTrackbarPos("Y3", "xyPosition", 575)
+cv2.setTrackbarPos("X4", "xyPosition", 970)
+cv2.setTrackbarPos("Y4", "xyPosition", 575)
+
 
 def safe_div(x, y):  # so we don't crash so often
     if y == 0:
@@ -75,15 +84,6 @@ while(showLive):
     x4 = cv2.getTrackbarPos('X4', 'xyPosition')
     y4 = cv2.getTrackbarPos('Y4', 'xyPosition')
 
-    cv2.setTrackbarPos("X1", "xyPosition", 219)
-    cv2.setTrackbarPos("Y1", "xyPosition", 0)
-    cv2.setTrackbarPos("X2", "xyPosition", 803)
-    cv2.setTrackbarPos("Y2", "xyPosition", 0)
-    cv2.setTrackbarPos("X3", "xyPosition", 26)
-    cv2.setTrackbarPos("Y3", "xyPosition", 575)
-    cv2.setTrackbarPos("X4", "xyPosition", 970)
-    cv2.setTrackbarPos("Y4", "xyPosition", 575)
-
     cv2.circle(frame, (x1, y1), 5, (0, 0, 255), -1)
     cv2.circle(frame, (x2, y2), 5, (0, 0, 255), -1)
     cv2.circle(frame, (x3, y3), 5, (0, 0, 255), -1)
@@ -98,13 +98,18 @@ while(showLive):
     resultWarp = cv2.warpPerspective(frame, matrix, (500, 500))
 
     Gblurred = cv2.GaussianBlur(resultWarp, (5, 5), 0)
-    # Bblurred = cv2.bilateralFilter(Gblurred, 9, 75, 75)
     Mblurred = cv2.medianBlur(Gblurred, 5)
+    # Denoise = cv2.fastNlMeansDenoisingMulti(resultWarp, 2, 5, None, 4, 7, 35)
+    # unsharpV = cv2.addWeighted(
+    #     resultWarp, 1.5, Mblurred, -0.5, 0, resultWarp)
+    # Bblurred = cv2.bilateralFilter(unsharpV, 9, 75, 75)
+
     hsv_frame = cv2.cvtColor(Mblurred, cv2.COLOR_BGR2HSV)
 
     # gray = cv2.cvtColor(Gblurred, cv2.COLOR_BGR2GRAY)
     # edged = cv2.Canny(gray, 10, 250)
     # cv2.imshow("Edged", edged)
+    # cv2.imshow("Denoise", Denoise)
 
     # both = np.concatenate((frame, result), axis=1)
     # cv2.imshow('Frame', both)
@@ -195,19 +200,6 @@ while(showLive):
     (tlblX, tlblY) = midpoint(tl, bl)
     (trbrX, trbrY) = midpoint(tr, br)
 
-    # draw the midpoints on the image
-    # cv2.circle(orig, (int(tltrX), int(tltrY)), 5, (255, 0, 0), -1)
-    # cv2.circle(orig, (int(blbrX), int(blbrY)), 5, (255, 0, 0), -1)
-    # cv2.circle(orig, (int(tlblX), int(tlblY)), 5, (255, 0, 0), -1)
-    # cv2.circle(orig, (int(trbrX), int(trbrY)), 5, (255, 0, 0), -1)
-
-    # draw lines between the midpoints
-    # cv2.line(orig, (int(tltrX), int(tltrY)),
-    #          (int(blbrX), int(blbrY)), (255, 0, 255), 1)
-    # cv2.line(orig, (int(tlblX), int(tlblY)),
-    #          (int(trbrX), int(trbrY)), (255, 0, 255), 1)
-    # cv2.drawContours(orig, [cnt], 0, (0, 0, 255), 1)
-
     # compute the Euclidean distance between the midpoints
     dA = dist.euclidean((tltrX, tltrY), (blbrX, blbrY))
     dB = dist.euclidean((tlblX, tlblY), (trbrX, trbrY))
@@ -228,14 +220,10 @@ while(showLive):
     M = cv2.moments(cnt)
     cX = int(safe_div(M["m10"], M["m00"]))
     cY = int(safe_div(M["m01"], M["m00"]))
-    # draw the contour and center of the shape on the image
-    # cv2.circle(orig, (cX, cY), 5, (255, 255, 255), -1)
-    # cv2.putText(orig, "center", (cX - 20, cY - 20),
-    #             cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
 
     # ------ COLOR ------------
     # Red color
-    low_red = np.array([106, 136, 0])
+    low_red = np.array([122, 0, 0])
     high_red = np.array([180, 255, 255])
     red_mask = cv2.inRange(hsv_frame, low_red, high_red)
     red = cv2.bitwise_and(resultWarp, resultWarp, mask=red_mask)
@@ -246,14 +234,14 @@ while(showLive):
     blue = cv2.bitwise_and(resultWarp, resultWarp, mask=blue_mask)
 
     # Green color
-    low_green = np.array([69, 32, 0])
-    high_green = np.array([94, 255, 234])
+    low_green = np.array([45, 55, 122])
+    high_green = np.array([78, 121, 191])
     green_mask = cv2.inRange(hsv_frame, low_green, high_green)
     green = cv2.bitwise_and(resultWarp, resultWarp, mask=green_mask)
 
     # Yellow color
-    low_yellow = np.array([15, 0, 180])
-    high_yellow = np.array([80, 255, 255])
+    low_yellow = np.array([15, 0, 181])
+    high_yellow = np.array([79, 170, 255])
     yellow_mask = cv2.inRange(hsv_frame, low_yellow, high_yellow)
     yellow = cv2.bitwise_and(resultWarp, resultWarp, mask=yellow_mask)
 
@@ -268,6 +256,11 @@ while(showLive):
     high = np.array([179, 255, 255])
     mask = cv2.inRange(hsv_frame, low, high)
     result = cv2.bitwise_and(resultWarp, resultWarp, mask=mask)
+    countRed = 0
+    countBlue = 0
+    countYellow = 0
+    countGreen = 0
+    countBlack = 0
 
     # # Contour Red
     contoursRed, _ = cv2.findContours(
@@ -277,6 +270,7 @@ while(showLive):
         biggest_contoursRed = max(contoursRed, key=cv2.contourArea)
         (x, y, w, h) = cv2.boundingRect(biggest_contoursRed)
         cv2.rectangle(resultWarp, (x, y), (x+w, y+h), (0, 0, 255), 2)
+        countRed = 1
     except:
         pass
 
@@ -286,6 +280,7 @@ while(showLive):
         biggest_contoursBlue = max(contoursBlue, key=cv2.contourArea)
         (x, y, w, h) = cv2.boundingRect(biggest_contoursBlue)
         cv2.rectangle(resultWarp, (x, y), (x+w, y+h), (255, 0, 0), 2)
+        countBlue = 1
     except:
         pass
 
@@ -295,6 +290,7 @@ while(showLive):
         biggest_contoursGreen = max(contoursGreen, key=cv2.contourArea)
         (x, y, w, h) = cv2.boundingRect(biggest_contoursGreen)
         cv2.rectangle(resultWarp, (x, y), (x+w, y+h), (0, 255, 0), 2)
+        countGreen = 1
     except:
         pass
 
@@ -305,6 +301,7 @@ while(showLive):
         biggest_contoursYellow = max(contoursYellow, key=cv2.contourArea)
         (x, y, w, h) = cv2.boundingRect(biggest_contoursYellow)
         cv2.rectangle(resultWarp, (x, y), (x+w, y+h), (0, 255, 255), 2)
+        countYellow = 1
     except:
         pass
 
@@ -315,6 +312,7 @@ while(showLive):
         biggest_contoursBlack = max(contoursBlack, key=cv2.contourArea)
         (x, y, w, h) = cv2.boundingRect(biggest_contoursBlack)
         cv2.rectangle(resultWarp, (x, y), (x+w, y+h), (0, 0, 0), 2)
+        countBlack = 1
     except:
         pass
 
@@ -328,13 +326,39 @@ while(showLive):
     #     if area > 1000:
     #         count = count + 1  # นับ object ที่มีพื้นที่มากกว่า 1000 pixel
     #         cv2.rectangle(resultWarp, (x, y), (x+w, y+h),  5)
-    # cv2.rectangle(resultWarp, (0, 0), (200, 120), (0, 0, 0), -1)
-    # cv2.putText(resultWarp, 'Red Count : ' + str(len(contoursRed)),
-    #             (10, 50),                  # bottomLeftCornerOfText
-    #             cv2.FONT_HERSHEY_SIMPLEX,  # font
-    #             0.5,                      # fontScale
-    #             (0, 0, 255),            # fontColor
-    #             1)                        # lineType
+
+    # Draw Text
+    cv2.rectangle(resultWarp, (0, 0), (100, 110), (0, 0, 0), -1)
+    cv2.putText(resultWarp, 'Red    :' + str(countRed),
+                (10, 20),                  # bottomLeftCornerOfText
+                cv2.FONT_HERSHEY_SIMPLEX,  # font
+                0.5,                      # fontScale
+                (0, 0, 255),            # fontColor
+                1)                        # lineType
+    cv2.putText(resultWarp, 'Yellow :' + str(countYellow),
+                (10, 40),                  # bottomLeftCornerOfText
+                cv2.FONT_HERSHEY_SIMPLEX,  # font
+                0.5,                      # fontScale
+                (0, 255, 255),            # fontColor
+                1)
+    cv2.putText(resultWarp, 'Blue   :' + str(countBlue),
+                (10, 60),                  # bottomLeftCornerOfText
+                cv2.FONT_HERSHEY_SIMPLEX,  # font
+                0.5,                      # fontScale
+                (255, 238, 0),            # fontColor
+                1)
+    cv2.putText(resultWarp, 'Green  :' + str(countGreen),
+                (10, 80),                  # bottomLeftCornerOfText
+                cv2.FONT_HERSHEY_SIMPLEX,  # font
+                0.5,                      # fontScale
+                (0, 255, 0),            # fontColor
+                1)
+    cv2.putText(resultWarp, 'Black  :' + str(countBlack),
+                (10, 100),                  # bottomLeftCornerOfText
+                cv2.FONT_HERSHEY_SIMPLEX,  # font
+                0.5,                      # fontScale
+                (255, 255, 255),            # fontColor
+                1)
 
     # cv2.putText(resultWarp, "Red : " + countRed, (int(
     #     tltrX - 0), int(tltrY - 0)), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
@@ -353,6 +377,7 @@ while(showLive):
 
     # cv2.imshow(windowName, orig)
     # cv2.imshow('', closing)
+    cv2.imshow('Mask All', result)
     cv2.imshow('Color', closing)
     frame2 = np.concatenate((orig, closing), axis=1)
     # cv2.imshow('window', frame2)
@@ -367,7 +392,7 @@ while(showLive):
     cv2.imshow('Black, Yellow', frame3)
     cv2.imshow("Frame", frame)
     cv2.imshow("Output", resultWarp)
-    cv2.imshow("Output Blurre", Mblurred)
+    # cv2.imshow("Output Blurre", Mblurred)
 
     # if cv2.waitKey(30) >= 0:
     #     showLive = False
