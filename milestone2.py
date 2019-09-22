@@ -223,7 +223,7 @@ while(showLive):
 
     # ------ COLOR ------------
     # Red color
-    low_red = np.array([122, 0, 0])
+    low_red = np.array([132, 75, 134])
     high_red = np.array([180, 255, 255])
     red_mask = cv2.inRange(hsv_frame, low_red, high_red)
     red = cv2.bitwise_and(resultWarp, resultWarp, mask=red_mask)
@@ -265,15 +265,21 @@ while(showLive):
     # # Contour Red
     contoursRed, _ = cv2.findContours(
         red_mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
-
     try:
         biggest_contoursRed = max(contoursRed, key=cv2.contourArea)
         (x, y, w, h) = cv2.boundingRect(biggest_contoursRed)
         cv2.rectangle(resultWarp, (x, y), (x+w, y+h), (0, 0, 255), 2)
         countRed = 1
+
+        Mred = cv2.moments(biggest_contoursRed)
+        rX = int(Mred["m10"] / Mred["m00"])
+        rY = int(Mred["m01"] / Mred["m00"])
+        cv2.circle(resultWarp, (rX, rY), 5, (0, 0, 255), -1)
+
+    # cv2.putText(resultWarp, ":" + rX, (rX - 25, rY - 25),
+    #             cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
     except:
         pass
-
     contoursBlue, _ = cv2.findContours(
         blue_mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
     try:
@@ -281,6 +287,12 @@ while(showLive):
         (x, y, w, h) = cv2.boundingRect(biggest_contoursBlue)
         cv2.rectangle(resultWarp, (x, y), (x+w, y+h), (255, 0, 0), 2)
         countBlue = 1
+
+        Mblue = cv2.moments(biggest_contoursBlue)
+        bX = int(Mblue["m10"] / Mblue["m00"])
+        bY = int(Mblue["m01"] / Mblue["m00"])
+        cv2.circle(resultWarp, (bX, bY), 5, (255, 0, 0), -1)
+
     except:
         pass
 
@@ -291,6 +303,11 @@ while(showLive):
         (x, y, w, h) = cv2.boundingRect(biggest_contoursGreen)
         cv2.rectangle(resultWarp, (x, y), (x+w, y+h), (0, 255, 0), 2)
         countGreen = 1
+
+        Mgreen = cv2.moments(biggest_contoursGreen)
+        gX = int(Mgreen["m10"] / Mgreen["m00"])
+        gY = int(Mgreen["m01"] / Mgreen["m00"])
+        cv2.circle(resultWarp, (gX, gY), 5, (0, 255, 0), -1)
     except:
         pass
 
@@ -302,6 +319,11 @@ while(showLive):
         (x, y, w, h) = cv2.boundingRect(biggest_contoursYellow)
         cv2.rectangle(resultWarp, (x, y), (x+w, y+h), (0, 255, 255), 2)
         countYellow = 1
+
+        Myellow = cv2.moments(biggest_contoursYellow)
+        yX = int(Myellow["m10"] / Myellow["m00"])
+        yY = int(Myellow["m01"] / Myellow["m00"])
+        cv2.circle(resultWarp, (yX, yY), 5, (0, 255, 255), -1)
     except:
         pass
 
@@ -313,6 +335,11 @@ while(showLive):
         (x, y, w, h) = cv2.boundingRect(biggest_contoursBlack)
         cv2.rectangle(resultWarp, (x, y), (x+w, y+h), (0, 0, 0), 2)
         countBlack = 1
+
+        Mblack = cv2.moments(biggest_contoursBlack)
+        blX = int(Mblack["m10"] / Mblack["m00"])
+        blY = int(Mblack["m01"] / Mblack["m00"])
+        cv2.circle(resultWarp, (blX, blY), 5, (0, 0, 0), -1)
     except:
         pass
 
