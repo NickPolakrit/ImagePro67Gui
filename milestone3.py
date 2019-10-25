@@ -246,8 +246,8 @@ while(showLive):
     yellow = cv2.bitwise_and(resultWarp, resultWarp, mask=yellow_mask)
 
     # Black color
-    low_black = np.array([79, 0, 0])
-    high_black = np.array([130, 197, 197])
+    low_black = np.array([63, 0, 0])
+    high_black = np.array([180, 65, 163])
     black_mask = cv2.inRange(hsv_frame, low_black, high_black)
     black = cv2.bitwise_and(resultWarp, resultWarp, mask=black_mask)
 
