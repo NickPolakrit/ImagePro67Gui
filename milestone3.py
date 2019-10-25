@@ -29,14 +29,14 @@ cv2.createTrackbar('Y3', 'xyPosition', 0, 575, nothing)
 cv2.createTrackbar('X4', 'xyPosition', 0, 1022, nothing)
 cv2.createTrackbar('Y4', 'xyPosition', 0, 575, nothing)
 
-cv2.setTrackbarPos("X1", "xyPosition", 219)
-cv2.setTrackbarPos("Y1", "xyPosition", 0)
-cv2.setTrackbarPos("X2", "xyPosition", 803)
-cv2.setTrackbarPos("Y2", "xyPosition", 0)
-cv2.setTrackbarPos("X3", "xyPosition", 26)
-cv2.setTrackbarPos("Y3", "xyPosition", 575)
-cv2.setTrackbarPos("X4", "xyPosition", 970)
-cv2.setTrackbarPos("Y4", "xyPosition", 575)
+cv2.setTrackbarPos("X1", "xyPosition", 242)
+cv2.setTrackbarPos("Y1", "xyPosition", 232)
+cv2.setTrackbarPos("X2", "xyPosition", 602)
+cv2.setTrackbarPos("Y2", "xyPosition", 240)
+cv2.setTrackbarPos("X3", "xyPosition", 97)
+cv2.setTrackbarPos("Y3", "xyPosition", 551)
+cv2.setTrackbarPos("X4", "xyPosition", 684)
+cv2.setTrackbarPos("Y4", "xyPosition", 549)
 
 
 def safe_div(x, y):  # so we don't crash so often
@@ -223,25 +223,25 @@ while(showLive):
 
     # ------ COLOR ------------
     # Red color
-    low_red = np.array([132, 75, 134])
+    low_red = np.array([114, 0, 94])
     high_red = np.array([180, 255, 255])
     red_mask = cv2.inRange(hsv_frame, low_red, high_red)
     red = cv2.bitwise_and(resultWarp, resultWarp, mask=red_mask)
     # Blue color
-    low_blue = np.array([94, 189, 2])
-    high_blue = np.array([126, 255, 255])
+    low_blue = np.array([99, 68, 116])
+    high_blue = np.array([166, 255, 255])
     blue_mask = cv2.inRange(hsv_frame, low_blue, high_blue)
     blue = cv2.bitwise_and(resultWarp, resultWarp, mask=blue_mask)
 
     # Green color
-    low_green = np.array([45, 55, 122])
-    high_green = np.array([78, 121, 191])
+    low_green = np.array([72, 11, 143])
+    high_green = np.array([96, 255, 255])
     green_mask = cv2.inRange(hsv_frame, low_green, high_green)
     green = cv2.bitwise_and(resultWarp, resultWarp, mask=green_mask)
 
     # Yellow color
-    low_yellow = np.array([15, 0, 181])
-    high_yellow = np.array([79, 170, 255])
+    low_yellow = np.array([14, 10, 148])
+    high_yellow = np.array([85, 170, 255])
     yellow_mask = cv2.inRange(hsv_frame, low_yellow, high_yellow)
     yellow = cv2.bitwise_and(resultWarp, resultWarp, mask=yellow_mask)
 
