@@ -29,14 +29,14 @@ cv2.createTrackbar('Y3', 'xyPosition', 0, 575, nothing)
 cv2.createTrackbar('X4', 'xyPosition', 0, 1022, nothing)
 cv2.createTrackbar('Y4', 'xyPosition', 0, 575, nothing)
 
-cv2.setTrackbarPos("X1", "xyPosition", 242)
-cv2.setTrackbarPos("Y1", "xyPosition", 232)
-cv2.setTrackbarPos("X2", "xyPosition", 602)
-cv2.setTrackbarPos("Y2", "xyPosition", 240)
-cv2.setTrackbarPos("X3", "xyPosition", 97)
-cv2.setTrackbarPos("Y3", "xyPosition", 551)
-cv2.setTrackbarPos("X4", "xyPosition", 684)
-cv2.setTrackbarPos("Y4", "xyPosition", 549)
+cv2.setTrackbarPos("X1", "xyPosition", 301)
+cv2.setTrackbarPos("Y1", "xyPosition", 272)
+cv2.setTrackbarPos("X2", "xyPosition", 621)
+cv2.setTrackbarPos("Y2", "xyPosition", 286)
+cv2.setTrackbarPos("X3", "xyPosition", 167)
+cv2.setTrackbarPos("Y3", "xyPosition", 519)
+cv2.setTrackbarPos("X4", "xyPosition", 706)
+cv2.setTrackbarPos("Y4", "xyPosition", 525)
 
 
 def safe_div(x, y):  # so we don't crash so often
@@ -223,7 +223,7 @@ while(showLive):
 
     # ------ COLOR ------------
     # Red color
-    low_red = np.array([114, 0, 94])
+    low_red = np.array([146, 23, 0])
     high_red = np.array([180, 255, 255])
     red_mask = cv2.inRange(hsv_frame, low_red, high_red)
     red = cv2.bitwise_and(resultWarp, resultWarp, mask=red_mask)
