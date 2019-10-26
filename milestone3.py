@@ -234,8 +234,8 @@ while(showLive):
     blue = cv2.bitwise_and(resultWarp, resultWarp, mask=blue_mask)
 
     # Green color
-    low_green = np.array([72, 11, 143])
-    high_green = np.array([96, 255, 255])
+    low_green = np.array([31, 0, 137])
+    high_green = np.array([96, 106, 255])
     green_mask = cv2.inRange(hsv_frame, low_green, high_green)
     green = cv2.bitwise_and(resultWarp, resultWarp, mask=green_mask)
 
@@ -275,6 +275,13 @@ while(showLive):
         rX = int(Mred["m10"] / Mred["m00"])
         rY = int(Mred["m01"] / Mred["m00"])
         cv2.circle(resultWarp, (rX, rY), 5, (0, 0, 255), -1)
+        cv2.putText(resultWarp, 'X :' + str(rX) + " Y :" + str(rY),
+                    # bottomLeftCornerOfText
+                    (rX + 30, rY),
+                    cv2.FONT_HERSHEY_SIMPLEX,  # font
+                    0.55,                      # fontScale
+                    (0, 0, 255),            # fontColor
+                    1)
 
     # cv2.putText(resultWarp, ":" + rX, (rX - 25, rY - 25),
     #             cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
@@ -292,6 +299,13 @@ while(showLive):
         bX = int(Mblue["m10"] / Mblue["m00"])
         bY = int(Mblue["m01"] / Mblue["m00"])
         cv2.circle(resultWarp, (bX, bY), 5, (255, 0, 0), -1)
+        cv2.putText(resultWarp, 'X :' + str(bX) + " Y :" + str(bY),
+                    # bottomLeftCornerOfText
+                    (bX + 30, bY),
+                    cv2.FONT_HERSHEY_SIMPLEX,  # font
+                    0.55,                      # fontScale
+                    (255, 0, 0),            # fontColor
+                    1)
 
     except:
         pass
@@ -308,6 +322,14 @@ while(showLive):
         gX = int(Mgreen["m10"] / Mgreen["m00"])
         gY = int(Mgreen["m01"] / Mgreen["m00"])
         cv2.circle(resultWarp, (gX, gY), 5, (0, 255, 0), -1)
+        cv2.putText(resultWarp, 'X :' + str(gX) + " Y :" + str(gY),
+                    # bottomLeftCornerOfText
+                    (gX + 30, gY),
+                    cv2.FONT_HERSHEY_SIMPLEX,  # font
+                    0.55,                      # fontScale
+                    (0, 255, 0),            # fontColor
+                    1)
+
     except:
         pass
 
@@ -324,6 +346,14 @@ while(showLive):
         yX = int(Myellow["m10"] / Myellow["m00"])
         yY = int(Myellow["m01"] / Myellow["m00"])
         cv2.circle(resultWarp, (yX, yY), 5, (0, 255, 255), -1)
+        cv2.putText(resultWarp, 'X :' + str(yX) + " Y :" + str(yY),
+                    # bottomLeftCornerOfText
+                    (yX + 30, yY),
+                    cv2.FONT_HERSHEY_SIMPLEX,  # font
+                    0.55,                      # fontScale
+                    (0, 255, 255),            # fontColor
+                    1)
+
     except:
         pass
 
@@ -340,6 +370,14 @@ while(showLive):
         blX = int(Mblack["m10"] / Mblack["m00"])
         blY = int(Mblack["m01"] / Mblack["m00"])
         cv2.circle(resultWarp, (blX, blY), 5, (0, 0, 0), -1)
+        cv2.putText(resultWarp, 'X :' + str(blX) + " Y :" + str(blY),
+                    # bottomLeftCornerOfText
+                    (blX + 30, blY),
+                    cv2.FONT_HERSHEY_SIMPLEX,  # font
+                    0.55,                      # fontScale
+                    (0, 0, 0),            # fontColor
+                    1)
+
     except:
         pass
 
