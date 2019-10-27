@@ -3,6 +3,7 @@ import cv2
 import pandas as pd
 import numpy as np
 import imutils
+import serial
 from scipy.spatial import distance as dist
 from imutils import perspective
 from imutils import contours
@@ -13,6 +14,12 @@ cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1000)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 760)
 # cap.set(3, 640)
 # cap.set(4, 480)
+
+serialDevice = serial.Serial(
+    "/dev/cu.usbserial-AC00YIZF", 115200, 8, 'N', 1, 0, 0, 0, 0, 0)
+
+serialDevice.setRTS(0)
+serialDevice.setDTR(0)
 
 
 def nothing(x):  # for trackbar
@@ -261,6 +268,8 @@ while(showLive):
     countYellow = 0
     countGreen = 0
     countBlack = 0
+
+    # ----------- Serial -------------
 
     # # Contour Red
     contoursRed, _ = cv2.findContours(

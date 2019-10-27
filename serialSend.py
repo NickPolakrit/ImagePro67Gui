@@ -5,7 +5,7 @@
 
 
 import serial
-serialDevice = serial.Serial(
+serialPort = serial.Serial(
     "/dev/cu.usbserial-AC00YIZF", 115200, 8, 'N', 1, 0, 0, 0, 0, 0)
 
 serialDevice.setRTS(0)
@@ -14,4 +14,4 @@ serialDevice.setDTR(0)
 while (1):
     g = str(input("Commands : "))
     print(g)
-    serialDevice.write(g.encode())
+    serialPort.write(g.encode())
