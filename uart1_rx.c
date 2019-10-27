@@ -58,17 +58,19 @@ int main(void) {
     
     //--------------------------------------------------------------------------
     printf("------------");
+//    commandS[5] = {"0", "0", "0", "0", "0"};
     while(1)
     {
         numByte = UART1_ReadBuffer(dataArray, 10);
+        
         if (numByte != 0){
             // Receive data
-            TRISBbits.TRISB10 = 0;
-            TRISBbits.TRISB11 = 0;
-            TRISBbits.TRISB12 = 0;
-            TRISBbits.TRISB13 = 0;
-            TRISBbits.TRISB14 = 0;
-    
+            LATBbits.LATB10 = 0;
+            LATBbits.LATB11 = 0;
+            LATBbits.LATB12 = 0;
+            LATBbits.LATB13 = 0;
+            LATBbits.LATB14 = 0;
+            
             if(dataArray[0] == '1' ){
                 printf("%d\n",numByte);
                 LATBbits.LATB10 = 1;
