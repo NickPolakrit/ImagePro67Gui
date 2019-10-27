@@ -6,13 +6,13 @@
 
 import serial
 serialPort = serial.Serial(
-    "/dev/cu.usbserial-AC00YIZF", 115200, 8, 'N', 1, 0, 0, 0, 0, 0)
+    "/dev/cu.usbserial-AC00YIZC", 115200, 8, 'N', 1, 0, 0, 0, 0, 0)
 
 serialPort.setRTS(0)
 serialPort.setDTR(0)
 
 while (1):
-    # g = str(input("Commands : "))
-    # print(g)
+    g = str(input("Commands : "))
+    print(g)
     serialPort.write(g.encode())
     print(serialPort.readline().decode('ascii').strip().split(','))
