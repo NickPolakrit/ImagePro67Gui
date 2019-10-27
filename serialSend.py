@@ -12,7 +12,7 @@ serialPort.setRTS(0)
 serialPort.setDTR(0)
 
 while (1):
-    g = str(input("Commands : "))
-    print(g)
-    serialPort.write(g.encode())
+    cInput = str(input("Commands : "))
+    print(cInput)
+    serialPort.write(cInput.encode())
     print(serialPort.readline().decode('ascii').strip().split(','))
