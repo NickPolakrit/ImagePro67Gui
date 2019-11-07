@@ -6,7 +6,7 @@
 
 import serial
 serialPort = serial.Serial(
-    "/dev/cu.usbserial-AC00YIZC", 115200, 8, 'N', 1, 0, 0, 0, 0, 0)
+    "/dev/cu.usbserial-AC00YIZF", 115200, 8, 'N', 1, 0, 0, 0, 0, 0)
 
 serialPort.setRTS(0)
 serialPort.setDTR(0)
