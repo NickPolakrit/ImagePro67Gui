@@ -8,7 +8,7 @@ from imutils import perspective
 from imutils import contours
 
 # using cam built-in to computer
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(1)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1000)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 760)
 # cap.set(3, 640)
@@ -136,7 +136,7 @@ while(showLive):
     closing = cv2.cvtColor(closing, cv2.COLOR_BGR2GRAY)
 
     # find contours with simple approximation cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE
-    _, contours, hierarchy = cv2.findContours(
+    contours, hierarchy = cv2.findContours(
         closing, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
 
     closing = cv2.cvtColor(closing, cv2.COLOR_GRAY2RGB)
@@ -263,7 +263,7 @@ while(showLive):
     countBlack = 0
 
     # # Contour Red
-    _, contoursRed, _ = cv2.findContours(
+    contoursRed, _ = cv2.findContours(
         red_mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
     try:
         biggest_contoursRed = max(contoursRed, key=cv2.contourArea)
@@ -280,7 +280,7 @@ while(showLive):
     #             cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
     except:
         pass
-    _, contoursBlue, _ = cv2.findContours(
+    contoursBlue, _ = cv2.findContours(
         blue_mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
     try:
         biggest_contoursBlue = max(contoursBlue, key=cv2.contourArea)
@@ -296,7 +296,7 @@ while(showLive):
     except:
         pass
 
-    _, contoursGreen, _ = cv2.findContours(
+    contoursGreen, _ = cv2.findContours(
         green_mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
     try:
         biggest_contoursGreen = max(contoursGreen, key=cv2.contourArea)
@@ -311,7 +311,7 @@ while(showLive):
     except:
         pass
 
-    _, contoursYellow, _ = cv2.findContours(
+    contoursYellow, _ = cv2.findContours(
         yellow_mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
 
     try:
@@ -327,7 +327,7 @@ while(showLive):
     except:
         pass
 
-    _, contoursBlack, _ = cv2.findContours(
+    contoursBlack, _ = cv2.findContours(
         black_mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
 
     try:
