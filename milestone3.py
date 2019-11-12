@@ -104,6 +104,8 @@ while(showLive):
 
     resultWarp = cv2.warpPerspective(frame, matrix, (500, 500))
 
+    positionDraw = cv2.warpPerspective(frame, matrix, (500, 500))
+
     Gblurred = cv2.GaussianBlur(resultWarp, (5, 5), 0)
     Mblurred = cv2.medianBlur(Gblurred, 5)
     # Denoise = cv2.fastNlMeansDenoisingMulti(resultWarp, 2, 5, None, 4, 7, 35)
@@ -340,6 +342,10 @@ while(showLive):
                     (0, 255, 0),            # fontColor
                     1)
 
+        pGx = gX*0.8
+        pGy = gY*0.8
+        cv2.circle(positionDraw, (pGx, pGy), 5, (0, 255, 0), -1)
+
     except:
         pass
 
@@ -483,6 +489,7 @@ while(showLive):
     cv2.imshow('Black, Yellow', frame3)
     cv2.imshow("Frame", frame)
     cv2.imshow("Output", resultWarp)
+    cv2.imshow("Position", positionDraw)
     # cv2.imshow("Output Blurre", Mblurred)
 
     # if cv2.waitKey(30) >= 0:
