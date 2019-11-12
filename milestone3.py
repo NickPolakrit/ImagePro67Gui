@@ -52,7 +52,7 @@ def safe_div(x, y):  # so we don't crash so often
     return x/y
 
 
-def rescale_result(result, percent=80):  # make the video windows a bit smaller
+def rescale_result(result, percent=100):  # make the video windows a bit smaller
     width = int(result.shape[1] * percent / 100)
     height = int(result.shape[0] * percent / 100)
     dim = (width, height)
@@ -203,11 +203,28 @@ while(showLive):
     (tl, tr, br, bl) = box
     (tltrX, tltrY) = midpoint(tl, tr)
     (blbrX, blbrY) = midpoint(bl, br)
+   
 
+    # ----------------
+    cv2.circle(resultWarp, (tl[0], tl[1]), 5, (0, 0, 255), -1)
+    cv2.circle(resultWarp, (tr[0], tr[1]), 5, (0, 0, 255), -1)
+    cv2.circle(resultWarp, (bl[0], bl[1]), 5, (0, 0, 255), -1)
+    cv2.circle(resultWarp, (br[0], br[1]), 5, (0, 0, 255), -1)
+    pts1 = np.float32([[tl[0], tl[1]],
+                       [tr[0], tl[1]],
+                       [bl[0], bl[1]],
+                       [br[0], br[1]]])
+    pts2 = np.float32([[0, 0], [500, 0], [0, 500], [500, 500]])
+    matrix = cv2.getPerspectiveTransform(pts1, pts2)
+
+    autoCrop = cv2.warpPerspective(resultWarp, matrix, (500, 500))
+    # ----------------
+    
     # compute the midpoint between the top-left and top-right points,
     # followed by the midpoint between the top-righ and bottom-right
     (tlblX, tlblY) = midpoint(tl, bl)
     (trbrX, trbrY) = midpoint(tr, br)
+  
 
     # compute the Euclidean distance between the midpoints
     dA = dist.euclidean((tltrX, tltrY), (blbrX, blbrY))
@@ -490,6 +507,7 @@ while(showLive):
     cv2.imshow("Frame", frame)
     cv2.imshow("Output", resultWarp)
     cv2.imshow("Position", positionDraw)
+    cv2.imshow("Crop", autoCrop)
     # cv2.imshow("Output Blurre", Mblurred)
 
     # if cv2.waitKey(30) >= 0:
