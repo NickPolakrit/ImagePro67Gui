@@ -36,13 +36,13 @@ cv2.createTrackbar('Y3', 'xyPosition', 0, 575, nothing)
 cv2.createTrackbar('X4', 'xyPosition', 0, 1022, nothing)
 cv2.createTrackbar('Y4', 'xyPosition', 0, 575, nothing)
 
-cv2.setTrackbarPos("X1", "xyPosition", 264)
-cv2.setTrackbarPos("Y1", "xyPosition", 232)
-cv2.setTrackbarPos("X2", "xyPosition", 609)
-cv2.setTrackbarPos("Y2", "xyPosition", 240)
-cv2.setTrackbarPos("X3", "xyPosition", 145)
+cv2.setTrackbarPos("X1", "xyPosition", 308)
+cv2.setTrackbarPos("Y1", "xyPosition", 18)
+cv2.setTrackbarPos("X2", "xyPosition", 676)
+cv2.setTrackbarPos("Y2", "xyPosition", 10)
+cv2.setTrackbarPos("X3", "xyPosition", 242)
 cv2.setTrackbarPos("Y3", "xyPosition", 529)
-cv2.setTrackbarPos("X4", "xyPosition", 721)
+cv2.setTrackbarPos("X4", "xyPosition", 769)
 cv2.setTrackbarPos("Y4", "xyPosition", 525)
 
 
@@ -230,39 +230,40 @@ while(showLive):
 
     # ------ COLOR ------------
     # Red color
-    low_red = np.array([146, 23, 0])
-    high_red = np.array([180, 255, 255])
+    low_red = np.array([0, 23, 32])
+    high_red = np.array([11, 255, 255])
     red_mask = cv2.inRange(hsv_frame, low_red, high_red)
     red = cv2.bitwise_and(resultWarp, resultWarp, mask=red_mask)
     # Blue color
-    low_blue = np.array([99, 68, 116])
-    high_blue = np.array([166, 255, 255])
+    low_blue = np.array([108, 0, 70])
+    high_blue = np.array([163, 255, 237])
     blue_mask = cv2.inRange(hsv_frame, low_blue, high_blue)
     blue = cv2.bitwise_and(resultWarp, resultWarp, mask=blue_mask)
 
     # Green color
-    low_green = np.array([31, 0, 137])
-    high_green = np.array([96, 106, 255])
+    low_green = np.array([26, 24, 42])
+    high_green = np.array([97, 102, 166])
     green_mask = cv2.inRange(hsv_frame, low_green, high_green)
     green = cv2.bitwise_and(resultWarp, resultWarp, mask=green_mask)
 
     # Yellow color
-    low_yellow = np.array([14, 10, 148])
-    high_yellow = np.array([85, 170, 255])
+    low_yellow = np.array([21, 39, 121])
+    high_yellow = np.array([94, 178, 254])
     yellow_mask = cv2.inRange(hsv_frame, low_yellow, high_yellow)
     yellow = cv2.bitwise_and(resultWarp, resultWarp, mask=yellow_mask)
 
     # Black color
-    low_black = np.array([63, 0, 0])
-    high_black = np.array([180, 65, 163])
+    low_black = np.array([88, 13, 106])
+    high_black = np.array([128, 255, 209])
     black_mask = cv2.inRange(hsv_frame, low_black, high_black)
     black = cv2.bitwise_and(resultWarp, resultWarp, mask=black_mask)
 
-    # Every color except white
-    low = np.array([0, 42, 0])
-    high = np.array([179, 255, 255])
+    # Card 
+    low = np.array([0, 10, 96])
+    high = np.array([25, 74, 255])
     mask = cv2.inRange(hsv_frame, low, high)
     result = cv2.bitwise_and(resultWarp, resultWarp, mask=mask)
+
     countRed = 0
     countBlue = 0
     countYellow = 0
@@ -386,6 +387,22 @@ while(showLive):
                     0.55,                      # fontScale
                     (0, 0, 0),            # fontColor
                     1)
+
+    except:
+        pass
+
+
+    contoursCard, _ = cv2.findContours(
+        mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+
+    try:
+        biggest_contoursCard = max(contoursCard, key=cv2.contourArea)
+        (x, y, w, h) = cv2.boundingRect(biggest_contoursCard)
+        cv2.rectangle(resultWarp, (x, y), (x+w, y+h), (0, 0, 0), 2)
+        
+
+        Mcard = cv2.moments(biggest_contoursCard)
+
 
     except:
         pass
