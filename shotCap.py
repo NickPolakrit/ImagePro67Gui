@@ -148,7 +148,19 @@ while True:
 
             # show the original coordinates
             print("Object #{}:".format(i + 1))
-            print(box)
+            print(box[0][0])
+            print(box[0][1])
+            print(box[1][0])
+            print(box[1][1])
+            print(box[2][0])
+            print(box[2][1])
+            print(box[3][0])
+            print(box[3][1])
+            
+            
+
+            
+            
 
             # order the points in the contour such that they appear
             # in top-left, top-right, bottom-right, and bottom-left
@@ -162,7 +174,8 @@ while True:
                 rect = perspective.order_points(box)
 
             # show the re-ordered coordinates
-            print(rect.astype("int"))
+            # print(rect.astype("int"))
+
             print("")
 
             # loop over the original points and draw them
@@ -175,8 +188,26 @@ while True:
             #         cv2.FONT_HERSHEY_SIMPLEX, 0.55, (255, 255, 255), 2)
 
             # show the image
+
+            cv2.circle(image, (box[2][0], box[2][1]), 2, (0, 0, 255), -1)
+            cv2.circle(image, (box[3][0], box[3][1]), 2, (0, 0, 255), -1)
+            cv2.circle(image, (box[1][0], box[1][1]), 2, (0, 0, 255), -1)
+            cv2.circle(image, (box[0][0], box[0][1]), 2, (0, 0, 255), -1)
+            pts1 = np.float32([[box[2][0], box[2][1]],
+                               [box[3][0], box[3][1]],
+                               [box[1][0], box[1][1]],
+                               [box[0][0], box[0][1]]])
+            pts2 = np.float32([[0, 0], [500, 0], [0, 500], [500, 500]])
+            matrix = cv2.getPerspectiveTransform(pts1, pts2)
+
+            resultCrop = cv2.warpPerspective(image, matrix, (500, 500))
+
+
             cv2.imshow("Image", image)
+            cv2.imshow("Crop", resultCrop)
             cv2.waitKey(0)
+
+        
                 
         
 

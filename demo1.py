@@ -352,18 +352,20 @@ while(showLive):
     # ------------
     k = cv2.waitKey(1)
     if k % 256 == 32:
-        print('Red X' + str(rX) + ' Y' + str(rY))
-        print('Blue X' + str(bX) + ' Y' + str(bY))
-        print('Green X' + str(gX) + ' Y' + str(gY))
-        print('Yellow X' + str(yX) + ' Y' + str(yY))
-        print('Black X' + str(blX) + ' Y' + str(blY))
-        cv2.putText(resultWarp, 'Sending...',
-                    (100, 200),                  # bottomLeftCornerOfText
-                    cv2.FONT_HERSHEY_SIMPLEX,  # font
-                    1,                      # fontScale
-                    (0, 255, 0),            # fontColor
-                    2)
+        # print('Red X' + str(rX) + ' Y' + str(rY))
+        # print('Blue X' + str(bX) + ' Y' + str(bY))
+        # print('Green X' + str(gX) + ' Y' + str(gY))
+        # print('Yellow X' + str(yX) + ' Y' + str(yY))
+        # print('Black X' + str(blX) + ' Y' + str(blY))
+        # cv2.putText(resultWarp, 'Sending...',
+        #             (100, 200),                  # bottomLeftCornerOfText
+        #             cv2.FONT_HERSHEY_SIMPLEX,  # font
+        #             1,                      # fontScale
+        #             (0, 255, 0),            # fontColor
+        #             2)
         # break
+
+        
     else:
         pass
         
