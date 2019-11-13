@@ -107,7 +107,7 @@ while True:
 
             return rect
 
-        ap = argparse.ArgumentParser()
+        ap = argparse.ArgumentParser() 
         ap.add_argument("-n", "--new", type=int, default=-1,
                         help="whether or not the new order points should should be used")
         args = vars(ap.parse_args())
@@ -170,9 +170,9 @@ while True:
                 cv2.circle(image, (int(x), int(y)), 5, color, -1)
 
             # draw the object num at the top-left corner
-            cv2.putText(image, "Object #{}".format(i + 1),
-                    (int(rect[0][0] - 15), int(rect[0][1] - 15)),
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.55, (255, 255, 255), 2)
+            # cv2.putText(image, "Object #{}".format(i + 1),
+            #         (int(rect[0][0] - 15), int(rect[0][1] - 15)),
+            #         cv2.FONT_HERSHEY_SIMPLEX, 0.55, (255, 255, 255), 2)
 
             # show the image
             cv2.imshow("Image", image)
