@@ -91,7 +91,7 @@ while True:
         time.sleep(2)
 
         img1 = cv2.imread('opencv_frame_0.png')
-        cv2.imshow("shotimg", img1)
+        
 
         def order_points_old(pts):
             rect = np.zeros((4, 2), dtype="float32")
@@ -200,14 +200,17 @@ while True:
             pts2 = np.float32([[0, 0], [500, 0], [0, 500], [500, 500]])
             matrix = cv2.getPerspectiveTransform(pts1, pts2)
 
-            resultCrop = cv2.warpPerspective(image, matrix, (500, 500))
+            resultCrop = cv2.warpPerspective(img1, matrix, (500, 500))
 
 
             cv2.imshow("Image", image)
             cv2.imshow("Crop", resultCrop)
+            cv2.imshow("shotimg", img1)
             cv2.waitKey(0)
+        # break
 
-        
+# print("finish")
+       
                 
         
 
