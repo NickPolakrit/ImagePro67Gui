@@ -9,7 +9,7 @@ from imutils import perspective
 from imutils import contours
 
 # using cam built-in to computer
-cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(0)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1000)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 760)
 # cap.set(3, 640)
@@ -71,8 +71,8 @@ cv2.createTrackbar("kernel", windowName, 5, 30, nothing)
 cv2.createTrackbar("iterations", windowName, 1, 10, nothing)
 
 cv2.setTrackbarPos("threshold", windowName, 210)
-cv2.setTrackbarPos("kernel", windowName, 13)
-# cv2.setTrackbarPos("iterations", windowName, 1)
+cv2.setTrackbarPos("kernel", windowName, 19)
+cv2.setTrackbarPos("iterations", windowName, 1)
 # Sliders to adjust image
 # https://medium.com/@manivannan_data/set-trackbar-on-image-using-opencv-python-58c57fbee1ee
 
@@ -191,11 +191,13 @@ while(showLive):
     # order, then draw the outline of the rotated bounding
     # box
     box = perspective.order_points(box)
+
     cv2.drawContours(orig, [box.astype("int")], -1, (0, 255, 0), 4)
 
     # loop over the original points and draw them
     for (x, y) in box:
         cv2.circle(orig, (int(x), int(y)), 5, (0, 0, 255), -1)
+        cv2.circle(closing, (int(x), int(y)), 5, (0, 255, 255), -1)
 
     # unpack the ordered bounding box, then compute the midpoint
     # between the top-left and top-right coordinates, followed by
@@ -495,7 +497,7 @@ while(showLive):
     # cv2.imshow('Color', closing)
     frame2 = np.concatenate((orig, closing), axis=1)
     cv2.imshow('window', frame2)
-    cv2.imshow('result', orig)
+    # cv2.imshow('result', orig)
     cv2.imshow('Red', red)
     frame3 = np.concatenate((black, yellow), axis=1)
     # frame2 = np.concatenate((frame, red), axis=1)
