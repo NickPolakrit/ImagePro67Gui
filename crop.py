@@ -76,7 +76,7 @@ while True:
 
 	# perform edge detection, then perform a dilation + erosion to
 	# close gaps in between object edges
-	edged = cv2.Canny(gray, 10, 40)
+	edged = cv2.Canny(gray, 10, 100)
 	edged = cv2.dilate(edged, None, iterations=1)
 	edged = cv2.erode(edged, None, iterations=1)
 	cv2.imshow("edge", edged)
@@ -118,8 +118,8 @@ while True:
 
 		# check to see if the new method should be used for
 		# ordering the coordinates
-		if args["new"] > 0:
-			rect = perspective.order_points(box)
+		# if args["new"] > 0:
+		# 	rect = perspective.order_points(box)
 
 		# show the re-ordered coordinates
 		print(rect.astype("int"))

@@ -42,7 +42,7 @@ cv2.setTrackbarPos("Y3", "xyPosition", 494)
 cv2.setTrackbarPos("X4", "xyPosition", 741)
 cv2.setTrackbarPos("Y4", "xyPosition", 494)
 
-
+stateWork = 1
 
 while True:
     ret, frame = cam.read()
@@ -75,7 +75,10 @@ while True:
     cv2.imshow("original", frame1)
     cv2.imshow("circle", frame)
     # cv2.imshow("Warp", resultWarp)
-    hsv_frame2 = cv2.cvtColor(resultWarp, cv2.COLOR_BGR2HSV)
+
+    Gblurred = cv2.GaussianBlur(resultWarp, (5, 5), 0)
+    Mblurred = cv2.medianBlur(Gblurred, 5)
+    hsv_frame2 = cv2.cvtColor(Mblurred, cv2.COLOR_BGR2HSV)
 
     # Card
     cardCount = 0
@@ -104,7 +107,9 @@ while True:
     cv2.imshow("Warp", resultWarp)
     # cv2.imshow("card", result)
 
-    if cardCount == 1:
+    
+
+    if cardCount == 1 and stateWork == 1:
         time.sleep(5)
         img_name = "opencv_frame_0.png"
         cv2.imwrite(img_name, resultWarp)
@@ -141,7 +146,7 @@ while True:
 
         # perform edge detection, then perform a dilation + erosion to
         # close gaps in between object edges
-        edged = cv2.Canny(gray, 10, 40)
+        edged = cv2.Canny(gray, 10, 100)
         edged = cv2.dilate(edged, None, iterations=1)
         edged = cv2.erode(edged, None, iterations=1)
         cv2.imshow("edge", edged)
@@ -221,13 +226,13 @@ while True:
         hsv_frame = cv2.cvtColor(resultCrop, cv2.COLOR_BGR2HSV)
         # ------ COLOR ------------
         # Red color
-        low_red = np.array([0, 23, 32])
-        high_red = np.array([11, 255, 255])
+        low_red = np.array([130, 0, 0])
+        high_red = np.array([180, 255, 255])
         red_mask = cv2.inRange(hsv_frame, low_red, high_red)
         red = cv2.bitwise_and(resultCrop, resultCrop, mask=red_mask)
         # Blue color
-        low_blue = np.array([108, 0, 70])
-        high_blue = np.array([163, 255, 237])
+        low_blue = np.array([103, 34, 0])
+        high_blue = np.array([169, 190, 255])
         blue_mask = cv2.inRange(hsv_frame, low_blue, high_blue)
         blue = cv2.bitwise_and(resultCrop, resultCrop, mask=blue_mask)
 
@@ -238,14 +243,14 @@ while True:
         green = cv2.bitwise_and(resultCrop, resultCrop, mask=green_mask)
 
         # Yellow color
-        low_yellow = np.array([21, 39, 121])
+        low_yellow = np.array([21, 49, 121])
         high_yellow = np.array([94, 178, 254])
         yellow_mask = cv2.inRange(hsv_frame, low_yellow, high_yellow)
         yellow = cv2.bitwise_and(resultCrop, resultCrop, mask=yellow_mask)
 
         # Black color
-        low_black = np.array([88, 13, 106])
-        high_black = np.array([128, 255, 209])
+        low_black = np.array([14, 2, 0])
+        high_black = np.array([180, 108, 107])
         black_mask = cv2.inRange(hsv_frame, low_black, high_black)
         black = cv2.bitwise_and(resultCrop, resultCrop, mask=black_mask)
 
@@ -426,7 +431,8 @@ while True:
 
         # time.sleep(10)
         cardCount = 0
-
+        stateWork = 0
+    
         
 
         # SPACE pressed
@@ -439,12 +445,13 @@ while True:
 
     # if not ret:
     #     break
-    # k = cv2.waitKey(1)
+    k = cv2.waitKey(1)
+    print(stateWork)
 
-    # if k % 256 == 27:
-    #     # ESC pressed
-    #     print("Escape hit, closing...")
-    #     break
+    if k % 256 == 27:
+        # ESC pressed
+        print("Escape hit, closing...")
+        break
     # elif k % 256 == 32:
 
     #     # SPACE pressed
