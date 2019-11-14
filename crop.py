@@ -67,14 +67,15 @@ ap.add_argument("-n", "--new", type=int, default=-1,
 args = vars(ap.parse_args())
 
 # load our input image, convert it to grayscale, and blur it slightly
-image = cv2.imread("opencv_frame_0.png")
+image = cv2.imread("demo1.png")
+# image = cv2.imread("opencv_frame_0.png")
 # image = cv2.imread("testDemo10.jpg")
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 gray = cv2.GaussianBlur(gray, (7, 7), 0)
 
 # perform edge detection, then perform a dilation + erosion to
 # close gaps in between object edges
-edged = cv2.Canny(gray, 20, 15)
+edged = cv2.Canny(gray, 10, 40)
 edged = cv2.dilate(edged, None, iterations=1)
 edged = cv2.erode(edged, None, iterations=1)
 cv2.imshow("edge", edged)
