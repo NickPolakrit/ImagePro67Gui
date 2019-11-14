@@ -100,12 +100,12 @@ while True:
 
     except:
         cardCount = 0
-        pass
+        continue
     cv2.imshow("Warp", resultWarp)
     # cv2.imshow("card", result)
 
     if cardCount == 1:
-        time.sleep(3)
+        time.sleep(5)
         img_name = "opencv_frame_0.png"
         cv2.imwrite(img_name, resultWarp)
         # print("{} written!".format(img_name))
@@ -422,7 +422,10 @@ while True:
         elif k % 256 == 32:
             print("spacebar...")
             
-            continue
+            break
+
+        # time.sleep(10)
+        cardCount = 0
 
         
 
@@ -431,8 +434,8 @@ while True:
         # continue
     
     else:
-        # pass
-        continue
+        pass
+        # continue
 
     # if not ret:
     #     break

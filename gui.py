@@ -41,6 +41,7 @@ import cv2
 import numpy as np
 
 img = cv2.imread('opencv_frame_0.png')
+# img = cv2.imread('demo1.png')
 # ret, thresh = cv2.threshold(img, 127, 255, 0)
 # contours, hierarchy = cv2.findContours(thresh, 1, 2)
 
@@ -54,8 +55,10 @@ result = cv2.bitwise_and(img, img, mask=mask)
 cv2.imshow("card", result)
 contoursCard, _ = cv2.findContours(
     mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+ret, thresh = cv2.threshold(result, 127, 255, 0)
+contours, hierarchy = cv2.findContours(thresh, 1, 2)
 
-cnt = contoursCard[0]
+cnt = contours[0]
 area = cv2.contourArea(cnt)
 print(str(area))
 
