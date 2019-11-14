@@ -146,7 +146,7 @@ while True:
 
         # perform edge detection, then perform a dilation + erosion to
         # close gaps in between object edges
-        edged = cv2.Canny(gray, 10, 100)
+        edged = cv2.Canny(gray, 30, 40)
         edged = cv2.dilate(edged, None, iterations=1)
         edged = cv2.erode(edged, None, iterations=1)
         cv2.imshow("edge", edged)
@@ -419,15 +419,14 @@ while True:
 
         # if not ret:
         # break
-        k = cv2.waitKey(1)
-        if k % 256 == 27:
-            # ESC pressed
-            print("Escape hit, closing...")
-            break
-        elif k % 256 == 32:
-            print("spacebar...")
+        # k = cv2.waitKey(1)
+        # if k % 256 == 27:
+        #     # ESC pressed
+        #     print("Escape hit, closing...")
+        #     break
+        # elif k % 256 == 32:
+        #     print("spacebar...")
             
-            break
 
         # time.sleep(10)
         cardCount = 0
@@ -452,7 +451,9 @@ while True:
         # ESC pressed
         print("Escape hit, closing...")
         break
-    # elif k % 256 == 32:
+    elif k % 256 == 32:
+        print("spacebar...")
+        stateWork = 1
 
     #     # SPACE pressed
         
