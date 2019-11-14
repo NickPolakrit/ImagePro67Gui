@@ -82,8 +82,8 @@ while True:
 
     # Card
     cardCount = 0
-    low = np.array([0, 10, 96])
-    high = np.array([25, 74, 255])
+    low = np.array([0, 0, 107])
+    high = np.array([98, 100, 255])
     mask = cv2.inRange(hsv_frame2, low, high)
     result = cv2.bitwise_and(resultWarp, resultWarp, mask=mask)
     cv2.imshow("card", result)
@@ -141,8 +141,9 @@ while True:
 
         # load our input image, convert it to grayscale, and blur it slightly
         image = cv2.imread("opencv_frame_0.png")
-        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        gray = cv2.cvtColor(result, cv2.COLOR_BGR2GRAY)
         gray = cv2.GaussianBlur(gray, (7, 7), 0)
+        cv2.imshow("gray",gray)
 
         # perform edge detection, then perform a dilation + erosion to
         # close gaps in between object edges
@@ -453,6 +454,12 @@ while True:
         break
     elif k % 256 == 32:
         print("spacebar...")
+        cv2.putText(resultCrop, 'Reset...',
+                                (100, 200),                  # bottomLeftCornerOfText
+                                cv2.FONT_HERSHEY_SIMPLEX,  # font
+                                2,                      # fontScale
+                                (0, 255, 0),            # fontColor
+                                2)
         stateWork = 1
 
     #     # SPACE pressed
