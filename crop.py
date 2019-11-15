@@ -37,6 +37,9 @@ import cv2
 
 
 while True:
+
+
+
 	def order_points_old(pts):
 		# initialize a list of coordinates that will be ordered
 		# such that the first entry in the list is the top-left,
@@ -73,6 +76,7 @@ while True:
 	# image = cv2.imread("testDemo10.jpg")
 	gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 	gray = cv2.GaussianBlur(gray, (7, 7), 0)
+
 
 	# perform edge detection, then perform a dilation + erosion to
 	# close gaps in between object edges

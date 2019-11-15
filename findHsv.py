@@ -22,11 +22,12 @@ cv2.createTrackbar("U-V", "Trackbars", 243, 255, nothing)
 font = cv2.FONT_HERSHEY_COMPLEX
 
 while True:
-    _, frame = cap.read()
+    # _, frame = cap.read()
+    frame = cv2.imread("opencv_frame_0.png")
     Gblurred = cv2.GaussianBlur(frame, (5, 5), 0)
     # Bblurred = cv2.bilateralFilter(Gblurred, 9, 75, 75)
-    Mblurred = cv2.medianBlur(Gblurred, 5)
-    hsv = cv2.cvtColor(Mblurred, cv2.COLOR_BGR2HSV)
+    # Mblurred = cv2.medianBlur(Gblurred, 5)
+    hsv = cv2.cvtColor(Gblurred, cv2.COLOR_BGR2HSV)
 
     l_h = cv2.getTrackbarPos("L-H", "Trackbars")
     l_s = cv2.getTrackbarPos("L-S", "Trackbars")
@@ -69,7 +70,7 @@ while True:
                 cv2.putText(frame, "Circle", (x, y), font, 1, (0, 0, 0))
 
     cv2.imshow("Frame", frame)
-    cv2.imshow("Mblurred", Mblurred)
+    cv2.imshow("guassian", Gblurred)
     cv2.imshow("Mask", mask)
 
     key = cv2.waitKey(1)
