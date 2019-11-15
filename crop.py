@@ -124,6 +124,7 @@ while True:
 		# show the re-ordered coordinates
 		print(rect.astype("int"))
 		print("")
+		
 
 		# loop over the original points and draw them
 		for ((x, y), color) in zip(rect, colors):

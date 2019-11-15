@@ -80,10 +80,11 @@ while True:
     Mblurred = cv2.medianBlur(Gblurred, 5)
     hsv_frame2 = cv2.cvtColor(Mblurred, cv2.COLOR_BGR2HSV)
 
+    # time.sleep(10)
     # Card
     cardCount = 0
-    low = np.array([0, 0, 107])
-    high = np.array([98, 100, 255])
+    low = np.array([0, 0, 0])
+    high = np.array([84, 255, 255])
     mask = cv2.inRange(hsv_frame2, low, high)
     result = cv2.bitwise_and(resultWarp, resultWarp, mask=mask)
     cv2.imshow("card", result)
@@ -101,6 +102,7 @@ while True:
 
         cardCount = 1
 
+
     except:
         cardCount = 0
         continue
@@ -110,7 +112,7 @@ while True:
     
 
     if cardCount == 1 and stateWork == 1:
-        time.sleep(5)
+        # time.sleep(5)
         img_name = "opencv_frame_0.png"
         cv2.imwrite(img_name, resultWarp)
         # print("{} written!".format(img_name))
@@ -250,8 +252,8 @@ while True:
         yellow = cv2.bitwise_and(resultCrop, resultCrop, mask=yellow_mask)
 
         # Black color
-        low_black = np.array([14, 2, 0])
-        high_black = np.array([180, 108, 107])
+        low_black = np.array([66, 0, 64])
+        high_black = np.array([150, 47, 183])
         black_mask = cv2.inRange(hsv_frame, low_black, high_black)
         black = cv2.bitwise_and(resultCrop, resultCrop, mask=black_mask)
 
@@ -476,7 +478,7 @@ while True:
 
 
 
-# print("finish")
+# print("finish") was 
 
 cam.release()
 cv2.destroyAllWindows()
