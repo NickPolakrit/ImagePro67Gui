@@ -83,11 +83,12 @@ while True:
         y = approx.ravel()[1]
 
         if 15000 > area > 5000:
+            time.sleep(1)
             # cv2.drawContours(resultWarp, [approx], 0, (0, 0, 0), 5)
 
             if len(approx) == 4 and stateWork == 1:
                 time.sleep(1)
-                cv2.putText(mask, "CARD", (x, y-20), font, 1, (0, 0, 0))
+                # cv2.putText(mask, "CARD", (x, y-20), font, 1, (0, 0, 0))
                 FOUND_CARD = True
                 cardCount = 1
 
@@ -296,6 +297,8 @@ while True:
                     pass
 
                 cv2.imshow("IMAGE", imgCrop)
+                
+                print( str(blX) + ' ' + str(blY) )
 
 
             else:
