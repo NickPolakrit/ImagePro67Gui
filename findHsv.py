@@ -7,9 +7,9 @@ def nothing(x):
     pass
 
 
-cap = cv2.VideoCapture(1)
-cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1000)
-cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 760)
+# cap = cv2.VideoCapture(1)
+# cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1000)
+# cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 760)
 
 cv2.namedWindow("Trackbars")
 cv2.createTrackbar("L-H", "Trackbars", 0, 180, nothing)

@@ -1,4 +1,4 @@
-from pyimagesearch.transform import four_point_transform
+from transform import four_point_transform
 import cv2
 import numpy as np
 import imutils
@@ -8,15 +8,15 @@ def nothing(x):
     pass
 
 
-cap = cv2.VideoCapture("VDO/X.mp4")
+cap = cv2.VideoCapture(1)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 800)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 600)
 
-l_h = 66
-l_s = 0
-l_v = 53
-u_h = 168
-u_s = 49
+l_h = 0
+l_s = 20
+l_v = 101
+u_h = 180
+u_s = 255
 u_v = 255
 FOUND_CARD = False
 
@@ -24,9 +24,10 @@ font = cv2.FONT_HERSHEY_COMPLEX
 
 while True:
     _, frame = cap.read()
-    frame =  cv2.resize(frame,(int(800),int(600)))
-    original = frame.copy()
-    Mblurred = cv2.medianBlur(frame, 7)
+    _, original = cap.read()
+    # frame =  cv2.resize(frame,(int(800),int(600)))
+    # original = frame.copy()
+    Mblurred = cv2.medianBlur(frame, 5)
     hsv = cv2.cvtColor(Mblurred, cv2.COLOR_BGR2HSV)
 
 
@@ -68,15 +69,15 @@ while True:
                             Approx = approx
                             break
                 Outline = cv2.drawContours(original.copy(), [Approx], -5, (0, 0, 255), 2)
-                ratio = Outline.shape[0] / 600.0 
+                ratio = Outline.shape[0] / 600 
                 Your_CARD = four_point_transform(original, Approx.reshape(4, 2) * ratio)
-                Your_CARD =  cv2.resize(Your_CARD,(int(600),int(600)))
+                Your_CARD =  cv2.resize(Your_CARD,(int(500),int(500)))
                 cv2.imshow("Outline", Outline)
                 cv2.imshow("Your_CARD", Your_CARD)
                 img_name = "img_CARD.png"
                 cv2.imwrite(img_name, Your_CARD)
-                cap.release()
-                cv2.destroyAllWindows()
+                # cap.release()
+                # cv2.destroyAllWindows()
                 
                             
 

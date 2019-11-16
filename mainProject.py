@@ -1,6 +1,6 @@
 
-
-from __future__ import print_function
+from transform import four_point_transform
+# from __future__ import print_function
 import imutils
 from imutils import perspective
 from imutils import contours
@@ -33,14 +33,14 @@ cv2.createTrackbar('Y3', 'xyPosition', 0, 575, nothing)
 cv2.createTrackbar('X4', 'xyPosition', 0, 1022, nothing)
 cv2.createTrackbar('Y4', 'xyPosition', 0, 575, nothing)
 
-cv2.setTrackbarPos("X1", "xyPosition", 367)
-cv2.setTrackbarPos("Y1", "xyPosition", 218)
-cv2.setTrackbarPos("X2", "xyPosition", 672)
-cv2.setTrackbarPos("Y2", "xyPosition", 213)
-cv2.setTrackbarPos("X3", "xyPosition", 314)
-cv2.setTrackbarPos("Y3", "xyPosition", 494)
-cv2.setTrackbarPos("X4", "xyPosition", 741)
-cv2.setTrackbarPos("Y4", "xyPosition", 494)
+cv2.setTrackbarPos("X1", "xyPosition", 249)
+cv2.setTrackbarPos("Y1", "xyPosition", 14)
+cv2.setTrackbarPos("X2", "xyPosition", 753)
+cv2.setTrackbarPos("Y2", "xyPosition", 24)
+cv2.setTrackbarPos("X3", "xyPosition", 176)
+cv2.setTrackbarPos("Y3", "xyPosition", 546)
+cv2.setTrackbarPos("X4", "xyPosition", 798)
+cv2.setTrackbarPos("Y4", "xyPosition", 549)
 
 stateWork = 1
 
@@ -83,8 +83,8 @@ while True:
     # time.sleep(10)
     # Card
     cardCount = 0
-    low = np.array([0, 21, 121])
-    high = np.array([52, 255, 255])
+    low = np.array([0, 20, 101])
+    high = np.array([180, 255, 255])
     mask = cv2.inRange(hsv_frame2, low, high)
     result = cv2.bitwise_and(resultWarp, resultWarp, mask=mask)
     
@@ -124,10 +124,10 @@ while True:
 
         # Mcard = cv2.moments(biggest_contoursCard)
     
-        print("area " + str(approx[0][0][0]))
+        # print("area " + str(approx[0][0][0]))
 
         if approx[0][0][0] > 200:
-            # time.sleep(5)
+            time.sleep(1)
 
             try:
                 biggest_contoursCard = max(contoursCard, key=cv2.contourArea)
@@ -141,8 +141,7 @@ while True:
                 # cv2.circle(image, (cX, cY), 5, (0, 0, 255), -1)
 
                 # Mcard = cv2.moments(biggest_contoursCard)
-                # time.sleep(5)
-
+                time.sleep(1)
                 cardCount = 1
 
             except:
@@ -153,7 +152,7 @@ while True:
             print("staetWork : "+str(stateWork) + " Card : " + str(cardCount))
 
             if cardCount == 1 and stateWork == 1:
-                # time.sleep(5)
+                time.sleep(1)
                 img_name = "opencv_frame_0.png"
                 cv2.imwrite(img_name, resultWarp)
                 # print("{} written!".format(img_name))
@@ -490,7 +489,7 @@ while True:
             print("Escape hit, closing...")
             break
         elif k % 256 == 32:
-            print("spacebar...")
+            print("spacebar Reset...")
             cv2.putText(frame, 'Reset...',
                                     # bottomLeftCornerOfText
                                     (100, 200),
