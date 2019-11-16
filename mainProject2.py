@@ -3,6 +3,7 @@ import cv2
 import numpy as np
 import imutils
 import time
+import serial
 
 
 def nothing(x):
@@ -298,13 +299,17 @@ while True:
 
                 cv2.imshow("IMAGE", imgCrop)
                 
-                print( str(blX) + ' ' + str(blY) )
+                Send = [rX,rY,gX,gY,bX,bY,yX,yY,blX,blY]
+                print(Send)
+                # r g b y black
+
+                
 
 
             else:
                 pass
 
-            print(" Loop staetWork : "+str(stateWork) + " Card : " + str(cardCount))
+            # print(" Loop staetWork : "+str(stateWork) + " Card : " + str(cardCount))
 
         k = cv2.waitKey(1)
 
@@ -332,6 +337,7 @@ while True:
     cv2.imshow("Mask", mask)
 
     # print("staetWork : "+str(stateWork) + " Card : " + str(cardCount))
+    
 
     key = cv2.waitKey(1)
     if key == 27:
