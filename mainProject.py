@@ -87,15 +87,42 @@ while True:
     high = np.array([52, 255, 255])
     mask = cv2.inRange(hsv_frame2, low, high)
     result = cv2.bitwise_and(resultWarp, resultWarp, mask=mask)
-    cv2.imshow("card", result)
+    
     contoursCard, _ = cv2.findContours(
         mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+
+    # try:
+    #     biggest_contoursCard = max(contoursCard, key=cv2.contourArea)
+    #     (x, y, w, h) = cv2.boundingRect(biggest_contoursCard)
+    #     # cv2.rectangle(resultWarp, (x, y), (x+w, y+h), (0, 0, 0), 2)
+
+    #     cv2.rectangle(result, (x, y), (x+w, y+h), (0, 0, 255), 2)
+    #     Mcard = cv2.moments(biggest_contoursCard)
+    #     cX = int(Mcard["m10"] / Mcard["m00"])
+    #     cY = int(Mcard["m01"] / Mcard["m00"])
+    #     cv2.circle(result, (cX, cY), 5, (0, 0, 255), -1)
+    # except:
+    #     pass
+
+    
+    cv2.imshow("card", result)
 
     for cnt1 in contoursCard:
         area12 = cv2.contourArea(cnt1)
         approx = cv2.approxPolyDP(cnt1, 0.02*cv2.arcLength(cnt1, True), True)
         # x = approx.ravel()[0]
         # y = approx.ravel()[1]
+        # biggest_contoursCard = max(contoursCard, key=cv2.contourArea)
+        # (x, y, w, h) = cv2.boundingRect(biggest_contoursCard)
+        # # cv2.rectangle(resultWarp, (x, y), (x+w, y+h), (0, 0, 0), 2)
+
+        # cv2.rectangle(result, (x, y), (x+w, y+h), (0, 0, 255), 2)
+        # Mcard = cv2.moments(biggest_contoursCard)
+        # cX = int(Mcard["m10"] / Mcard["m00"])
+        # cY = int(Mcard["m01"] / Mcard["m00"])
+        # cv2.circle(result, (cX, cY), 5, (0, 0, 255), -1)
+
+        # Mcard = cv2.moments(biggest_contoursCard)
     
         print("area " + str(approx[0][0][0]))
 
@@ -107,7 +134,13 @@ while True:
                 (x, y, w, h) = cv2.boundingRect(biggest_contoursCard)
                 # cv2.rectangle(resultWarp, (x, y), (x+w, y+h), (0, 0, 0), 2)
 
-                Mcard = cv2.moments(biggest_contoursCard)
+                # cv2.rectangle(image, (x, y), (x+w, y+h), (0, 0, 255), 2)
+                # Mcard = cv2.moments(biggest_contoursCard)
+                # cX = int(Mcard["m10"] / Mcard["m00"])
+                # cY = int(Mcard["m01"] / Mcard["m00"])
+                # cv2.circle(image, (cX, cY), 5, (0, 0, 255), -1)
+
+                # Mcard = cv2.moments(biggest_contoursCard)
                 # time.sleep(5)
 
                 cardCount = 1
@@ -450,22 +483,22 @@ while True:
             else:
                 pass
 
-            k = cv2.waitKey(1)
+        k = cv2.waitKey(1)
 
-            if k % 256 == 27:
-                # ESC pressed
-                print("Escape hit, closing...")
-                break
-            elif k % 256 == 32:
-                print("spacebar...")
-                cv2.putText(resultCrop, 'Reset...',
-                                        # bottomLeftCornerOfText
-                                        (100, 200),
-                                        cv2.FONT_HERSHEY_SIMPLEX,  # font
-                                        2,                      # fontScale
-                                        (0, 255, 0),            # fontColor
-                                        2)
-                stateWork = 1
+        if k % 256 == 27:
+            # ESC pressed
+            print("Escape hit, closing...")
+            break
+        elif k % 256 == 32:
+            print("spacebar...")
+            cv2.putText(frame, 'Reset...',
+                                    # bottomLeftCornerOfText
+                                    (100, 200),
+                                    cv2.FONT_HERSHEY_SIMPLEX,  # font
+                                    2,                      # fontScale
+                                    (0, 255, 0),            # fontColor
+                                    2)
+            stateWork = 1
 
 
 
