@@ -23,7 +23,7 @@ font = cv2.FONT_HERSHEY_COMPLEX
 
 while True:
     # _, frame = cap.read()
-    frame = cv2.imread("opencv_frame_0.png")
+    frame = cv2.imread("crop_card.png")
     Gblurred = cv2.GaussianBlur(frame, (5, 5), 0)
     # Bblurred = cv2.bilateralFilter(Gblurred, 9, 75, 75)
     # Mblurred = cv2.medianBlur(Gblurred, 5)
