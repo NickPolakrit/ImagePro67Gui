@@ -16,6 +16,7 @@ def nothing(x):
 cap = cv2.VideoCapture(1)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1000)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 760)
+cap.set(cv2.CAP_PROP_AUTOFOCUS, 0)  # turn the autofocus off
 
 l_h = 6
 l_s = 20
@@ -203,7 +204,7 @@ while True:
 
                 # Blacklow color
                 low_blacklow = np.array([0, 0, 0])
-                high_blacklow = np.array([180, 42, 149])
+                high_blacklow = np.array([180, 48, 141])
                 black_mask = cv2.inRange(hsv_frame, low_blacklow, high_blacklow)
                 black = cv2.bitwise_and(
                     imgCrop, imgCrop, mask=black_mask)
@@ -365,7 +366,7 @@ while True:
                 #     serialPIC.write(c)
                 #     # print(i)
 
-                # # r g b y black
+                # # # r g b y black
 
                 
                 # p0 = 0
@@ -384,7 +385,7 @@ while True:
                 #                 c = struct.pack('B', i1)
                 #                 serialPIC.write(c)
                 #                 print('cmands : ' + (cmands))
-                #                 print(i1)
+                #                 # print(i1)
                 #             p0 = 5
                 #         else:
                 #             continue
@@ -399,7 +400,7 @@ while True:
                 #                 c = struct.pack('B', i0)
                 #                 serialPIC.write(c)
                 #                 print('cmands : ' + (cmands))
-                #                 print(i0)
+                #                 # print(i0)
                 #             p0 = 0
 
                 #         else:
