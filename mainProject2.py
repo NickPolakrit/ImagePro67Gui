@@ -366,16 +366,16 @@ while True:
 
                 cv2.imshow("IMAGE", imgCrop)
 
-                cmands = 9
+                # cmands = 9
                 
-                Send = [int(rX/2),int(rY/2),int(gX/2),int(gY/2),int(bX/2),int(bY/2),int(yX/2),int(yY/2),int(blX/2),int(blY/2),cmands]
+                Send = [int(rX/2),int(rY/2),int(gX/2),int(gY/2),int(bX/2),int(bY/2),int(yX/2),int(yY/2),int(blX/2),int(blY/2)]
                 print(Send)
 
-                # for i in Send:
-                #     time.sleep(0.1)
-                #     c = struct.pack('B', i)
-                #     serialPIC.write(c)
-                #     # print(i)
+                for i in Send:
+                    time.sleep(0.1)
+                    c = struct.pack('B', i)
+                    serialPIC.write(c)
+                    # print(i)
 
                 # # # r g b y black
 
