@@ -170,8 +170,8 @@ while True:
                 # cv2.imshow("bg", fg)
 
                 # Red color
-                low_red = np.array([0, 4, 0])
-                high_red = np.array([16, 255, 255])
+                low_red = np.array([0, 32, 0])
+                high_red = np.array([14, 255, 255])
                 red_mask = cv2.inRange(hsv_frame, low_red, high_red)
                 red = cv2.bitwise_and(imgCrop, imgCrop, mask=red_mask)
                 # Blue color
@@ -188,7 +188,7 @@ while True:
                     imgCrop, imgCrop, mask=green_mask)
 
                 # Yellow color
-                low_yellow = np.array([24, 72, 0])
+                low_yellow = np.array([22, 56, 0])
                 high_yellow = np.array([30, 255, 255])
                 yellow_mask = cv2.inRange(hsv_frame, low_yellow, high_yellow)
                 yellow = cv2.bitwise_and(
