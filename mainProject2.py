@@ -4,6 +4,7 @@ import numpy as np
 import imutils
 import time
 import serial
+import struct 
 
 
 def nothing(x):
@@ -22,6 +23,29 @@ u_h = 180
 u_s = 255
 u_v = 255
 
+x1 = 249
+y1 = 14
+x2 = 753
+y2 = 24
+x3 = 176
+y3 = 546
+x4 = 798
+y4 = 549
+
+r_lh = 0
+r_ls = 43
+r_lv = 40
+r_uh = 12
+r_us = 255
+r_uv = 255
+
+# serialPort = serial.Serial(
+#     "/dev/cu.usbserial-AC00YIZF", 115200, 8, 'N', 1, 0, 0, 0, 0, 0)
+
+# serialPort.setRTS(0)
+# serialPort.setDTR(0)
+
+
 FOUND_CARD = False
 
 
@@ -34,14 +58,7 @@ while True:
 
     
 
-    x1 = 249
-    y1 = 14
-    x2 = 753
-    y2 = 24
-    x3 = 176
-    y3 = 546
-    x4 = 798
-    y4 = 549
+    
 
     cv2.circle(frame, (x1, y1), 5, (0, 0, 255), -1)
     cv2.circle(frame, (x2, y2), 5, (0, 0, 255), -1)
@@ -113,6 +130,7 @@ while True:
                     resultWarp, Approx.reshape(4, 2) * ratio)
                 Crop_card = cv2.resize(Crop_card, (int(500), int(500)))
                 cv2.imshow("Outline", Outline)
+                cv2.imshow("warp crop", resultWarp)
                 cv2.imshow("Your_CARD", Crop_card)
                 img_name = "crop_card.png"
                 cv2.imwrite(img_name, Crop_card)
@@ -122,9 +140,19 @@ while True:
                 # cardCount = 0
                 stateWork = 0
                 # ------ COLOR ------------
+                
 
                 cropBlur = cv2.medianBlur(imgCrop, 5)
                 hsv_frame = cv2.cvtColor(cropBlur, cv2.COLOR_BGR2HSV)
+
+                # Blackground color
+                low_bg = np.array([0, 0, 150])
+                high_bg = np.array([34, 74, 255])
+                bg_mask = cv2.inRange(hsv_frame, low_bg, high_bg)
+                bg = cv2.bitwise_and(
+                    imgCrop, imgCrop, mask=bg_mask)
+                cv2.imshow("bg", bg)
+
                 # Red color
                 low_red = np.array([0, 43, 40])
                 high_red = np.array([12, 255, 255])
@@ -156,7 +184,9 @@ while True:
                 black_mask = cv2.inRange(hsv_frame, low_black, high_black)
                 black = cv2.bitwise_and(
                     imgCrop, imgCrop, mask=black_mask)
-                # cv2.imshow("red", red)
+                cv2.imshow("red", red)
+
+                
 
                 countRed = 0
                 countBlue = 0
@@ -299,8 +329,18 @@ while True:
 
                 cv2.imshow("IMAGE", imgCrop)
                 
-                Send = [rX,rY,gX,gY,bX,bY,yX,yY,blX,blY]
+                Send = [int(rX/2),int(rY/2),int(gX/2),int(gY/2),int(bX/2),int(bY/2),int(yX/2),int(yY/2),int(blX/2),int(blY/2)]
                 print(Send)
+                # serialPort.write(Send)
+                # print(serialPort.readline())
+                # totalall = [1]
+
+                # for i in Send:
+                #     time.sleep(0.1)
+                #     c = struct.pack('B', i)
+                #     serialPort.write(c)
+                #     print(i)
+
                 # r g b y black
 
                 
