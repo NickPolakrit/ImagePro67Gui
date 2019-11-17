@@ -212,7 +212,7 @@ while True:
                 cv2.imshow("black", black)
 
 
-                
+         
 
                 countRed = 0
                 countBlue = 0
@@ -349,7 +349,7 @@ while True:
                                 1)
 
 
-                
+
 
                 except:
                     pass
