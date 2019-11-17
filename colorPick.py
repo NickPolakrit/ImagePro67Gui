@@ -24,7 +24,7 @@ def main():
     import sys
     global image_hsv, pixel  # so we can use it in mouse callback
 
-    image_src = cv2.imread("crop_card1.png")  # pick.py my.png
+    image_src = cv2.imread("warpcard2.png")  # pick.py my.png
     if image_src is None:
         print("the image read is None............")
         return

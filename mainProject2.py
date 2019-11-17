@@ -24,14 +24,14 @@ u_h = 180
 u_s = 255
 u_v = 255
 
-x1 = 249
-y1 = 14
-x2 = 753
-y2 = 24
-x3 = 176
-y3 = 546
-x4 = 798
-y4 = 549
+x1 = 319
+y1 = 30
+x2 = 819
+y2 = 13
+x3 = 278
+y3 = 548
+x4 = 875
+y4 = 550
 
 r_lh = 0
 r_ls = 43
@@ -113,7 +113,7 @@ while True:
             # cv2.drawContours(resultWarp, [approx], 0, (0, 0, 0), 5)
 
             if len(approx) == 4 and stateWork == 1:
-                time.sleep(0.1)
+                time.sleep(0.3)
                 # cv2.putText(mask, "CARD", (x, y-20), font, 1, (0, 0, 0))
                 FOUND_CARD = True
                 cardCount = 1
@@ -137,6 +137,7 @@ while True:
                 Crop_card = four_point_transform(
                     resultWarp, Approx.reshape(4, 2) * ratio)
                 Crop_card = cv2.resize(Crop_card, (int(500), int(500)))
+                time.sleep(0.1)
                 cv2.imshow("Outline", Outline)
                 cv2.imshow("warp crop", resultWarp)
                 cv2.imshow("Your_CARD", Crop_card)
@@ -169,13 +170,13 @@ while True:
                 # cv2.imshow("bg", fg)
 
                 # Red color
-                low_red = np.array([0, 43, 40])
-                high_red = np.array([12, 255, 255])
+                low_red = np.array([0, 4, 0])
+                high_red = np.array([16, 255, 255])
                 red_mask = cv2.inRange(hsv_frame, low_red, high_red)
                 red = cv2.bitwise_and(imgCrop, imgCrop, mask=red_mask)
                 # Blue color
-                low_blue = np.array([62, 11, 0])
-                high_blue = np.array([180, 255, 255])
+                low_blue = np.array([86, 0, 0])
+                high_blue = np.array([121, 255, 255])
                 blue_mask = cv2.inRange(hsv_frame, low_blue, high_blue)
                 blue = cv2.bitwise_and(imgCrop, imgCrop, mask=blue_mask)
 
@@ -202,7 +203,7 @@ while True:
 
                 # Blacklow color
                 low_blacklow = np.array([0, 0, 0])
-                high_blacklow = np.array([84, 28, 222])
+                high_blacklow = np.array([180, 42, 149])
                 black_mask = cv2.inRange(hsv_frame, low_blacklow, high_blacklow)
                 black = cv2.bitwise_and(
                     imgCrop, imgCrop, mask=black_mask)
@@ -216,6 +217,7 @@ while True:
                 countYellow = 0
                 countGreen = 0
                 countBlack = 0
+                # print("r :" + str(countRed) + " g :" + str(countGreen) + " b :" + str(countBlue) + " y :" + str(countYellow) + " black" + str(countBlack) )
                 # # Contour Red
                 contoursRed, _ = cv2.findContours(
                     red_mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
