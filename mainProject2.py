@@ -19,10 +19,10 @@ cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 760)
 # cap.set(cv2.CAP_PROP_AUTOFOCUS, 0)  # turn the autofocus off
 cap.set(cv2.CAP_PROP_FPS, 30)
 
-l_h = 6
-l_s = 20
+l_h = 0
+l_s = 9
 l_v = 0
-u_h = 180
+u_h = 76
 u_s = 255
 u_v = 255
 
@@ -35,12 +35,12 @@ y3 = 548
 x4 = 875
 y4 = 550
 
-r_lh = 0
-r_ls = 43
-r_lv = 40
-r_uh = 12
-r_us = 255
-r_uv = 255
+# r_lh = 0
+# r_ls = 43
+# r_lv = 40
+# r_uh = 12
+# r_us = 255
+# r_uv = 255
 
 # serialPIC = serial.Serial(
 #     "/dev/cu.usbserial-AC00YIZF", 115200, 8, 'N', 1, 0, 0, 0, 0, 0)
@@ -205,7 +205,7 @@ while True:
 
                 # Blacklow color
                 low_blacklow = np.array([0, 0, 0])
-                high_blacklow = np.array([180, 48, 141])
+                high_blacklow = np.array([50, 28, 187])
                 black_mask = cv2.inRange(hsv_frame, low_blacklow, high_blacklow)
                 black = cv2.bitwise_and(
                     imgCrop, imgCrop, mask=black_mask)
