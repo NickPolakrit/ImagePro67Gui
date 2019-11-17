@@ -5,6 +5,7 @@ import imutils
 import time
 import serial
 import struct 
+import subprocess
 
 
 def nothing(x):
@@ -39,11 +40,17 @@ r_uh = 12
 r_us = 255
 r_uv = 255
 
-# serialPort = serial.Serial(
+# serialPIC = serial.Serial(
 #     "/dev/cu.usbserial-AC00YIZF", 115200, 8, 'N', 1, 0, 0, 0, 0, 0)
 
-# serialPort.setRTS(0)
-# serialPort.setDTR(0)
+# serialPIC.setRTS(0)
+# serialPIC.setDTR(0)
+
+# serialAd = serial.Serial(
+#     "/dev/cu.usbserial-AC00YIZF", 115200, 8, 'N', 1, 0, 0, 0, 0, 0)
+
+# serialAd.setRTS(0)
+# serialAd.setDTR(0)
 
 
 FOUND_CARD = False
@@ -95,17 +102,18 @@ while True:
         mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
     for cnt in contours:
+        # time.sleep(0.1)
         area = cv2.contourArea(cnt)
         approx = cv2.approxPolyDP(cnt, 0.02*cv2.arcLength(cnt, True), True)
         x = approx.ravel()[0]
         y = approx.ravel()[1]
 
         if 15000 > area > 5000:
-            time.sleep(1)
+            # time.sleep(0.5)
             # cv2.drawContours(resultWarp, [approx], 0, (0, 0, 0), 5)
 
             if len(approx) == 4 and stateWork == 1:
-                time.sleep(1)
+                time.sleep(0.1)
                 # cv2.putText(mask, "CARD", (x, y-20), font, 1, (0, 0, 0))
                 FOUND_CARD = True
                 cardCount = 1
@@ -133,6 +141,7 @@ while True:
                 cv2.imshow("warp crop", resultWarp)
                 cv2.imshow("Your_CARD", Crop_card)
                 img_name = "crop_card.png"
+                time.sleep(0.5)
                 cv2.imwrite(img_name, Crop_card)
 
                 imgCrop = cv2.imread("crop_card.png")
@@ -141,17 +150,23 @@ while True:
                 stateWork = 0
                 # ------ COLOR ------------
                 
-
                 cropBlur = cv2.medianBlur(imgCrop, 5)
                 hsv_frame = cv2.cvtColor(cropBlur, cv2.COLOR_BGR2HSV)
 
-                # Blackground color
-                low_bg = np.array([0, 0, 150])
-                high_bg = np.array([34, 74, 255])
-                bg_mask = cv2.inRange(hsv_frame, low_bg, high_bg)
-                bg = cv2.bitwise_and(
-                    imgCrop, imgCrop, mask=bg_mask)
-                cv2.imshow("bg", bg)
+                # # Blackground color
+                # low_bg = np.array([9, 24, 175])
+                # high_bg = np.array([180, 93, 255])
+                # bg_mask = cv2.inRange(hsv_frame, low_bg, high_bg)
+                # # bg = cv2.bitwise_and(
+                # #     imgCrop, imgCrop, mask=bg_mask)
+                # mask_bg = cv2.bitwise_not(bg_mask)
+                # fg = cv2.bitwise_and(imgCropCard, imgCropCard, mask=mask_bg)
+                # img_name = "crop_bg.png"
+                # time.sleep(0.1)
+                # cv2.imwrite(img_name, fg)
+
+                # imgCrop = cv2.imread("crop_bg.png")
+                # cv2.imshow("bg", fg)
 
                 # Red color
                 low_red = np.array([0, 43, 40])
@@ -179,12 +194,20 @@ while True:
                     imgCrop, imgCrop, mask=yellow_mask)
 
                 # Black color
-                low_black = np.array([133, 0, 0])
-                high_black = np.array([180, 43, 147])
-                black_mask = cv2.inRange(hsv_frame, low_black, high_black)
+                # low_black = np.array([133, 0, 0])
+                # high_black = np.array([180, 43, 147])
+                # black_mask = cv2.inRange(hsv_frame, low_black, high_black)
+                # black = cv2.bitwise_and(
+                #     imgCrop, imgCrop, mask=black_mask)
+
+                # Blacklow color
+                low_blacklow = np.array([0, 0, 0])
+                high_blacklow = np.array([84, 28, 222])
+                black_mask = cv2.inRange(hsv_frame, low_blacklow, high_blacklow)
                 black = cv2.bitwise_and(
                     imgCrop, imgCrop, mask=black_mask)
-                cv2.imshow("red", red)
+                cv2.imshow("black", black)
+
 
                 
 
@@ -328,20 +351,66 @@ while True:
                     pass
 
                 cv2.imshow("IMAGE", imgCrop)
+
+                cmands = 9
                 
-                Send = [int(rX/2),int(rY/2),int(gX/2),int(gY/2),int(bX/2),int(bY/2),int(yX/2),int(yY/2),int(blX/2),int(blY/2)]
+                Send = [int(rX/2),int(rY/2),int(gX/2),int(gY/2),int(bX/2),int(bY/2),int(yX/2),int(yY/2),int(blX/2),int(blY/2),cmands]
                 print(Send)
-                # serialPort.write(Send)
-                # print(serialPort.readline())
-                # totalall = [1]
 
                 # for i in Send:
                 #     time.sleep(0.1)
                 #     c = struct.pack('B', i)
-                #     serialPort.write(c)
-                #     print(i)
+                #     serialPIC.write(c)
+                #     # print(i)
 
-                # r g b y black
+                # # r g b y black
+
+                
+                # p0 = 0
+                # for sCount in range(11 ,16):  
+                #     print(sCount)
+                #     Rpic = serialPIC.read()
+                #     Radr = serialAD.read()
+                #     if Rpic == b'1' and p0 == 0:
+                #         print(Rpic)
+                #         keep = struct.pack('B', 1)
+                #         serialAd.write(keep)  # Earth
+                #         if Radr == b'1':
+                #             cmands = 1
+                #             for i1 in Send:
+                #                 time.sleep(0.1)
+                #                 c = struct.pack('B', i1)
+                #                 serialPIC.write(c)
+                #                 print('cmands : ' + (cmands))
+                #                 print(i1)
+                #             p0 = 5
+                #         else:
+                #             continue
+                #     elif Rpic == b'0' and p0 == 5:
+                #         print(Rpic)
+                #         paste = struct.pack('B', 0)
+                #         serialAd.write(paste)  # Earth
+                #         if Radr == b'0':
+                #             cmands = sCount
+                #             for i0 in Send:
+                #                 time.sleep(0.1)
+                #                 c = struct.pack('B', i0)
+                #                 serialPIC.write(c)
+                #                 print('cmands : ' + (cmands))
+                #                 print(i0)
+                #             p0 = 0
+
+                #         else:
+                #             continue
+                #     else:
+                #         continue
+
+                #     print(sCount)
+                subprocess.call(["afplay", "beep-06.wav"])
+
+                
+
+                
 
                 
 
@@ -350,6 +419,8 @@ while True:
                 pass
 
             # print(" Loop staetWork : "+str(stateWork) + " Card : " + str(cardCount))
+
+        
 
         k = cv2.waitKey(1)
 
