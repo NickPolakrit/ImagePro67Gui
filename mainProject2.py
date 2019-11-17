@@ -35,6 +35,17 @@ y3 = 548
 x4 = 875
 y4 = 550
 
+rX = 100
+rY = 100
+gX = 100
+gY = 100
+bX = 100
+bY = 100
+yX = 100
+yY = 100
+blX = 100
+blY = 100
+
 # r_lh = 0
 # r_ls = 43
 # r_lv = 40
@@ -205,7 +216,7 @@ while True:
 
                 # Blacklow color
                 low_blacklow = np.array([0, 0, 0])
-                high_blacklow = np.array([46, 34, 211])
+                high_blacklow = np.array([31, 47, 210])
                 black_mask = cv2.inRange(hsv_frame, low_blacklow, high_blacklow)
                 black = cv2.bitwise_and(
                     imgCrop, imgCrop, mask=black_mask)
