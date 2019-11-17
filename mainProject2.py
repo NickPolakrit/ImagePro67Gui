@@ -205,7 +205,7 @@ while True:
 
                 # Blacklow color
                 low_blacklow = np.array([0, 0, 0])
-                high_blacklow = np.array([50, 28, 187])
+                high_blacklow = np.array([46, 34, 211])
                 black_mask = cv2.inRange(hsv_frame, low_blacklow, high_blacklow)
                 black = cv2.bitwise_and(
                     imgCrop, imgCrop, mask=black_mask)
