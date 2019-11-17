@@ -370,46 +370,52 @@ while True:
                 # # # r g b y black
 
                 
-                # p0 = 0
-                # for sCount in range(11 ,16):  
-                #     print(sCount)
-                #     Rpic = serialPIC.read()
-                #     Radr = serialAD.read()
-                #     if Rpic == b'1' and p0 == 0:
-                #         print(Rpic)
-                #         keep = struct.pack('B', 1)
-                #         serialAd.write(keep)  # Earth
-                #         if Radr == b'1':
-                #             cmands = 1
-                #             for i1 in Send:
-                #                 time.sleep(0.1)
-                #                 c = struct.pack('B', i1)
-                #                 serialPIC.write(c)
-                #                 print('cmands : ' + (cmands))
-                #                 # print(i1)
-                #             p0 = 5
-                #         else:
-                #             continue
-                #     elif Rpic == b'0' and p0 == 5:
-                #         print(Rpic)
-                #         paste = struct.pack('B', 0)
-                #         serialAd.write(paste)  # Earth
-                #         if Radr == b'0':
-                #             cmands = sCount
-                #             for i0 in Send:
-                #                 time.sleep(0.1)
-                #                 c = struct.pack('B', i0)
-                #                 serialPIC.write(c)
-                #                 print('cmands : ' + (cmands))
-                #                 # print(i0)
-                #             p0 = 0
+                p0 = 0
+                f1 = 0
+                f2 = 0
+                for sCount in range(11 ,15):  
+                    print(sCount)
+                    Rpic = serialPIC.read()
+                    Radr = serialAD.read()
+                    if Rpic == b'1' and p0 == 0:
+                        print(Rpic)
+                        keep = struct.pack('B', 1)
+                        if f1 == 0 :
+                            serialAd.write(keep)  # Earth
+                            f1 = 1
+                        elif Radr == b'1':
+                            cmands = 1
+                            for i1 in Send:
+                                time.sleep(0.1)
+                                c = struct.pack('B', i1)
+                                serialPIC.write(c)
+                                print('cmands : ' + (cmands))
+                                # print(i1)
+                            p0 = 5
+                        else:
+                            continue
+                    elif Rpic == b'0' and p0 == 5:
+                        print(Rpic)
+                        paste = struct.pack('B', 0)
+                        if f2 == 0:
+                            serialAd.write(paste)  # Earth
+                            f2 = 1
+                        elif Radr == b'0':
+                            cmands = sCount
+                            for i0 in Send:
+                                time.sleep(0.1)
+                                c = struct.pack('B', i0)
+                                serialPIC.write(c)
+                                print('cmands : ' + (cmands))
+                                # print(i0)
+                            p0 = 0
 
-                #         else:
-                #             continue
-                #     else:
-                #         continue
+                        else:
+                            continue
+                    else:
+                        continue
 
-                #     print(sCount)
+                    print(sCount)
                 subprocess.call(["afplay", "beep-06.wav"])
 
                 
