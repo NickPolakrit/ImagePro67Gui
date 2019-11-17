@@ -16,7 +16,7 @@ def nothing(x):
 cap = cv2.VideoCapture(1)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1000)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 760)
-cap.set(cv2.CAP_PROP_AUTOFOCUS, 0)  # turn the autofocus off
+# cap.set(cv2.CAP_PROP_AUTOFOCUS, 0)  # turn the autofocus off
 cap.set(cv2.CAP_PROP_FPS, 30)
 
 l_h = 6
@@ -144,7 +144,7 @@ while True:
                 cv2.imshow("warp crop", resultWarp)
                 cv2.imshow("Your_CARD", Crop_card)
                 img_name = "crop_card.png"
-                time.sleep(1)
+                time.sleep(0.3)
                 cv2.imwrite(img_name, Crop_card)
 
                 imgCrop = cv2.imread("crop_card.png")
@@ -370,54 +370,54 @@ while True:
                 # # # r g b y black
 
                 
-                p0 = 0
-                f1 = 0
-                f2 = 0
-                for sCount in range(11 ,15):  
-                    print(sCount)
-                    Rpic = serialPIC.read()
-                    Radr = serialAD.read()
-                    if Rpic == b'1' and p0 == 0:
-                        print(Rpic)
-                        keep = struct.pack('B', 1)
-                        if f1 == 0 :
-                            serialAd.write(keep)  # Earth
-                            f1 = 1
-                        elif Radr == b'1':
-                            cmands = 1
-                            for i1 in Send:
-                                time.sleep(0.1)
-                                c = struct.pack('B', i1)
-                                serialPIC.write(c)
-                                print('cmands : ' + (cmands))
-                                # print(i1)
-                            p0 = 5
-                        else:
-                            continue
-                    elif Rpic == b'0' and p0 == 5:
-                        print(Rpic)
-                        paste = struct.pack('B', 0)
-                        if f2 == 0:
-                            serialAd.write(paste)  # Earth
-                            f2 = 1
-                        elif Radr == b'0':
-                            cmands = sCount
-                            for i0 in Send:
-                                time.sleep(0.1)
-                                c = struct.pack('B', i0)
-                                serialPIC.write(c)
-                                print('cmands : ' + (cmands))
-                                # print(i0)
-                            p0 = 0
+                # p0 = 0
+                # f1 = 0
+                # f2 = 0
+                # for sCount in range(11 ,15):  
+                #     print(sCount)
+                #     Rpic = serialPIC.read()
+                #     Radr = serialAD.read()
+                #     if Rpic == b'1' and p0 == 0:
+                #         print(Rpic)
+                #         keep = struct.pack('B', 1)
+                #         if f1 == 0 :
+                #             serialAd.write(keep)  # Earth
+                #             f1 = 1
+                #         elif Radr == b'1':
+                #             cmands = 1
+                #             for i1 in Send:
+                #                 time.sleep(0.1)
+                #                 c = struct.pack('B', i1)
+                #                 serialPIC.write(c)
+                #                 print('cmands : ' + (cmands))
+                #                 # print(i1)
+                #             p0 = 5
+                #         else:
+                #             continue
+                #     elif Rpic == b'0' and p0 == 5:
+                #         print(Rpic)
+                #         paste = struct.pack('B', 0)
+                #         if f2 == 0:
+                #             serialAd.write(paste)  # Earth
+                #             f2 = 1
+                #         elif Radr == b'0':
+                #             cmands = sCount
+                #             for i0 in Send:
+                #                 time.sleep(0.1)
+                #                 c = struct.pack('B', i0)
+                #                 serialPIC.write(c)
+                #                 print('cmands : ' + (cmands))
+                #                 # print(i0)
+                #             p0 = 0
 
-                        else:
-                            continue
-                    else:
-                        continue
-                    f1 = 0
-                    f2 = 0
+                #         else:
+                #             continue
+                #     else:
+                #         continue
+                #     f1 = 0
+                #     f2 = 0
 
-                    print(sCount)
+                #     print(sCount)
                 subprocess.call(["afplay", "beep-06.wav"])
 
                 
