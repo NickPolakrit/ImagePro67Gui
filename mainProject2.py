@@ -17,6 +17,7 @@ cap = cv2.VideoCapture(1)
 cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1000)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 760)
 cap.set(cv2.CAP_PROP_AUTOFOCUS, 0)  # turn the autofocus off
+cap.set(cv2.CAP_PROP_FPS, 30)
 
 l_h = 6
 l_s = 20
