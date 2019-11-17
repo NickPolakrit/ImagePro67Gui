@@ -122,11 +122,11 @@ while True:
         y = approx.ravel()[1]
 
         if 15000 > area > 5000:
-            time.sleep(0.1)
+            # time.sleep(0.1)
             # cv2.drawContours(resultWarp, [approx], 0, (0, 0, 0), 5)
 
             if len(approx) == 4 and stateWork == 1:
-                time.sleep(0.8)
+                time.sleep(0.3)
                 # cv2.putText(mask, "CARD", (x, y-20), font, 1, (0, 0, 0))
                 FOUND_CARD = True
                 cardCount = 1
@@ -150,12 +150,11 @@ while True:
                 Crop_card = four_point_transform(
                     resultWarp, Approx.reshape(4, 2) * ratio)
                 Crop_card = cv2.resize(Crop_card, (int(500), int(500)))
-                time.sleep(0.1)
                 cv2.imshow("Outline", Outline)
                 cv2.imshow("warp crop", resultWarp)
                 cv2.imshow("Your_CARD", Crop_card)
                 img_name = "crop_card.png"
-                time.sleep(0.3)
+                time.sleep(0.1)
                 cv2.imwrite(img_name, Crop_card)
 
                 imgCrop = cv2.imread("crop_card.png")
@@ -216,7 +215,7 @@ while True:
 
                 # Blacklow color
                 low_blacklow = np.array([0, 0, 0])
-                high_blacklow = np.array([31, 47, 210])
+                high_blacklow = np.array([42, 27, 210])
                 black_mask = cv2.inRange(hsv_frame, low_blacklow, high_blacklow)
                 black = cv2.bitwise_and(
                     imgCrop, imgCrop, mask=black_mask)
