@@ -414,6 +414,8 @@ while True:
                             continue
                     else:
                         continue
+                    f1 = 0
+                    f2 = 0
 
                     print(sCount)
                 subprocess.call(["afplay", "beep-06.wav"])
