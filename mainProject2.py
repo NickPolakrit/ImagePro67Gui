@@ -46,17 +46,17 @@ yY = 100
 blX = 100
 blY = 100
 
-# serialPIC = serial.Serial(
-#     "/dev/cu.usbserial-AC00YIZF", 115200, 8, 'N', 1, 0, 0, 0, 0, 0)
+serialPIC = serial.Serial(
+    "/dev/cu.usbserial-AC00YIZF", 115200, 8, 'N', 1, 0, 0, 0, 0, 0)
 
-# serialPIC.setRTS(0)
-# serialPIC.setDTR(0)
+serialPIC.setRTS(0)
+serialPIC.setDTR(0)
 
-# serialAd = serial.Serial(
-#     "/dev/cu.usbserial-AC00YIZF", 115200, 8, 'N', 1, 0, 0, 0, 0, 0)
+serialAd = serial.Serial(
+    "/dev/cu.usbserial-AC00YIZF", 115200, 8, 'N', 1, 0, 0, 0, 0, 0)
 
-# serialAd.setRTS(0)
-# serialAd.setDTR(0)
+serialAd.setRTS(0)
+serialAd.setDTR(0)
 
 
 FOUND_CARD = False
@@ -369,6 +369,11 @@ while True:
                     c = struct.pack('B', i)
                     serialPIC.write(c)
                     # print(i)
+                    
+                keep = struct.pack('B', 1)
+                serialAd.write(keep)
+
+                
 
                 # # # r g b y black
 
