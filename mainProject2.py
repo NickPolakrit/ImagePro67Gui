@@ -26,14 +26,14 @@ u_h = 76
 u_s = 255
 u_v = 255
 
-x1 = 319
-y1 = 30
-x2 = 819
-y2 = 13
-x3 = 278
-y3 = 548
-x4 = 875
-y4 = 550
+x1 = 275
+y1 = 11
+x2 = 771
+y2 = 12
+x3 = 220
+y3 = 525
+x4 = 804
+y4 = 533
 
 rX = 100
 rY = 100
@@ -52,17 +52,17 @@ serialPIC = serial.Serial(
 serialPIC.setRTS(0)
 serialPIC.setDTR(0)
 
-serialAd = serial.Serial(
-    "/dev/cu.usbserial-AC00YIZF", 115200, 8, 'N', 1, 0, 0, 0, 0, 0)
+# serialAd = serial.Serial(
+#     "/dev/cu.usbserial-AC00YIZF", 115200, 8, 'N', 1, 0, 0, 0, 0, 0)
 
-serialAd.setRTS(0)
-serialAd.setDTR(0)
+# serialAd.setRTS(0)
+# serialAd.setDTR(0)
 
 
 FOUND_CARD = False
 
 
-stateWork = 1
+stateWork = 0
 font = cv2.FONT_HERSHEY_COMPLEX
 
 while True:
@@ -208,7 +208,8 @@ while True:
 
                 # Blacklow color
                 low_blacklow = np.array([0, 0, 0])
-                high_blacklow = np.array([42, 27, 210])
+                high_blacklow = np.array([28, 40, 189])
+                # 41 28 208
                 black_mask = cv2.inRange(hsv_frame, low_blacklow, high_blacklow)
                 black = cv2.bitwise_and(
                     imgCrop, imgCrop, mask=black_mask)
@@ -360,18 +361,32 @@ while True:
                 cv2.imshow("IMAGE", imgCrop)
 
                 # cmands = 9
+                rX = int(250-(rX/2))
+                rY = int(rY/2)
+                gX = int(250-(gX/2))
+                gY = int(gY/2)
+                bX = int(250-(bX/2))
+                bY = int(bY/2)
+                yX = int(250-(yX/2))
+                yY = int(yY/2)
+                blX = int(250-(blX/2))
+                blY = int(blY/2)
+
+                # rx = (rx)
                 
-                Send = [int(rX/2),int(rY/2),int(gX/2),int(gY/2),int(bX/2),int(bY/2),int(yX/2),int(yY/2),int(blX/2),int(blY/2)]
+                # Send = [int(rX/2),int(250-(rY/2)),int(gX/2),int(250-(gY/2)),int(bX/2),int(250-(bY/2)),int(yX/2),int(250-(yY/2)),int(blX/2),int(250-(blY/2))]
+                Send = [rX,rY,gX,gY,bX,bY,yX,yY,blX,blY]
                 print(Send)
+                print(rX, rY, gX, gY, bX, bY, yX, yY, blX, blY)
 
                 for i in Send:
                     time.sleep(0.1)
                     c = struct.pack('B', i)
                     serialPIC.write(c)
                     # print(i)
-                    
-                keep = struct.pack('B', 1)
-                serialAd.write(keep)
+
+                # keep = struct.pack('B', 1)
+                # serialAd.write(keep)
 
                 
 
