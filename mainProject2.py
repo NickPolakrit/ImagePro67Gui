@@ -46,13 +46,6 @@ yY = 100
 blX = 100
 blY = 100
 
-# r_lh = 0
-# r_ls = 43
-# r_lv = 40
-# r_uh = 12
-# r_us = 255
-# r_uv = 255
-
 # serialPIC = serial.Serial(
 #     "/dev/cu.usbserial-AC00YIZF", 115200, 8, 'N', 1, 0, 0, 0, 0, 0)
 
