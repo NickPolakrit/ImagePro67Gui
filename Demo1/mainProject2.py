@@ -20,10 +20,10 @@ cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 760)
 cap.set(cv2.CAP_PROP_FPS, 30)
 
 l_h = 0
-l_s = 9
-l_v = 0
-u_h = 76
-u_s = 255
+l_s = 6
+l_v = 101
+u_h = 106
+u_s = 193
 u_v = 255
 
 x1 = 275
