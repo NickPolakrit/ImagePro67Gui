@@ -17,7 +17,7 @@
    <item row="2" column="0" colspan="2">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>7</number>
      </property>
      <widget class="QWidget" name="tab_7">
       <attribute name="title">
@@ -1275,8 +1275,8 @@
        <string>Main</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_21">
-       <item row="0" column="0">
-        <widget class="QLabel" name="card_output_3">
+       <item row="0" column="2">
+        <widget class="QLabel" name="card_output3">
          <property name="frameShape">
           <enum>QFrame::Box</enum>
          </property>
@@ -1285,7 +1285,7 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
+       <item row="0" column="0">
         <widget class="QLabel" name="card_output">
          <property name="frameShape">
           <enum>QFrame::Box</enum>
@@ -1295,8 +1295,8 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="2">
-        <widget class="QLabel" name="card_output_2">
+       <item row="0" column="1">
+        <widget class="QLabel" name="card_output2">
          <property name="frameShape">
           <enum>QFrame::Box</enum>
          </property>
@@ -1306,28 +1306,16 @@
         </widget>
        </item>
        <item row="1" column="2">
-        <widget class="QPushButton" name="start_card">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
+        <widget class="QCommandLinkButton" name="commandLinkButton">
          <property name="styleSheet">
           <string notr="true">QPushButton{
-    background-color:rgb(70, 255, 148)
+    background-color:rgb(255, 249, 0)
 }
 
 </string>
          </property>
          <property name="text">
-          <string>Start</string>
-         </property>
-         <property name="autoDefault">
-          <bool>false</bool>
-         </property>
-         <property name="default">
-          <bool>false</bool>
-         </property>
-         <property name="flat">
-          <bool>false</bool>
+          <string>HOME</string>
          </property>
         </widget>
        </item>
