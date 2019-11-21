@@ -17,16 +17,15 @@ class ColorDetector(QDialog):
         self.start_button.clicked.connect(self.start_webcam)
         self.stop_button.clicked.connect(self.stop_webcam)
 
-        self.start_card.clicked.connect(self.start_card)
-        self.stop_card.clicked.connect(self.stop_card)
 
-    # def start_card(self):
-    #     self
+    # def start_card(self, imgWarp):
+
+        
     
 
 
     def start_webcam(self):
-        self.capture = cv2.VideoCapture(0)
+        self.capture = cv2.VideoCapture(1)
         # self.capture = cap
 
         self.capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 300)
@@ -41,10 +40,10 @@ class ColorDetector(QDialog):
         self.x4_slider.setValue(86)
         self.y4_slider.setValue(410)
 
-        self.card_lh.setValue(23)
-        self.card_ls.setValue(59)
-        self.card_lv.setValue(19)
-        self.card_uh.setValue(54)
+        self.card_lh.setValue(0)
+        self.card_ls.setValue(19)
+        self.card_lv.setValue(0)
+        self.card_uh.setValue(63)
         self.card_us.setValue(255)
         self.card_uv.setValue(255)
 
@@ -235,6 +234,8 @@ class ColorDetector(QDialog):
         self.displayImage(self.image, closingBl2, 11)
         self.displayImage(self.image, closingBl, 12)
         
+        # self.start_card.clicked.connect(self.start_card, self.imageWarp)
+        # self.stop_card.clicked.connect(self.stop_card)
         
 
 
@@ -245,7 +246,7 @@ class ColorDetector(QDialog):
         self.timer.stop()
 
     def stop_card(self):
-        self.capture.release()
+        # self.capture.release()
         self.timer.stop()
 
     def displayImage(self, img, imageWarp, window=1):
