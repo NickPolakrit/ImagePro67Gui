@@ -218,25 +218,26 @@ class OpencvImg(QDialog):
         dilationY2 = cv2.dilate(yellow_mask, kernel, iterations=1)
         openingY2 = cv2.morphologyEx(dilationY2, cv2.MORPH_OPEN, kernel)
         closingY2 = cv2.morphologyEx(openingY2, cv2.MORPH_CLOSE, kernel)
-
+        
         dilationY = cv2.dilate(yellow, kernel, iterations=1)
         openingY = cv2.morphologyEx(dilationY, cv2.MORPH_OPEN, kernel)
         closingY = cv2.morphologyEx(openingY, cv2.MORPH_CLOSE, kernel)
+        
 
         black_mask = cv2.inRange(hsv, black_lower, black_upper)
         black = cv2.bitwise_and(
             self.imageWarp, self.imageWarp, mask=black_mask)
-        # dilationbl2 = cv2.dilate(black_mask, kernel, iterations=1)
+        dilationbl2 = cv2.dilate(black_mask, kernel, iterations=1)
+        openingBl2 = cv2.morphologyEx(dilationbl2, cv2.MORPH_OPEN, kernel)
+        closingBl2 = cv2.morphologyEx(openingBl2, cv2.MORPH_CLOSE, kernel)
         # openingBl2 = cv2.morphologyEx(black, cv2.MORPH_OPEN, kernel)
         # closingBl2 = cv2.morphologyEx(openingBl2, cv2.MORPH_CLOSE, kernel)
+        # dilationBl2 = cv2.dilate(closingBl2, kernel, iterations=1)
 
         dilationBl = cv2.dilate(black, kernel, iterations=1)
         openingBl = cv2.morphologyEx(dilationBl, cv2.MORPH_OPEN, kernel)
         closingBl = cv2.morphologyEx(openingBl, cv2.MORPH_CLOSE, kernel)
-
-        openingBl2 = cv2.morphologyEx(black, cv2.MORPH_OPEN, kernel)
-        closingBl2 = cv2.morphologyEx(openingBl2, cv2.MORPH_CLOSE, kernel)
-        dilationBl2 = cv2.dilate(closingBl2, kernel, iterations=1)
+        
         
         
         
@@ -254,8 +255,8 @@ class OpencvImg(QDialog):
         self.displayImage(self.image, closingB, 8)
         self.displayImage(self.image, closingY2, 9)
         self.displayImage(self.image, closingY, 10)
-        self.displayImage(self.image, closingBl, 11)
-        self.displayImage(self.image, dilationBl2, 12)
+        self.displayImage(self.image, closingBl2, 11)
+        self.displayImage(self.image, closingBl, 12)
         
         # self.start_card.clicked.connect(self.start_card, self.imageWarp)
         # self.stop_card.clicked.connect(self.stop_card)
