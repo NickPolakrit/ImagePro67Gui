@@ -119,8 +119,8 @@ class OpencvImg(QDialog):
         resultWarp = cv2.warpPerspective(self.notCircle, matrix, (500, 500))
         self.imageWarp = resultWarp
 
-        self.image = cv2.flip(self.image, 1)
-        # self.imageWarp = cv2.flip(self.imageWarp, 1)
+        # self.image = cv2.flip(self.image, 1)
+        self.imageWarp = cv2.flip(self.imageWarp, 1)
         # self.displayImage(self.image, self.imageWarp, 1)
         
         Mblurred = cv2.medianBlur(self.imageWarp, 5)
@@ -227,12 +227,17 @@ class OpencvImg(QDialog):
         black = cv2.bitwise_and(
             self.imageWarp, self.imageWarp, mask=black_mask)
         # dilationbl2 = cv2.dilate(black_mask, kernel, iterations=1)
-        openingBl2 = cv2.morphologyEx(black, cv2.MORPH_OPEN, kernel)
+        # openingBl2 = cv2.morphologyEx(black, cv2.MORPH_OPEN, kernel)
         # closingBl2 = cv2.morphologyEx(openingBl2, cv2.MORPH_CLOSE, kernel)
 
         dilationBl = cv2.dilate(black, kernel, iterations=1)
         openingBl = cv2.morphologyEx(dilationBl, cv2.MORPH_OPEN, kernel)
         closingBl = cv2.morphologyEx(openingBl, cv2.MORPH_CLOSE, kernel)
+
+        openingBl2 = cv2.morphologyEx(black, cv2.MORPH_OPEN, kernel)
+        closingBl2 = cv2.morphologyEx(openingBl2, cv2.MORPH_CLOSE, kernel)
+        dilationBl2 = cv2.dilate(closingBl2, kernel, iterations=1)
+        
         
         
         
@@ -250,7 +255,7 @@ class OpencvImg(QDialog):
         self.displayImage(self.image, closingY2, 9)
         self.displayImage(self.image, closingY, 10)
         self.displayImage(self.image, closingBl, 11)
-        self.displayImage(self.image, openingBl2, 12)
+        self.displayImage(self.image, dilationBl2, 12)
         
         # self.start_card.clicked.connect(self.start_card, self.imageWarp)
         # self.stop_card.clicked.connect(self.stop_card)
