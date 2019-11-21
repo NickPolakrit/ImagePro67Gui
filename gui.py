@@ -9,9 +9,9 @@ import imutils
 from transform import four_point_transform
 
 
-class ColorDetector(QDialog):
+class OpencvImg(QDialog):
     def __init__(self):
-        super(ColorDetector, self).__init__()
+        super(OpencvImg, self).__init__()
         loadUi('demo2gui.ui', self)
         self.image = None
         self.start_button.clicked.connect(self.start_webcam)
@@ -47,33 +47,33 @@ class ColorDetector(QDialog):
         self.card_us.setValue(255)
         self.card_uv.setValue(255)
 
-        self.red_lh.setValue(166)
-        self.red_ls.setValue(84)
-        self.red_lv.setValue(141)
-        self.red_uh.setValue(186)
+        self.red_lh.setValue(0)
+        self.red_ls.setValue(47)
+        self.red_lv.setValue(100)
+        self.red_uh.setValue(6)
         self.red_us.setValue(255)
         self.red_uv.setValue(255)
 
-        self.green_lh.setValue(66)
-        self.green_ls.setValue(122)
-        self.green_lv.setValue(129)
-        self.green_uh.setValue(86)
+        self.green_lh.setValue(30)
+        self.green_ls.setValue(37)
+        self.green_lv.setValue(119)
+        self.green_uh.setValue(84)
         self.green_us.setValue(255)
         self.green_uv.setValue(255)
 
-        self.blue_lh.setValue(97)
-        self.blue_ls.setValue(100)
-        self.blue_lv.setValue(117)
-        self.blue_uh.setValue(117)
+        self.blue_lh.setValue(100)
+        self.blue_ls.setValue(35)
+        self.blue_lv.setValue(116)
+        self.blue_uh.setValue(115)
         self.blue_us.setValue(255)
         self.blue_uv.setValue(255)
 
-        self.yellow_lh.setValue(23)
-        self.yellow_ls.setValue(59)
-        self.yellow_lv.setValue(19)
-        self.yellow_uh.setValue(54)
+        self.yellow_lh.setValue(21)
+        self.yellow_ls.setValue(62)
+        self.yellow_lv.setValue(173)
+        self.yellow_uh.setValue(46)
         self.yellow_us.setValue(255)
-        self.yellow_uv.setValue(255)
+        self.yellow_uv.setValue(240)
 
         self.black_lh.setValue(23)
         self.black_ls.setValue(59)
@@ -180,42 +180,58 @@ class ColorDetector(QDialog):
         red_mask = cv2.inRange(hsv, red_lower, red_upper)
         red = cv2.bitwise_and(
             self.imageWarp, self.imageWarp, mask=red_mask)
-        openingR2 = cv2.morphologyEx(red_mask, cv2.MORPH_OPEN, kernel)
+        dilationR2 = cv2.dilate(red_mask, kernel, iterations=1)
+        openingR2 = cv2.morphologyEx(dilationR2, cv2.MORPH_OPEN, kernel)
         closingR2 = cv2.morphologyEx(openingR2, cv2.MORPH_CLOSE, kernel)
-        openingR = cv2.morphologyEx(red, cv2.MORPH_OPEN, kernel)
+
+        dilationR = cv2.dilate(red, kernel, iterations=1)
+        openingR = cv2.morphologyEx(dilationR, cv2.MORPH_OPEN, kernel)
         closingR = cv2.morphologyEx(openingR, cv2.MORPH_CLOSE, kernel)
+        
 
 
         green_mask = cv2.inRange(hsv, green_lower, green_upper)
         green = cv2.bitwise_and(
             self.imageWarp, self.imageWarp, mask=green_mask)
-        openingG2 = cv2.morphologyEx(green_mask, cv2.MORPH_OPEN, kernel)
+        dilationG2 = cv2.dilate(green_mask, kernel, iterations=1)
+        openingG2 = cv2.morphologyEx(dilationG2, cv2.MORPH_OPEN, kernel)
         closingG2 = cv2.morphologyEx(openingG2, cv2.MORPH_CLOSE, kernel)
-        openingG = cv2.morphologyEx(green, cv2.MORPH_OPEN, kernel)
+
+        dilationG = cv2.dilate(green, kernel, iterations=1)
+        openingG = cv2.morphologyEx(dilationG, cv2.MORPH_OPEN, kernel)
         closingG = cv2.morphologyEx(openingG, cv2.MORPH_CLOSE, kernel)
 
         blue_mask = cv2.inRange(hsv, blue_lower, blue_upper)
         blue = cv2.bitwise_and(
             self.imageWarp, self.imageWarp, mask=blue_mask)
-        openingB2 = cv2.morphologyEx(blue_mask, cv2.MORPH_OPEN, kernel)
+        dilationB2 = cv2.dilate(blue_mask, kernel, iterations=1)
+        openingB2 = cv2.morphologyEx(dilationB2, cv2.MORPH_OPEN, kernel)
         closingB2 = cv2.morphologyEx(openingB2, cv2.MORPH_CLOSE, kernel)
-        openingB = cv2.morphologyEx(blue, cv2.MORPH_OPEN, kernel)
+
+        dilationB = cv2.dilate(blue, kernel, iterations=1)
+        openingB = cv2.morphologyEx(dilationB, cv2.MORPH_OPEN, kernel)
         closingB = cv2.morphologyEx(openingB, cv2.MORPH_CLOSE, kernel)
 
         yellow_mask = cv2.inRange(hsv, yellow_lower, yellow_upper)
         yellow = cv2.bitwise_and(
             self.imageWarp, self.imageWarp, mask=yellow_mask)
-        openingY2 = cv2.morphologyEx(yellow_mask, cv2.MORPH_OPEN, kernel)
+        dilationY2 = cv2.dilate(yellow_mask, kernel, iterations=1)
+        openingY2 = cv2.morphologyEx(dilationY2, cv2.MORPH_OPEN, kernel)
         closingY2 = cv2.morphologyEx(openingY2, cv2.MORPH_CLOSE, kernel)
-        openingY = cv2.morphologyEx(yellow, cv2.MORPH_OPEN, kernel)
+
+        dilationY = cv2.dilate(yellow, kernel, iterations=1)
+        openingY = cv2.morphologyEx(dilationY, cv2.MORPH_OPEN, kernel)
         closingY = cv2.morphologyEx(openingY, cv2.MORPH_CLOSE, kernel)
 
         black_mask = cv2.inRange(hsv, black_lower, black_upper)
         black = cv2.bitwise_and(
             self.imageWarp, self.imageWarp, mask=black_mask)
-        openingBl2 = cv2.morphologyEx(black_mask, cv2.MORPH_OPEN, kernel)
+        dilationbl2 = cv2.dilate(black_mask, kernel, iterations=1)
+        openingBl2 = cv2.morphologyEx(dilationbl2, cv2.MORPH_OPEN, kernel)
         closingBl2 = cv2.morphologyEx(openingBl2, cv2.MORPH_CLOSE, kernel)
-        openingBl = cv2.morphologyEx(black, cv2.MORPH_OPEN, kernel)
+
+        dilationBl = cv2.dilate(black, kernel, iterations=1)
+        openingBl = cv2.morphologyEx(dilationBl, cv2.MORPH_OPEN, kernel)
         closingBl = cv2.morphologyEx(openingBl, cv2.MORPH_CLOSE, kernel)
         
         self.displayImage(self.image, closingC, 1)
@@ -312,7 +328,7 @@ class ColorDetector(QDialog):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    window = ColorDetector()
-    window.setWindowTitle('OpenCV Color Detector')
+    window = OpencvImg()
+    window.setWindowTitle('NICKY')
     window.show()
     sys.exit(app.exec_())
