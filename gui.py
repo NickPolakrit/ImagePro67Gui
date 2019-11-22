@@ -42,7 +42,9 @@ class OpencvImg(QDialog):
         self.commandLinkButton.clicked.connect(self.start_card)
         
         
-    
+    def start_card(self):
+        self.timer.timeout.connect(self.find_card)
+        self.timer.start(5)
 
 
     def start_webcam(self):
@@ -267,51 +269,6 @@ class OpencvImg(QDialog):
         dilationBl = cv2.dilate(black, kernel, iterations=1)
         openingBl = cv2.morphologyEx(dilationBl, cv2.MORPH_OPEN, kernel)
         closingBl = cv2.morphologyEx(openingBl, cv2.MORPH_CLOSE, kernel)
-
-        
-        # def start_card():
-        #     print(color_upper)
-        #     print("HOME ... !!!")
-            # exit(1)
-
-        # for cnt in contours:
-        #     # time.sleep(0.1)
-        #     area = cv2.contourArea(cnt)
-        #     approx = cv2.approxPolyDP(cnt, 0.02*cv2.arcLength(cnt, True), True)
-        #     x = approx.ravel()[0]
-        #     y = approx.ravel()[1]
-
-        #     if area > 5000:
-        #         stateWork = 1
-        #         if len(approx) == 4 :
-        #             cnts = cv2.findContours(
-        #                 edged.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
-        #             cnts = imutils.grab_contours(cnts)
-        #             cnts = sorted(cnts, key=cv2.contourArea, reverse=True)[:5]
-        #             Approx = approx
-        #             Outline = cv2.drawContours(
-        #                 self.imageWarp.copy(), [Approx], -5, (0, 0, 255), 1)
-        #             ratio = Outline.shape[0] / 500
-        #             Crop_card = four_point_transform(
-        #                 self.imageWarp, Approx.reshape(4, 2) * ratio)
-        #             Crop_card = cv2.resize(Crop_card, (int(500), int(500)))
-        #             # cv2.imshow("Outline", Outline)
-        #             # cv2.imshow("warp crop", resultWarp)
-        #             # cv2.imshow("Your_CARD", Crop_card)
-        #             img_name = "crop_card.png"
-        #             # time.sleep(0.1)
-        #             cv2.imwrite(img_name, Crop_card)
-        #             imgCrop = cv2.imread("crop_card.png")
-        #             # cardCount = 0
-        #             stateWork = 0
-        #             self.displayImage(Outline, imgCrop, 14)
-
-        # self.commandLinkButton.clicked.connect(start_card)
-        # self.pushButton_3.clicked.connect(start_card)
-
-        # def start_card(self):
-        #     print("HOME ... !!!")
-        #     exit(1)
         
         self.displayImage(self.image, closingC, 1)
         self.displayImage(self.image, color_mask, 2)
@@ -329,11 +286,8 @@ class OpencvImg(QDialog):
         self.displayImage(self.image, closingBl2, 11)
         self.displayImage(self.image, closingBl, 12)
         
-        # if self.start_card.clicked.connect():
-        #     print("11111")
-        # self.stop_card.clicked.connect(self.stop_card)
         
-    def start_card(self):
+    def find_card(self):
         # print("HOME ... !!!")
         self.debugTextBrowser.append("Home ...")
         ret, self.image = self.capture.read()
@@ -434,7 +388,7 @@ class OpencvImg(QDialog):
             x = approx.ravel()[0]
             y = approx.ravel()[1]
 
-            if area > 5000:
+            if area > 6000:
                 stateWork = 1
                 if len(approx) == 4 :
                     cnts = cv2.findContours(
@@ -673,6 +627,7 @@ class OpencvImg(QDialog):
                         self.debugTextBrowser.append(str(i))
 
                     subprocess.call(["afplay", "beep-06.wav"])
+                    self.timer.stop()
         
 
 
