@@ -53,13 +53,13 @@
      </item>
     </layout>
    </item>
-   <item row="8" column="3">
-    <widget class="QCommandLinkButton" name="commandLinkButton">
-     <property name="styleSheet">
-      <string notr="true"/>
-     </property>
+   <item row="10" column="3">
+    <widget class="QPushButton" name="pushButton_2">
      <property name="text">
-      <string>HOME</string>
+      <string>Disconnect Serial</string>
+     </property>
+     <property name="autoDefault">
+      <bool>false</bool>
      </property>
     </widget>
    </item>
@@ -1356,9 +1356,186 @@
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="tab_8">
+      <attribute name="title">
+       <string>color</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_22">
+       <item row="0" column="1">
+        <widget class="QSpinBox" name="card_lh2"/>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_42">
+         <property name="text">
+          <string>card</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="4">
+        <widget class="QSpinBox" name="green_lv2"/>
+       </item>
+       <item row="0" column="4">
+        <widget class="QSpinBox" name="card_lv2"/>
+       </item>
+       <item row="5" column="3">
+        <widget class="QSpinBox" name="blue_ls2"/>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_37">
+         <property name="text">
+          <string>Green</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="4">
+        <widget class="QSpinBox" name="blue_lv2"/>
+       </item>
+       <item row="0" column="3">
+        <widget class="QSpinBox" name="card_ls2"/>
+       </item>
+       <item row="6" column="8">
+        <widget class="QSpinBox" name="yellow_uv2"/>
+       </item>
+       <item row="4" column="1">
+        <widget class="QSpinBox" name="green_lh2"/>
+       </item>
+       <item row="7" column="0">
+        <widget class="QLabel" name="label_41">
+         <property name="text">
+          <string>Black</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="3">
+        <widget class="QSpinBox" name="green_ls2"/>
+       </item>
+       <item row="7" column="1">
+        <widget class="QSpinBox" name="black_lh2"/>
+       </item>
+       <item row="5" column="7">
+        <widget class="QSpinBox" name="blue_us2"/>
+       </item>
+       <item row="6" column="1">
+        <widget class="QSpinBox" name="yellow_lh2"/>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="label_40">
+         <property name="text">
+          <string>Yellow</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="label_39">
+         <property name="text">
+          <string>Blue</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="8">
+        <widget class="QSpinBox" name="green_uv2"/>
+       </item>
+       <item row="5" column="8">
+        <widget class="QSpinBox" name="blue_uv2"/>
+       </item>
+       <item row="1" column="4">
+        <widget class="QSpinBox" name="red_lv2"/>
+       </item>
+       <item row="7" column="6">
+        <widget class="QSpinBox" name="black_uh2"/>
+       </item>
+       <item row="4" column="6">
+        <widget class="QSpinBox" name="green_uh2"/>
+       </item>
+       <item row="7" column="7">
+        <widget class="QSpinBox" name="black_us2"/>
+       </item>
+       <item row="7" column="3">
+        <widget class="QSpinBox" name="black_ls2"/>
+       </item>
+       <item row="6" column="4">
+        <widget class="QSpinBox" name="yellow_lv2"/>
+       </item>
+       <item row="7" column="4">
+        <widget class="QSpinBox" name="black_lv2"/>
+       </item>
+       <item row="6" column="3">
+        <widget class="QSpinBox" name="yellow_ls2"/>
+       </item>
+       <item row="1" column="7">
+        <widget class="QSpinBox" name="red_us2"/>
+       </item>
+       <item row="1" column="8">
+        <widget class="QSpinBox" name="red_uv2"/>
+       </item>
+       <item row="1" column="1">
+        <widget class="QSpinBox" name="red_lh2"/>
+       </item>
+       <item row="1" column="3">
+        <widget class="QSpinBox" name="red_ls2"/>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_38">
+         <property name="text">
+          <string>Red</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="6">
+        <widget class="QSpinBox" name="red_uh2"/>
+       </item>
+       <item row="4" column="7">
+        <widget class="QSpinBox" name="green_us2"/>
+       </item>
+       <item row="7" column="8">
+        <widget class="QSpinBox" name="black_uv2"/>
+       </item>
+       <item row="6" column="7">
+        <widget class="QSpinBox" name="yellow_us2"/>
+       </item>
+       <item row="5" column="1">
+        <widget class="QSpinBox" name="blue_lh2"/>
+       </item>
+       <item row="6" column="6">
+        <widget class="QSpinBox" name="yellow_uh2"/>
+       </item>
+       <item row="5" column="6">
+        <widget class="QSpinBox" name="blue_uh2"/>
+       </item>
+       <item row="0" column="6">
+        <widget class="QSpinBox" name="card_uh2"/>
+       </item>
+       <item row="0" column="7">
+        <widget class="QSpinBox" name="card_us2"/>
+       </item>
+       <item row="0" column="8">
+        <widget class="QSpinBox" name="card_uv2"/>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
-   <item row="7" column="0" rowspan="3" colspan="3">
+   <item row="9" column="3">
+    <widget class="QPushButton" name="pushButton">
+     <property name="text">
+      <string>Connect Serial</string>
+     </property>
+     <property name="autoDefault">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="3">
+    <widget class="QCommandLinkButton" name="commandLinkButton">
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="text">
+      <string>HOME</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="2" rowspan="4">
     <widget class="QTextBrowser" name="debugTextBrowser"/>
    </item>
   </layout>
@@ -1366,34 +1543,18 @@
  <resources/>
  <connections>
   <connection>
-   <sender>black_uv</sender>
+   <sender>card_lh</sender>
    <signal>valueChanged(int)</signal>
-   <receiver>spinBox_33</receiver>
+   <receiver>spinBox</receiver>
    <slot>setValue(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>774</x>
-     <y>429</y>
+     <x>321</x>
+     <y>359</y>
     </hint>
     <hint type="destinationlabel">
-     <x>817</x>
-     <y>438</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>spinBox_11</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>red_lh</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>406</x>
-     <y>352</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>360</x>
-     <y>351</y>
+     <x>432</x>
+     <y>360</y>
     </hint>
    </hints>
   </connection>
@@ -1942,6 +2103,102 @@
    </hints>
   </connection>
   <connection>
+   <sender>black_uv</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>spinBox_33</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>774</x>
+     <y>429</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>817</x>
+     <y>438</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBox_11</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>red_lh</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>406</x>
+     <y>352</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>360</x>
+     <y>351</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBox_10</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>red_ls</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>402</x>
+     <y>393</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>363</x>
+     <y>390</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBox_12</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>red_lv</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>392</x>
+     <y>433</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>361</x>
+     <y>433</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBox_8</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>red_uh</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>817</x>
+     <y>353</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>776</x>
+     <y>353</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spinBox_7</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>red_us</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>825</x>
+     <y>398</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>783</x>
+     <y>389</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
    <sender>spinBox_9</sender>
    <signal>valueChanged(int)</signal>
    <receiver>red_uv</receiver>
@@ -2434,86 +2691,6 @@
     <hint type="destinationlabel">
      <x>780</x>
      <y>430</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>spinBox_10</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>red_ls</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>402</x>
-     <y>393</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>363</x>
-     <y>390</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>card_lh</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>spinBox</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>321</x>
-     <y>359</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>432</x>
-     <y>360</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>spinBox_12</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>red_lv</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>392</x>
-     <y>433</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>361</x>
-     <y>433</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>spinBox_8</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>red_uh</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>817</x>
-     <y>353</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>776</x>
-     <y>353</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>spinBox_7</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>red_us</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>825</x>
-     <y>398</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>783</x>
-     <y>389</y>
     </hint>
    </hints>
   </connection>
