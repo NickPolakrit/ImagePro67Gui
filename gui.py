@@ -13,6 +13,23 @@ import struct
 import subprocess
 
 
+serialPIC = serial.Serial(
+    "/dev/cu.usbserial-AC00YIZF", 115200, 8, 'N', 1, 0, 0, 0, 0, 0)
+
+serialPIC.setRTS(0)
+serialPIC.setDTR(0)
+rX = 100
+rY = 100
+gX = 100
+gY = 100
+bX = 100
+bY = 100
+yX = 100
+yY = 100
+blX = 100
+blY = 100
+
+
 
 class OpencvImg(QDialog):
     def __init__(self):
@@ -633,10 +650,27 @@ class OpencvImg(QDialog):
                     except:
                         pass
 
-                    Send = [rX,rY,gX,gY,bX,bY,yX,yY,blX,blY]
+                    rX = int(250-(rX/2))
+                    rY = int(250-(rY/2))
+                    gX = int(250-(gX/2))
+                    gY = int(250-(gY/2))
+                    bX = int(250-(bX/2))
+                    bY = int(250-(bY/2))
+                    yX = int(250-(yX/2))
+                    yY = int(250-(yY/2))
+                    blX = int(250-(blX/2))
+                    blY = int(250-(blY/2))
+
+                    Send = [rY,rX,gY,gX,bY,bX,yY,yX,blY,blX]
                     self.debugTextBrowser.append(str(Send))
 
                     self.displayImage(Outline, imgCrop, 14)
+
+                    for i in Send:
+                        time.sleep(0.1)
+                        c = struct.pack('B', i)
+                        serialPIC.write(c)
+                        self.debugTextBrowser.append(str(i))
 
                     subprocess.call(["afplay", "beep-06.wav"])
         
