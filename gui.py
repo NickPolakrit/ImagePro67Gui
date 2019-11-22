@@ -17,17 +17,18 @@ class OpencvImg(QDialog):
         self.start_button.clicked.connect(self.start_webcam)
         self.stop_button.clicked.connect(self.stop_webcam)
 
-
-    # def start_card(self, imgWarp):
+        self.commandLinkButton.clicked.connect(self.start_card)
 
         
-    
+    def start_card(self):
+        print("HOME ... !!!")
+        
 
 
     def start_webcam(self):
+        
         self.capture = cv2.VideoCapture(1)
         # self.capture = cap
-
         self.capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 300)
         self.capture.set(cv2.CAP_PROP_FRAME_WIDTH, 400)
         
@@ -89,6 +90,7 @@ class OpencvImg(QDialog):
 
 
     def update_frame(self):
+
         ret, self.image = self.capture.read()
 
         self.notCircle = self.image.copy()
@@ -187,6 +189,7 @@ class OpencvImg(QDialog):
         dilationR = cv2.dilate(red, kernel, iterations=1)
         openingR = cv2.morphologyEx(dilationR, cv2.MORPH_OPEN, kernel)
         closingR = cv2.morphologyEx(openingR, cv2.MORPH_CLOSE, kernel)
+
         
 
 
@@ -237,8 +240,43 @@ class OpencvImg(QDialog):
         dilationBl = cv2.dilate(black, kernel, iterations=1)
         openingBl = cv2.morphologyEx(dilationBl, cv2.MORPH_OPEN, kernel)
         closingBl = cv2.morphologyEx(openingBl, cv2.MORPH_CLOSE, kernel)
+
         
         
+        # def start_card():
+        #     print("HOME ... !!!")
+
+        for cnt in contours:
+            # time.sleep(0.1)
+            area = cv2.contourArea(cnt)
+            approx = cv2.approxPolyDP(cnt, 0.02*cv2.arcLength(cnt, True), True)
+            x = approx.ravel()[0]
+            y = approx.ravel()[1]
+
+            if area > 5000:
+                stateWork = 1
+                if len(approx) == 4 :
+                    cnts = cv2.findContours(
+                        edged.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+                    cnts = imutils.grab_contours(cnts)
+                    cnts = sorted(cnts, key=cv2.contourArea, reverse=True)[:5]
+                    Approx = approx
+                    Outline = cv2.drawContours(
+                        self.imageWarp.copy(), [Approx], -5, (0, 0, 255), 1)
+                    ratio = Outline.shape[0] / 500
+                    Crop_card = four_point_transform(
+                        self.imageWarp, Approx.reshape(4, 2) * ratio)
+                    Crop_card = cv2.resize(Crop_card, (int(500), int(500)))
+                    # cv2.imshow("Outline", Outline)
+                    # cv2.imshow("warp crop", resultWarp)
+                    # cv2.imshow("Your_CARD", Crop_card)
+                    img_name = "crop_card.png"
+                    # time.sleep(0.1)
+                    cv2.imwrite(img_name, Crop_card)
+                    imgCrop = cv2.imread("crop_card.png")
+                    # cardCount = 0
+                    stateWork = 0
+                    self.displayImage(Outline, imgCrop, 14)
         
         
         
@@ -258,7 +296,8 @@ class OpencvImg(QDialog):
         self.displayImage(self.image, closingBl2, 11)
         self.displayImage(self.image, closingBl, 12)
         
-        # self.start_card.clicked.connect(self.start_card, self.imageWarp)
+        # if self.start_card.clicked.connect():
+        #     print("11111")
         # self.stop_card.clicked.connect(self.stop_card)
         
 
@@ -269,9 +308,9 @@ class OpencvImg(QDialog):
         self.capture.release()
         self.timer.stop()
 
-    def stop_card(self):
-        # self.capture.release()
-        self.timer.stop()
+    # def stop_card(self):
+    #     # self.capture.release()
+    #     self.timer.stop()
 
     def displayImage(self, img, imageWarp, window=1):
         qformat = QImage.Format_Indexed8
@@ -332,6 +371,12 @@ class OpencvImg(QDialog):
         elif window == 13:
             self.frame_card3.setPixmap(QPixmap.fromImage(outImageWarp))
             self.frame_card3.setScaledContents(True)
+
+        elif window == 14:
+            self.card_output.setPixmap(QPixmap.fromImage(outImageWarp))
+            self.card_output.setScaledContents(True)
+            self.card_output2.setPixmap(QPixmap.fromImage(outImage))
+            self.card_output2.setScaledContents(True)
     
 
 if __name__ == '__main__':
