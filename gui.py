@@ -387,8 +387,9 @@ class OpencvImg(QDialog):
             approx = cv2.approxPolyDP(cnt, 0.02*cv2.arcLength(cnt, True), True)
             x = approx.ravel()[0]
             y = approx.ravel()[1]
+            self.debugTextBrowser.append(str(area))
 
-            if area > 6000:
+            if 17000 > area > 5000:
                 stateWork = 1
                 if len(approx) == 4 :
                     cnts = cv2.findContours(
