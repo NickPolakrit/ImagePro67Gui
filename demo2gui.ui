@@ -14,7 +14,56 @@
    <string>Dialog</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_13">
-   <item row="2" column="0" colspan="2">
+   <item row="1" column="0" colspan="4">
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QPushButton" name="start_button">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>ON Cam</string>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
+       <property name="default">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="stop_button">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>OFF Cam</string>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="10" column="3">
+    <widget class="QPushButton" name="pushButton_2">
+     <property name="text">
+      <string>Disconnect Serial</string>
+     </property>
+     <property name="autoDefault">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0" colspan="4">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
       <number>7</number>
@@ -1275,7 +1324,7 @@
        <string>Main</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_21">
-       <item row="0" column="2">
+       <item row="0" column="7">
         <widget class="QLabel" name="card_output3">
          <property name="frameShape">
           <enum>QFrame::Box</enum>
@@ -1285,17 +1334,7 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="card_output">
-         <property name="frameShape">
-          <enum>QFrame::Box</enum>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
+       <item row="0" column="3">
         <widget class="QLabel" name="card_output2">
          <property name="frameShape">
           <enum>QFrame::Box</enum>
@@ -1305,38 +1344,178 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="2">
-        <widget class="QCommandLinkButton" name="commandLinkButton">
-         <property name="styleSheet">
-          <string notr="true"/>
+       <item row="0" column="1">
+        <widget class="QLabel" name="card_output">
+         <property name="frameShape">
+          <enum>QFrame::Box</enum>
          </property>
          <property name="text">
-          <string>HOME</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QPushButton" name="pushButton_3">
-         <property name="styleSheet">
-          <string notr="true"/>
-         </property>
-         <property name="text">
-          <string>HOME</string>
+          <string/>
          </property>
         </widget>
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="tab_8">
+      <attribute name="title">
+       <string>color</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_22">
+       <item row="0" column="1">
+        <widget class="QSpinBox" name="card_lh2"/>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_42">
+         <property name="text">
+          <string>card</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="4">
+        <widget class="QSpinBox" name="green_lv2"/>
+       </item>
+       <item row="0" column="4">
+        <widget class="QSpinBox" name="card_lv2"/>
+       </item>
+       <item row="5" column="3">
+        <widget class="QSpinBox" name="blue_ls2"/>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_37">
+         <property name="text">
+          <string>Green</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="4">
+        <widget class="QSpinBox" name="blue_lv2"/>
+       </item>
+       <item row="0" column="3">
+        <widget class="QSpinBox" name="card_ls2"/>
+       </item>
+       <item row="6" column="8">
+        <widget class="QSpinBox" name="yellow_uv2"/>
+       </item>
+       <item row="4" column="1">
+        <widget class="QSpinBox" name="green_lh2"/>
+       </item>
+       <item row="7" column="0">
+        <widget class="QLabel" name="label_41">
+         <property name="text">
+          <string>Black</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="3">
+        <widget class="QSpinBox" name="green_ls2"/>
+       </item>
+       <item row="7" column="1">
+        <widget class="QSpinBox" name="black_lh2"/>
+       </item>
+       <item row="5" column="7">
+        <widget class="QSpinBox" name="blue_us2"/>
+       </item>
+       <item row="6" column="1">
+        <widget class="QSpinBox" name="yellow_lh2"/>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="label_40">
+         <property name="text">
+          <string>Yellow</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="label_39">
+         <property name="text">
+          <string>Blue</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="8">
+        <widget class="QSpinBox" name="green_uv2"/>
+       </item>
+       <item row="5" column="8">
+        <widget class="QSpinBox" name="blue_uv2"/>
+       </item>
+       <item row="1" column="4">
+        <widget class="QSpinBox" name="red_lv2"/>
+       </item>
+       <item row="7" column="6">
+        <widget class="QSpinBox" name="black_uh2"/>
+       </item>
+       <item row="4" column="6">
+        <widget class="QSpinBox" name="green_uh2"/>
+       </item>
+       <item row="7" column="7">
+        <widget class="QSpinBox" name="black_us2"/>
+       </item>
+       <item row="7" column="3">
+        <widget class="QSpinBox" name="black_ls2"/>
+       </item>
+       <item row="6" column="4">
+        <widget class="QSpinBox" name="yellow_lv2"/>
+       </item>
+       <item row="7" column="4">
+        <widget class="QSpinBox" name="black_lv2"/>
+       </item>
+       <item row="6" column="3">
+        <widget class="QSpinBox" name="yellow_ls2"/>
+       </item>
+       <item row="1" column="7">
+        <widget class="QSpinBox" name="red_us2"/>
+       </item>
+       <item row="1" column="8">
+        <widget class="QSpinBox" name="red_uv2"/>
+       </item>
+       <item row="1" column="1">
+        <widget class="QSpinBox" name="red_lh2"/>
+       </item>
+       <item row="1" column="3">
+        <widget class="QSpinBox" name="red_ls2"/>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_38">
+         <property name="text">
+          <string>Red</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="6">
+        <widget class="QSpinBox" name="red_uh2"/>
+       </item>
+       <item row="4" column="7">
+        <widget class="QSpinBox" name="green_us2"/>
+       </item>
+       <item row="7" column="8">
+        <widget class="QSpinBox" name="black_uv2"/>
+       </item>
+       <item row="6" column="7">
+        <widget class="QSpinBox" name="yellow_us2"/>
+       </item>
+       <item row="5" column="1">
+        <widget class="QSpinBox" name="blue_lh2"/>
+       </item>
+       <item row="6" column="6">
+        <widget class="QSpinBox" name="yellow_uh2"/>
+       </item>
+       <item row="5" column="6">
+        <widget class="QSpinBox" name="blue_uh2"/>
+       </item>
+       <item row="0" column="6">
+        <widget class="QSpinBox" name="card_uh2"/>
+       </item>
+       <item row="0" column="7">
+        <widget class="QSpinBox" name="card_us2"/>
+       </item>
+       <item row="0" column="8">
+        <widget class="QSpinBox" name="card_uv2"/>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
-   <item row="3" column="0" rowspan="2">
-    <widget class="QPlainTextEdit" name="plainTextEdit">
-     <property name="readOnly">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="1">
+   <item row="9" column="3">
     <widget class="QPushButton" name="pushButton">
      <property name="text">
       <string>Connect Serial</string>
@@ -1346,54 +1525,18 @@
      </property>
     </widget>
    </item>
-   <item row="4" column="1">
-    <widget class="QPushButton" name="pushButton_2">
-     <property name="text">
-      <string>Disconnect Serial</string>
+   <item row="8" column="3">
+    <widget class="QCommandLinkButton" name="commandLinkButton">
+     <property name="styleSheet">
+      <string notr="true"/>
      </property>
-     <property name="autoDefault">
-      <bool>false</bool>
+     <property name="text">
+      <string>HOME</string>
      </property>
     </widget>
    </item>
-   <item row="1" column="0" colspan="2">
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
-     <item>
-      <widget class="QPushButton" name="start_button">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text">
-        <string>ON Cam</string>
-       </property>
-       <property name="autoDefault">
-        <bool>false</bool>
-       </property>
-       <property name="default">
-        <bool>false</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="stop_button">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text">
-        <string>OFF Cam</string>
-       </property>
-       <property name="autoDefault">
-        <bool>false</bool>
-       </property>
-      </widget>
-     </item>
-    </layout>
+   <item row="7" column="2" rowspan="4">
+    <widget class="QTextBrowser" name="debugTextBrowser"/>
    </item>
   </layout>
  </widget>
@@ -1423,11 +1566,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>309</x>
-     <y>439</y>
+     <y>427</y>
     </hint>
     <hint type="destinationlabel">
      <x>432</x>
-     <y>440</y>
+     <y>428</y>
     </hint>
    </hints>
   </connection>
@@ -1439,11 +1582,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>311</x>
-     <y>399</y>
+     <y>388</y>
     </hint>
     <hint type="destinationlabel">
      <x>432</x>
-     <y>400</y>
+     <y>389</y>
     </hint>
    </hints>
   </connection>
@@ -1471,11 +1614,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>753</x>
-     <y>399</y>
+     <y>388</y>
     </hint>
     <hint type="destinationlabel">
      <x>841</x>
-     <y>400</y>
+     <y>389</y>
     </hint>
    </hints>
   </connection>
@@ -1487,11 +1630,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>757</x>
-     <y>439</y>
+     <y>427</y>
     </hint>
     <hint type="destinationlabel">
      <x>841</x>
-     <y>440</y>
+     <y>428</y>
     </hint>
    </hints>
   </connection>
@@ -1519,7 +1662,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>331</x>
-     <y>409</y>
+     <y>398</y>
     </hint>
     <hint type="destinationlabel">
      <x>418</x>
@@ -1555,7 +1698,7 @@
     </hint>
     <hint type="destinationlabel">
      <x>861</x>
-     <y>370</y>
+     <y>360</y>
     </hint>
    </hints>
   </connection>
@@ -1599,11 +1742,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>354</x>
-     <y>362</y>
+     <y>352</y>
     </hint>
     <hint type="destinationlabel">
      <x>405</x>
-     <y>362</y>
+     <y>352</y>
     </hint>
    </hints>
   </connection>
@@ -1619,7 +1762,7 @@
     </hint>
     <hint type="destinationlabel">
      <x>413</x>
-     <y>401</y>
+     <y>390</y>
     </hint>
    </hints>
   </connection>
@@ -1631,11 +1774,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>363</x>
-     <y>441</y>
+     <y>429</y>
     </hint>
     <hint type="destinationlabel">
      <x>406</x>
-     <y>440</y>
+     <y>428</y>
     </hint>
    </hints>
   </connection>
@@ -1647,7 +1790,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>761</x>
-     <y>362</y>
+     <y>352</y>
     </hint>
     <hint type="destinationlabel">
      <x>809</x>
@@ -1695,11 +1838,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>371</x>
-     <y>369</y>
+     <y>359</y>
     </hint>
     <hint type="destinationlabel">
      <x>442</x>
-     <y>370</y>
+     <y>360</y>
     </hint>
    </hints>
   </connection>
@@ -1711,11 +1854,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>303</x>
-     <y>404</y>
+     <y>393</y>
     </hint>
     <hint type="destinationlabel">
      <x>412</x>
-     <y>401</y>
+     <y>390</y>
     </hint>
    </hints>
   </connection>
@@ -1743,7 +1886,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>674</x>
-     <y>360</y>
+     <y>350</y>
     </hint>
     <hint type="destinationlabel">
      <x>823</x>
@@ -1775,11 +1918,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>777</x>
-     <y>442</y>
+     <y>430</y>
     </hint>
     <hint type="destinationlabel">
      <x>809</x>
-     <y>442</y>
+     <y>430</y>
     </hint>
    </hints>
   </connection>
@@ -1823,11 +1966,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>352</x>
-     <y>441</y>
+     <y>429</y>
     </hint>
     <hint type="destinationlabel">
      <x>410</x>
-     <y>441</y>
+     <y>429</y>
     </hint>
    </hints>
   </connection>
@@ -1839,7 +1982,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>571</x>
-     <y>361</y>
+     <y>351</y>
     </hint>
     <hint type="destinationlabel">
      <x>830</x>
@@ -1891,7 +2034,7 @@
     </hint>
     <hint type="destinationlabel">
      <x>401</x>
-     <y>362</y>
+     <y>352</y>
     </hint>
    </hints>
   </connection>
@@ -1919,11 +2062,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>361</x>
-     <y>440</y>
+     <y>428</y>
     </hint>
     <hint type="destinationlabel">
      <x>390</x>
-     <y>440</y>
+     <y>428</y>
     </hint>
    </hints>
   </connection>
@@ -1951,7 +2094,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>774</x>
-     <y>400</y>
+     <y>389</y>
     </hint>
     <hint type="destinationlabel">
      <x>817</x>
@@ -1967,7 +2110,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>774</x>
-     <y>441</y>
+     <y>429</y>
     </hint>
     <hint type="destinationlabel">
      <x>817</x>
@@ -1983,11 +2126,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>406</x>
-     <y>362</y>
+     <y>352</y>
     </hint>
     <hint type="destinationlabel">
      <x>360</x>
-     <y>361</y>
+     <y>351</y>
     </hint>
    </hints>
   </connection>
@@ -1999,11 +2142,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>402</x>
-     <y>404</y>
+     <y>393</y>
     </hint>
     <hint type="destinationlabel">
      <x>363</x>
-     <y>401</y>
+     <y>390</y>
     </hint>
    </hints>
   </connection>
@@ -2015,11 +2158,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>392</x>
-     <y>445</y>
+     <y>433</y>
     </hint>
     <hint type="destinationlabel">
      <x>361</x>
-     <y>445</y>
+     <y>433</y>
     </hint>
    </hints>
   </connection>
@@ -2051,7 +2194,7 @@
     </hint>
     <hint type="destinationlabel">
      <x>783</x>
-     <y>400</y>
+     <y>389</y>
     </hint>
    </hints>
   </connection>
@@ -2063,11 +2206,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>808</x>
-     <y>444</y>
+     <y>432</y>
     </hint>
     <hint type="destinationlabel">
      <x>786</x>
-     <y>443</y>
+     <y>431</y>
     </hint>
    </hints>
   </connection>
@@ -2223,11 +2366,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>823</x>
-     <y>366</y>
+     <y>356</y>
     </hint>
     <hint type="destinationlabel">
      <x>797</x>
-     <y>366</y>
+     <y>356</y>
     </hint>
    </hints>
   </connection>
@@ -2239,11 +2382,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>815</x>
-     <y>408</y>
+     <y>397</y>
     </hint>
     <hint type="destinationlabel">
      <x>795</x>
-     <y>405</y>
+     <y>394</y>
     </hint>
    </hints>
   </connection>
@@ -2255,11 +2398,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>816</x>
-     <y>447</y>
+     <y>435</y>
     </hint>
     <hint type="destinationlabel">
      <x>784</x>
-     <y>441</y>
+     <y>429</y>
     </hint>
    </hints>
   </connection>
@@ -2303,11 +2446,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>417</x>
-     <y>449</y>
+     <y>437</y>
     </hint>
     <hint type="destinationlabel">
      <x>366</x>
-     <y>445</y>
+     <y>433</y>
     </hint>
    </hints>
   </connection>
@@ -2319,11 +2462,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>815</x>
-     <y>365</y>
+     <y>355</y>
     </hint>
     <hint type="destinationlabel">
      <x>773</x>
-     <y>363</y>
+     <y>353</y>
     </hint>
    </hints>
   </connection>
@@ -2335,11 +2478,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>815</x>
-     <y>402</y>
+     <y>391</y>
     </hint>
     <hint type="destinationlabel">
      <x>791</x>
-     <y>402</y>
+     <y>391</y>
     </hint>
    </hints>
   </connection>
@@ -2367,11 +2510,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>421</x>
-     <y>368</y>
+     <y>358</y>
     </hint>
     <hint type="destinationlabel">
      <x>372</x>
-     <y>361</y>
+     <y>351</y>
     </hint>
    </hints>
   </connection>
@@ -2387,7 +2530,7 @@
     </hint>
     <hint type="destinationlabel">
      <x>371</x>
-     <y>400</y>
+     <y>389</y>
     </hint>
    </hints>
   </connection>
@@ -2415,11 +2558,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>821</x>
-     <y>366</y>
+     <y>356</y>
     </hint>
     <hint type="destinationlabel">
      <x>789</x>
-     <y>365</y>
+     <y>355</y>
     </hint>
    </hints>
   </connection>
@@ -2431,11 +2574,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>814</x>
-     <y>405</y>
+     <y>394</y>
     </hint>
     <hint type="destinationlabel">
      <x>789</x>
-     <y>405</y>
+     <y>394</y>
     </hint>
    </hints>
   </connection>
@@ -2447,11 +2590,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>811</x>
-     <y>449</y>
+     <y>437</y>
     </hint>
     <hint type="destinationlabel">
      <x>771</x>
-     <y>444</y>
+     <y>432</y>
     </hint>
    </hints>
   </connection>
@@ -2479,11 +2622,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>420</x>
-     <y>402</y>
+     <y>391</y>
     </hint>
     <hint type="destinationlabel">
      <x>370</x>
-     <y>404</y>
+     <y>393</y>
     </hint>
    </hints>
   </connection>
@@ -2495,11 +2638,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>394</x>
-     <y>445</y>
+     <y>433</y>
     </hint>
     <hint type="destinationlabel">
      <x>368</x>
-     <y>444</y>
+     <y>432</y>
     </hint>
    </hints>
   </connection>
@@ -2511,11 +2654,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>826</x>
-     <y>364</y>
+     <y>354</y>
     </hint>
     <hint type="destinationlabel">
      <x>796</x>
-     <y>362</y>
+     <y>352</y>
     </hint>
    </hints>
   </connection>
@@ -2527,11 +2670,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>811</x>
-     <y>405</y>
+     <y>394</y>
     </hint>
     <hint type="destinationlabel">
      <x>779</x>
-     <y>405</y>
+     <y>394</y>
     </hint>
    </hints>
   </connection>
@@ -2543,11 +2686,11 @@
    <hints>
     <hint type="sourcelabel">
      <x>820</x>
-     <y>445</y>
+     <y>433</y>
     </hint>
     <hint type="destinationlabel">
      <x>780</x>
-     <y>442</y>
+     <y>430</y>
     </hint>
    </hints>
   </connection>

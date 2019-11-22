@@ -379,11 +379,11 @@ while True:
                 print(Send)
                 print(rX, rY, gX, gY, bX, bY, yX, yY, blX, blY)
 
-                # for i in Send:
-                #     time.sleep(0.1)
-                #     c = struct.pack('B', i)
-                #     serialPIC.write(c)
-                    # print(i)
+                for i in Send:
+                    time.sleep(0.1)
+                    c = struct.pack('B', i)
+                    serialPIC.write(c)
+                    print(i)
 
                 # keep = struct.pack('B', 1)
                 # serialAd.write(keep)
