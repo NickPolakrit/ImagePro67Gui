@@ -417,7 +417,7 @@ class OpencvImg(QDialog):
             y = approx.ravel()[1]
             self.debugTextBrowser.append(str(area))
 
-            if 96000 > area > 5000:
+            if 95000 > area > 5000:
                 stateWork = 1
                 if len(approx) == 4 :
                     cnts = cv2.findContours(
@@ -664,91 +664,9 @@ class OpencvImg(QDialog):
 
                     # # r g b y black
 
-                    
-                    # sCount = 0
-                    # # for sCount in range(5):
-                    # p0 = 0
-                    # f1 = 0
-                    # f2 = 0
-                    # while 6 > sCount >= 0 :
-                        
-                    #     time.sleep(0.2)
-                    #     print(sCount)
-                        
-                    #     self.debugTextBrowser.append(" Count" + str(sCount))
-                    #     Rpic = serialPIC.read()
-                    #     Radr = serialAD.read()
-                    #     while Rpic == b'1' and p0 == 0:
-                    #         Radr = serialAD.read()
-                    #         print("f1 = " + str(f1))
-                    #         print( " pic = "+str(Rpic))
-                    #         self.debugTextBrowser.append( "pic send 1 "+str(Rpic))
-                    #         keep = struct.pack('B', 49)
-                    #         if f1 == 0 :
-                    #             serialAD.write(keep)  # Earth
-                                
-                    #             self.debugTextBrowser.append("1 to arduino")
-                    #             print("1 to arduino")
-                    #             f1 = 1
-                    #         elif Radr == b'1':
-                    #             self.debugTextBrowser.append("------  arduino send 1")
-                    #             print(" arduino send 1")
-                    #             cmands = 1
-                    #             # for i1 in Send:
-                    #             #     time.sleep(0.1)
-                    #             #     # c = struct.pack('B', i1)
-                    #             #     # serialPIC.write(c)
-                    #             #     print('cmands : ' + (cmands))
-                    #             #     # print(i1)
-                                
-                    #             self.debugTextBrowser.append("------  p0 = 5")
-                    #             print("p0 = 5")
-                    #             p0 = 5
-                    #         # else:
-                    #         #     print("case 1")
-                    #         #     continue
-                    #     while Rpic == b'0' and p0 == 5:
-                    #         Radr = serialAD.read()
-                    #         print("pic = "+str(Rpic))
-                    #         self.debugTextBrowser.append("pic send 1"+str(Rpic))
-                    #         paste = struct.pack('B', 48)
-                    #         if f2 == 0:
-                    #             time.sleep(2)
-                    #             serialAD.write(paste)  # Earth
-                                
-                    #             self.debugTextBrowser.append("0 to arduino")
-                    #             print("0 to arduino")
-                    #             f2 = 1
-                    #         elif Radr == b'0':
-                    #             cmands = sCount
-                    #             # for i0 in Send:
-                    #             #     time.sleep(0.1)
-                    #             #     # c = struct.pack('B', i0)
-                    #             #     # serialPIC.write(c)
-                    #             #     print('cmands : ' + (cmands))
-                    #             #     # print(i0)
-                                
-                    #             self.debugTextBrowser.append("p0 = 0")
-                    #             print("p0 = 0")
-                    #             p0 = 0
-
-                    #         # else:
-                    #         #     print("case 2")
-                    #         #     continue
-                    #     else:
-                    #         continue
-                    #     f1 = 0
-                    #     f2 = 0
-                    #     sCount += 1
-                        
-
-                    #     print(sCount)
-
-                    # ------------------
-                    # for sCount in range(5):
                     sCount = 0
                     while sCount < 10:
-                        print("start "+ str(sCount))
+                        # print("start "+ str(sCount))
                         Rpic = serialPIC.read()
                         Radr = serialAD.read()
                         if Rpic == b'1':
@@ -761,7 +679,7 @@ class OpencvImg(QDialog):
                             print("past")
                         else:
                             continue
-                        print(sCount)
+                        # print(sCount)
                         sCount += 1
 
                             
