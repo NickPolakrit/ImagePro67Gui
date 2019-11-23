@@ -25,7 +25,7 @@
         </sizepolicy>
        </property>
        <property name="text">
-        <string>ON Cam</string>
+        <string>ON</string>
        </property>
        <property name="autoDefault">
         <bool>false</bool>
@@ -44,7 +44,7 @@
         </sizepolicy>
        </property>
        <property name="text">
-        <string>OFF Cam</string>
+        <string>OFF</string>
        </property>
        <property name="autoDefault">
         <bool>false</bool>
@@ -63,10 +63,13 @@
      </property>
     </widget>
    </item>
+   <item row="7" column="0" rowspan="3" colspan="3">
+    <widget class="QTextBrowser" name="debugTextBrowser"/>
+   </item>
    <item row="2" column="0" colspan="4">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>7</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab_7">
       <attribute name="title">
@@ -198,44 +201,14 @@
        <string>Card</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_16">
-       <item row="0" column="0">
-        <widget class="QLabel" name="frame_card1">
-         <property name="frameShape">
-          <enum>QFrame::Box</enum>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1" colspan="2">
-        <widget class="QLabel" name="frame_card2">
-         <property name="frameShape">
-          <enum>QFrame::Box</enum>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="3">
-        <widget class="QLabel" name="frame_card3">
-         <property name="frameShape">
-          <enum>QFrame::Box</enum>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0" colspan="4">
+       <item row="2" column="0" colspan="4">
         <widget class="QLabel" name="card_value">
          <property name="text">
           <string>Value-&gt;</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="0" colspan="2">
+       <item row="3" column="0" colspan="2">
         <layout class="QGridLayout" name="gridLayout">
          <item row="2" column="1">
           <widget class="QSlider" name="card_lv">
@@ -311,7 +284,7 @@
          </item>
         </layout>
        </item>
-       <item row="2" column="2" colspan="2">
+       <item row="3" column="2" colspan="2">
         <layout class="QGridLayout" name="gridLayout_2">
          <item row="2" column="1">
           <widget class="QSlider" name="card_uv">
@@ -387,6 +360,40 @@
          </item>
         </layout>
        </item>
+       <item row="1" column="0" colspan="4">
+        <layout class="QHBoxLayout" name="horizontalLayout_7">
+         <item>
+          <widget class="QLabel" name="frame_card1">
+           <property name="frameShape">
+            <enum>QFrame::Box</enum>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="frame_card2">
+           <property name="frameShape">
+            <enum>QFrame::Box</enum>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="frame_card3">
+           <property name="frameShape">
+            <enum>QFrame::Box</enum>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="tab">
@@ -394,34 +401,14 @@
        <string>Red</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_14">
-       <item row="0" column="0">
-        <widget class="QLabel" name="frame_red">
-         <property name="frameShape">
-          <enum>QFrame::Box</enum>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLabel" name="frame_red2">
-         <property name="frameShape">
-          <enum>QFrame::Box</enum>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0" colspan="2">
+       <item row="2" column="0">
         <widget class="QLabel" name="red_value">
          <property name="text">
           <string>Value-&gt;</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="0">
+       <item row="3" column="0">
         <layout class="QGridLayout" name="gridLayout_4">
          <item row="2" column="1">
           <widget class="QSlider" name="red_lv">
@@ -497,7 +484,7 @@
          </item>
         </layout>
        </item>
-       <item row="2" column="1">
+       <item row="3" column="2">
         <layout class="QGridLayout" name="gridLayout_3">
          <item row="2" column="1">
           <widget class="QSlider" name="red_uv">
@@ -573,6 +560,40 @@
          </item>
         </layout>
        </item>
+       <item row="1" column="0" colspan="3">
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QLabel" name="frame_red">
+           <property name="frameShape">
+            <enum>QFrame::Box</enum>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="frame_red2">
+           <property name="frameShape">
+            <enum>QFrame::Box</enum>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="frame_red3">
+           <property name="frameShape">
+            <enum>QFrame::Box</enum>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="tab_6">
@@ -580,34 +601,14 @@
        <string>Green</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_17">
-       <item row="0" column="0">
-        <widget class="QLabel" name="frame_green">
-         <property name="frameShape">
-          <enum>QFrame::Box</enum>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLabel" name="frame_green2">
-         <property name="frameShape">
-          <enum>QFrame::Box</enum>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0" colspan="2">
+       <item row="2" column="0" colspan="2">
         <widget class="QLabel" name="green_value">
          <property name="text">
           <string>Value-&gt;</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="0">
+       <item row="3" column="0">
         <layout class="QGridLayout" name="gridLayout_10">
          <item row="2" column="1">
           <widget class="QSlider" name="green_lv">
@@ -683,7 +684,7 @@
          </item>
         </layout>
        </item>
-       <item row="2" column="1">
+       <item row="3" column="1">
         <layout class="QGridLayout" name="gridLayout_9">
          <item row="2" column="1">
           <widget class="QSlider" name="green_uv">
@@ -759,6 +760,40 @@
          </item>
         </layout>
        </item>
+       <item row="1" column="0" colspan="2">
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QLabel" name="frame_green">
+           <property name="frameShape">
+            <enum>QFrame::Box</enum>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="frame_green2">
+           <property name="frameShape">
+            <enum>QFrame::Box</enum>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="frame_green3">
+           <property name="frameShape">
+            <enum>QFrame::Box</enum>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="tab_3">
@@ -766,34 +801,7 @@
        <string>Blue</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_18">
-       <item row="0" column="0">
-        <widget class="QLabel" name="frame_blue">
-         <property name="frameShape">
-          <enum>QFrame::Box</enum>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLabel" name="frame_blue2">
-         <property name="frameShape">
-          <enum>QFrame::Box</enum>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0" colspan="2">
-        <widget class="QLabel" name="blue_value">
-         <property name="text">
-          <string>Value-&gt;</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
+       <item row="3" column="0">
         <layout class="QGridLayout" name="gridLayout_6">
          <item row="2" column="1">
           <widget class="QSlider" name="blue_lv">
@@ -869,7 +877,14 @@
          </item>
         </layout>
        </item>
-       <item row="2" column="1">
+       <item row="2" column="0" colspan="2">
+        <widget class="QLabel" name="blue_value">
+         <property name="text">
+          <string>Value-&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
         <layout class="QGridLayout" name="gridLayout_5">
          <item row="2" column="1">
           <widget class="QSlider" name="blue_uv">
@@ -945,6 +960,40 @@
          </item>
         </layout>
        </item>
+       <item row="1" column="0" colspan="2">
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <item>
+          <widget class="QLabel" name="frame_blue">
+           <property name="frameShape">
+            <enum>QFrame::Box</enum>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="frame_blue2">
+           <property name="frameShape">
+            <enum>QFrame::Box</enum>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="frame_blue3">
+           <property name="frameShape">
+            <enum>QFrame::Box</enum>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="tab_4">
@@ -952,34 +1001,14 @@
        <string>Yellow</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_19">
-       <item row="0" column="0">
-        <widget class="QLabel" name="frame_yellow">
-         <property name="frameShape">
-          <enum>QFrame::Box</enum>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLabel" name="frame_yellow2">
-         <property name="frameShape">
-          <enum>QFrame::Box</enum>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0" colspan="2">
+       <item row="2" column="0" colspan="2">
         <widget class="QLabel" name="yellow_value">
          <property name="text">
           <string>Value-&gt;</string>
          </property>
         </widget>
        </item>
-       <item row="2" column="0">
+       <item row="3" column="0">
         <layout class="QGridLayout" name="gridLayout_8">
          <item row="2" column="1">
           <widget class="QSlider" name="yellow_lv">
@@ -1055,7 +1084,7 @@
          </item>
         </layout>
        </item>
-       <item row="2" column="1">
+       <item row="3" column="1">
         <layout class="QGridLayout" name="gridLayout_7">
          <item row="2" column="1">
           <widget class="QSlider" name="yellow_uv">
@@ -1131,6 +1160,40 @@
          </item>
         </layout>
        </item>
+       <item row="1" column="0" colspan="2">
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <item>
+          <widget class="QLabel" name="frame_yellow">
+           <property name="frameShape">
+            <enum>QFrame::Box</enum>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="frame_yellow2">
+           <property name="frameShape">
+            <enum>QFrame::Box</enum>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="frame_yellow3">
+           <property name="frameShape">
+            <enum>QFrame::Box</enum>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="tab_5">
@@ -1138,110 +1201,7 @@
        <string>Black</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_20">
-       <item row="0" column="0">
-        <widget class="QLabel" name="frame_black">
-         <property name="frameShape">
-          <enum>QFrame::Box</enum>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLabel" name="frame_black2">
-         <property name="frameShape">
-          <enum>QFrame::Box</enum>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0" colspan="2">
-        <widget class="QLabel" name="black_value">
-         <property name="text">
-          <string>Value-&gt;</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <layout class="QGridLayout" name="gridLayout_12">
-         <item row="2" column="1">
-          <widget class="QSlider" name="black_lv">
-           <property name="maximum">
-            <number>255</number>
-           </property>
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QSlider" name="black_ls">
-           <property name="maximum">
-            <number>255</number>
-           </property>
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="label_34">
-           <property name="text">
-            <string>Low S</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0">
-          <widget class="QLabel" name="label_35">
-           <property name="text">
-            <string>Low V</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_36">
-           <property name="text">
-            <string>Low H</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="2">
-          <widget class="QSpinBox" name="spinBox_34">
-           <property name="maximum">
-            <number>255</number>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="2">
-          <widget class="QSpinBox" name="spinBox_35">
-           <property name="maximum">
-            <number>179</number>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="2">
-          <widget class="QSpinBox" name="spinBox_36">
-           <property name="maximum">
-            <number>255</number>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QSlider" name="black_lh">
-           <property name="maximum">
-            <number>179</number>
-           </property>
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="2" column="1">
+       <item row="3" column="1">
         <layout class="QGridLayout" name="gridLayout_11">
          <item row="2" column="1">
           <widget class="QSlider" name="black_uv">
@@ -1317,6 +1277,123 @@
          </item>
         </layout>
        </item>
+       <item row="2" column="0" colspan="2">
+        <widget class="QLabel" name="black_value">
+         <property name="text">
+          <string>Value-&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <layout class="QGridLayout" name="gridLayout_12">
+         <item row="2" column="1">
+          <widget class="QSlider" name="black_lv">
+           <property name="maximum">
+            <number>255</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QSlider" name="black_ls">
+           <property name="maximum">
+            <number>255</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_34">
+           <property name="text">
+            <string>Low S</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_35">
+           <property name="text">
+            <string>Low V</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_36">
+           <property name="text">
+            <string>Low H</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QSpinBox" name="spinBox_34">
+           <property name="maximum">
+            <number>255</number>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QSpinBox" name="spinBox_35">
+           <property name="maximum">
+            <number>179</number>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="2">
+          <widget class="QSpinBox" name="spinBox_36">
+           <property name="maximum">
+            <number>255</number>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QSlider" name="black_lh">
+           <property name="maximum">
+            <number>179</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="1" column="0" colspan="2">
+        <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <item>
+          <widget class="QLabel" name="frame_black">
+           <property name="frameShape">
+            <enum>QFrame::Box</enum>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="frame_black2">
+           <property name="frameShape">
+            <enum>QFrame::Box</enum>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="frame_black3">
+           <property name="frameShape">
+            <enum>QFrame::Box</enum>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="tab_2">
@@ -1357,9 +1434,6 @@
       </layout>
      </widget>
     </widget>
-   </item>
-   <item row="7" column="0" rowspan="3" colspan="3">
-    <widget class="QTextBrowser" name="debugTextBrowser"/>
    </item>
   </layout>
  </widget>

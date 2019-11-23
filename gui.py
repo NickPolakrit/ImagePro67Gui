@@ -54,49 +54,49 @@ class OpencvImg(QDialog):
         self.capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 300)
         self.capture.set(cv2.CAP_PROP_FRAME_WIDTH, 400)
         
-        self.x1_slider.setValue(545)
-        self.y1_slider.setValue(55)
-        self.x2_slider.setValue(86)
-        self.y2_slider.setValue(55)
-        self.x3_slider.setValue(545)
-        self.y3_slider.setValue(400)
-        self.x4_slider.setValue(86)
-        self.y4_slider.setValue(410)
+        self.x1_slider.setValue(508)
+        self.y1_slider.setValue(41)
+        self.x2_slider.setValue(128)
+        self.y2_slider.setValue(17)
+        self.x3_slider.setValue(532)
+        self.y3_slider.setValue(444)
+        self.x4_slider.setValue(70)
+        self.y4_slider.setValue(418)
 
         self.card_lh.setValue(0)
-        self.card_ls.setValue(19)
+        self.card_ls.setValue(12)
         self.card_lv.setValue(0)
-        self.card_uh.setValue(63)
+        self.card_uh.setValue(179)
         self.card_us.setValue(255)
         self.card_uv.setValue(255)
 
 
         self.red_lh.setValue(0)
-        self.red_ls.setValue(19)
-        self.red_lv.setValue(117)
-        self.red_uh.setValue(11)
+        self.red_ls.setValue(43)
+        self.red_lv.setValue(96)
+        self.red_uh.setValue(8)
         self.red_us.setValue(255)
         self.red_uv.setValue(255)
 
 
-        self.green_lh.setValue(30)
-        self.green_ls.setValue(16)
-        self.green_lv.setValue(118)
-        self.green_uh.setValue(64)
-        self.green_us.setValue(190)
-        self.green_uv.setValue(229)
+        self.green_lh.setValue(35)
+        self.green_ls.setValue(19)
+        self.green_lv.setValue(84)
+        self.green_uh.setValue(89)
+        self.green_us.setValue(207)
+        self.green_uv.setValue(255)
 
 
-        self.blue_lh.setValue(100)
-        self.blue_ls.setValue(18)
-        self.blue_lv.setValue(0)
-        self.blue_uh.setValue(153)
+        self.blue_lh.setValue(94)
+        self.blue_ls.setValue(46)
+        self.blue_lv.setValue(11)
+        self.blue_uh.setValue(139)
         self.blue_us.setValue(255)
         self.blue_uv.setValue(255)
 
 
-        self.yellow_lh.setValue(23)
-        self.yellow_ls.setValue(47)
+        self.yellow_lh.setValue(28)
+        self.yellow_ls.setValue(58)
         self.yellow_lv.setValue(120)
         self.yellow_uh.setValue(28)
         self.yellow_us.setValue(255)
@@ -107,8 +107,8 @@ class OpencvImg(QDialog):
         self.black_ls.setValue(0)
         self.black_lv.setValue(0)
         self.black_uh.setValue(179)
-        self.black_us.setValue(6)
-        self.black_uv.setValue(194)
+        self.black_us.setValue(30)
+        self.black_uv.setValue(120)
 
 
 
@@ -154,8 +154,8 @@ class OpencvImg(QDialog):
         self.imageWarp = cv2.flip(self.imageWarp, 1)
         # self.displayImage(self.image, self.imageWarp, 1)
         
-        Mblurred = cv2.medianBlur(self.imageWarp, 5)
-        hsv = cv2.cvtColor(Mblurred, cv2.COLOR_BGR2HSV)
+        # Mblurred = cv2.medianBlur(self.imageWarp, 5)
+        hsv = cv2.cvtColor(self.imageWarp, cv2.COLOR_BGR2HSV)
 
         color_lower = np.array([self.card_lh.value(), self.card_ls.value(), self.card_lv.value()], np.uint8)
         color_upper = np.array([self.card_uh.value(), self.card_us.value(), self.card_uv.value()], np.uint8)
@@ -197,9 +197,12 @@ class OpencvImg(QDialog):
         color_mask = cv2.inRange(hsv, color_lower, color_upper)
         card = cv2.bitwise_and(
             self.imageWarp, self.imageWarp, mask=color_mask)
-        openingC2 = cv2.morphologyEx(color_mask, cv2.MORPH_OPEN, kernel)
+        bFilterC2 = cv2.bilateralFilter(color_mask, 9, 75, 75)
+        openingC2 = cv2.morphologyEx(bFilterC2, cv2.MORPH_OPEN, kernel)
         closingC2 = cv2.morphologyEx(openingC2, cv2.MORPH_CLOSE, kernel)
-        openingC = cv2.morphologyEx(card, cv2.MORPH_OPEN, kernel)
+
+        bFilterC = cv2.bilateralFilter(card, 9, 75, 75)
+        openingC = cv2.morphologyEx(bFilterC, cv2.MORPH_OPEN, kernel)
         closingC = cv2.morphologyEx(openingC, cv2.MORPH_CLOSE, kernel)
         mask = cv2.erode(closingC2, kernel)
         edged = cv2.Canny(mask, 50, 220)
@@ -211,11 +214,13 @@ class OpencvImg(QDialog):
         red_mask = cv2.inRange(hsv, red_lower, red_upper)
         red = cv2.bitwise_and(
             self.imageWarp, self.imageWarp, mask=red_mask)
-        dilationR2 = cv2.dilate(red_mask, kernel, iterations=1)
+        bFilterR2 = cv2.bilateralFilter(red_mask, 9, 75, 75)
+        dilationR2 = cv2.dilate(bFilterR2, kernel, iterations=1)
         openingR2 = cv2.morphologyEx(dilationR2, cv2.MORPH_OPEN, kernel)
         closingR2 = cv2.morphologyEx(openingR2, cv2.MORPH_CLOSE, kernel)
-
-        dilationR = cv2.dilate(red, kernel, iterations=1)
+        
+        bFilterR2 = cv2.bilateralFilter(red, 9, 75, 75)
+        dilationR = cv2.dilate(bFilterR2, kernel, iterations=1)
         openingR = cv2.morphologyEx(dilationR, cv2.MORPH_OPEN, kernel)
         closingR = cv2.morphologyEx(openingR, cv2.MORPH_CLOSE, kernel)
 
@@ -271,24 +276,39 @@ class OpencvImg(QDialog):
         closingBl = cv2.morphologyEx(openingBl, cv2.MORPH_CLOSE, kernel)
         
         self.displayImage(self.image, closingC, 1)
-        self.displayImage(self.image, color_mask, 2)
+        self.displayImage(self.image, mask, 2)
         self.displayImage(self.image, edged, 13)
         # self.displayImage(self.image, edge, 14)
 
         self.displayImage(self.image, closingR2, 3)
         self.displayImage(self.image, closingR, 4)
+        self.displayImage(self.image, self.imageWarp, 15)
+
         self.displayImage(self.image, closingG2, 5)
         self.displayImage(self.image, closingG, 6)
+
         self.displayImage(self.image, closingB2, 7)
         self.displayImage(self.image, closingB, 8)
+
         self.displayImage(self.image, closingY2, 9)
         self.displayImage(self.image, closingY, 10)
+
         self.displayImage(self.image, closingBl2, 11)
         self.displayImage(self.image, closingBl, 12)
         
         
     def find_card(self):
         # print("HOME ... !!!")
+        rX = 100
+        rY = 100
+        gX = 100
+        gY = 100
+        bX = 100
+        bY = 100
+        yX = 100
+        yY = 100
+        blX = 100
+        blY = 100
         self.debugTextBrowser.append("Home ...")
         ret, self.image = self.capture.read()
 
@@ -389,7 +409,7 @@ class OpencvImg(QDialog):
             y = approx.ravel()[1]
             self.debugTextBrowser.append(str(area))
 
-            if 18000 > area > 5000:
+            if 10000 > area > 5000:
                 stateWork = 1
                 if len(approx) == 4 :
                     cnts = cv2.findContours(
@@ -422,10 +442,13 @@ class OpencvImg(QDialog):
                     red_mask = cv2.inRange(hsv, red_lower, red_upper)
                     red = cv2.bitwise_and(
                         self.imageWarp, self.imageWarp, mask=red_mask)
-                    dilationR2 = cv2.dilate(red_mask, kernel, iterations=1)
+
+                    bFilterR2 = cv2.bilateralFilter(red_mask, 9, 75, 75)
+                    dilationR2 = cv2.dilate(bFilterR2, kernel, iterations=1)
                     openingR2 = cv2.morphologyEx(dilationR2, cv2.MORPH_OPEN, kernel)
                     closingR2 = cv2.morphologyEx(openingR2, cv2.MORPH_CLOSE, kernel)
 
+                    # bFilterR2 = cv2.bilateralFilter(red_mask, 9, 75, 75)
                     dilationR = cv2.dilate(red, kernel, iterations=1)
                     openingR = cv2.morphologyEx(dilationR, cv2.MORPH_OPEN, kernel)
                     closingR = cv2.morphologyEx(openingR, cv2.MORPH_CLOSE, kernel)
@@ -466,7 +489,8 @@ class OpencvImg(QDialog):
                     black_mask = cv2.inRange(hsv, black_lower, black_upper)
                     black = cv2.bitwise_and(
                         self.imageWarp, self.imageWarp, mask=black_mask)
-                    dilationbl2 = cv2.dilate(black_mask, kernel, iterations=1)
+                    bFilterBl2 = cv2.bilateralFilter(black_mask, 9, 75, 75)
+                    dilationbl2 = cv2.dilate(bFilterBl2, kernel, iterations=1)
                     openingBl2 = cv2.morphologyEx(dilationbl2, cv2.MORPH_OPEN, kernel)
                     closingBl2 = cv2.morphologyEx(openingBl2, cv2.MORPH_CLOSE, kernel)
 
@@ -593,7 +617,7 @@ class OpencvImg(QDialog):
                         Mblack = cv2.moments(biggest_contoursBlack)
                         blX = int(Mblack["m10"] / Mblack["m00"])
                         blY = int(Mblack["m01"] / Mblack["m00"])
-                        cv2.circle(imgCrop, (blX, blY), 5, (0, 0, 0), -1)
+                        cv2.circle(imgCrop, (blX, blY), 5, (191, 191, 191), -1)
                         cv2.putText(imgCrop, 'X :' + str(blX) + " Y :" + str(blY),
                                     # bottomLeftCornerOfText
                                     (blX + 30, blY),
@@ -622,13 +646,16 @@ class OpencvImg(QDialog):
                     self.displayImage(Outline, imgCrop, 14)
 
                     for i in Send:
-                        time.sleep(0.1)
+                        time.sleep(0.2)
                         c = struct.pack('B', i)
                         serialPIC.write(c)
                         self.debugTextBrowser.append(str(i))
 
                     subprocess.call(["afplay", "beep-06.wav"])
                     self.timer.stop()
+                    
+        
+        
         
 
 
@@ -676,6 +703,7 @@ class OpencvImg(QDialog):
         elif window == 4:
             self.frame_red2.setPixmap(QPixmap.fromImage(outImageWarp))
             self.frame_red2.setScaledContents(True)
+        
         elif window == 5:
             self.frame_green.setPixmap(QPixmap.fromImage(outImageWarp))
             self.frame_green.setScaledContents(True)
@@ -711,6 +739,18 @@ class OpencvImg(QDialog):
             self.card_output2.setScaledContents(True)
             self.card_output3.setPixmap(QPixmap.fromImage(outImageWarp))
             self.card_output3.setScaledContents(True)
+
+        elif window == 15:
+            self.frame_red3.setPixmap(QPixmap.fromImage(outImageWarp))
+            self.frame_red3.setScaledContents(True)
+            self.frame_green3.setPixmap(QPixmap.fromImage(outImageWarp))
+            self.frame_green3.setScaledContents(True)
+            self.frame_blue3.setPixmap(QPixmap.fromImage(outImageWarp))
+            self.frame_blue3.setScaledContents(True)
+            self.frame_yellow3.setPixmap(QPixmap.fromImage(outImageWarp))
+            self.frame_yellow3.setScaledContents(True)
+            self.frame_black3.setPixmap(QPixmap.fromImage(outImageWarp))
+            self.frame_black3.setScaledContents(True)
     
 
 if __name__ == '__main__':
