@@ -417,7 +417,7 @@ class OpencvImg(QDialog):
             y = approx.ravel()[1]
             self.debugTextBrowser.append(str(area))
 
-            if 95000 > area > 5000:
+            if 93000 > area > 5000:
                 stateWork = 1
                 if len(approx) == 4 :
                     cnts = cv2.findContours(
@@ -433,7 +433,6 @@ class OpencvImg(QDialog):
                     Crop_card = cv2.resize(Crop_card, (int(500), int(500)))
                     img_name = "crop_card.png"
                     # time.sleep(0.1)
-                    time.sleep(0.2)
                     cv2.imwrite(img_name, Crop_card)
                     imgCrop = cv2.imread("crop_card.png")
                     # cardCount = 0
