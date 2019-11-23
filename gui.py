@@ -18,6 +18,14 @@ serialPIC = serial.Serial(
 
 serialPIC.setRTS(0)
 serialPIC.setDTR(0)
+
+serialAD = serial.Serial(
+    "/dev/cu.usbserial-14320", 115200, 8, 'N', 1, 0, 0, 0, 0, 0)
+
+serialAD.setRTS(0)
+serialAD.setDTR(0)
+
+
 rX = 100
 rY = 100
 gX = 100
@@ -54,13 +62,13 @@ class OpencvImg(QDialog):
         self.capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 300)
         self.capture.set(cv2.CAP_PROP_FRAME_WIDTH, 400)
         
-        self.x1_slider.setValue(508)
+        self.x1_slider.setValue(549)
         self.y1_slider.setValue(41)
-        self.x2_slider.setValue(128)
-        self.y2_slider.setValue(17)
-        self.x3_slider.setValue(532)
-        self.y3_slider.setValue(444)
-        self.x4_slider.setValue(70)
+        self.x2_slider.setValue(153)
+        self.y2_slider.setValue(36)
+        self.x3_slider.setValue(587)
+        self.y3_slider.setValue(427)
+        self.x4_slider.setValue(123)
         self.y4_slider.setValue(418)
 
         self.card_lh.setValue(0)
@@ -409,7 +417,7 @@ class OpencvImg(QDialog):
             y = approx.ravel()[1]
             self.debugTextBrowser.append(str(area))
 
-            if 10000 > area > 5000:
+            if 96000 > area > 5000:
                 stateWork = 1
                 if len(approx) == 4 :
                     cnts = cv2.findContours(
@@ -641,6 +649,7 @@ class OpencvImg(QDialog):
                     blY = int(250-(blY/2))
 
                     Send = [rY,rX,gY,gX,bY,bX,yY,yX,blY,blX]
+                    # Send = [250,250,0,250,250,0,0,0,0,0]
                     self.debugTextBrowser.append(str(Send))
 
                     self.displayImage(Outline, imgCrop, 14)
@@ -651,59 +660,93 @@ class OpencvImg(QDialog):
                         serialPIC.write(c)
                         self.debugTextBrowser.append(str(i))
 
-                    keep = struct.pack('B', 1)
-                    serialAd.write(keep)
+
 
                     # # r g b y black
 
-                    p0 = 0
-                    f1 = 0
-                    f2 = 0
-                    for sCount in range(11 ,15):
-                        print(sCount)
-                        Rpic = serialPIC.read()
-                        Radr = serialAD.read()
-                        if Rpic == b'1' and p0 == 0:
-                            print(Rpic)
-                            keep = struct.pack('B', 1)
-                            if f1 == 0 :
-                                serialAd.write(keep)  # Earth
-                                f1 = 1
-                            elif Radr == b'1':
-                                cmands = 1
-                                for i1 in Send:
-                                    time.sleep(0.1)
-                                    c = struct.pack('B', i1)
-                                    serialPIC.write(c)
-                                    print('cmands : ' + (cmands))
-                                    # print(i1)
-                                p0 = 5
-                            else:
-                                continue
-                        elif Rpic == b'0' and p0 == 5:
-                            print(Rpic)
-                            paste = struct.pack('B', 0)
-                            if f2 == 0:
-                                serialAd.write(paste)  # Earth
-                                f2 = 1
-                            elif Radr == b'0':
-                                cmands = sCount
-                                for i0 in Send:
-                                    time.sleep(0.1)
-                                    c = struct.pack('B', i0)
-                                    serialPIC.write(c)
-                                    print('cmands : ' + (cmands))
-                                    # print(i0)
-                                p0 = 0
+                    
+                    # sCount = 0
+                    # # for sCount in range(5):
+                    # p0 = 0
+                    # f1 = 0
+                    # f2 = 0
+                    # while 6 > sCount >= 0 :
+                        
+                    #     time.sleep(0.2)
+                    #     print(sCount)
+                        
+                    #     self.debugTextBrowser.append(" Count" + str(sCount))
+                    #     Rpic = serialPIC.read()
+                    #     Radr = serialAD.read()
+                    #     while Rpic == b'1' and p0 == 0:
+                    #         Radr = serialAD.read()
+                    #         print("f1 = " + str(f1))
+                    #         print( " pic = "+str(Rpic))
+                    #         self.debugTextBrowser.append( "pic send 1 "+str(Rpic))
+                    #         keep = struct.pack('B', 49)
+                    #         if f1 == 0 :
+                    #             serialAD.write(keep)  # Earth
+                                
+                    #             self.debugTextBrowser.append("1 to arduino")
+                    #             print("1 to arduino")
+                    #             f1 = 1
+                    #         elif Radr == b'1':
+                    #             self.debugTextBrowser.append("------  arduino send 1")
+                    #             print(" arduino send 1")
+                    #             cmands = 1
+                    #             # for i1 in Send:
+                    #             #     time.sleep(0.1)
+                    #             #     # c = struct.pack('B', i1)
+                    #             #     # serialPIC.write(c)
+                    #             #     print('cmands : ' + (cmands))
+                    #             #     # print(i1)
+                                
+                    #             self.debugTextBrowser.append("------  p0 = 5")
+                    #             print("p0 = 5")
+                    #             p0 = 5
+                    #         # else:
+                    #         #     print("case 1")
+                    #         #     continue
+                    #     while Rpic == b'0' and p0 == 5:
+                    #         Radr = serialAD.read()
+                    #         print("pic = "+str(Rpic))
+                    #         self.debugTextBrowser.append("pic send 1"+str(Rpic))
+                    #         paste = struct.pack('B', 48)
+                    #         if f2 == 0:
+                    #             time.sleep(2)
+                    #             serialAD.write(paste)  # Earth
+                                
+                    #             self.debugTextBrowser.append("0 to arduino")
+                    #             print("0 to arduino")
+                    #             f2 = 1
+                    #         elif Radr == b'0':
+                    #             cmands = sCount
+                    #             # for i0 in Send:
+                    #             #     time.sleep(0.1)
+                    #             #     # c = struct.pack('B', i0)
+                    #             #     # serialPIC.write(c)
+                    #             #     print('cmands : ' + (cmands))
+                    #             #     # print(i0)
+                                
+                    #             self.debugTextBrowser.append("p0 = 0")
+                    #             print("p0 = 0")
+                    #             p0 = 0
 
-                            else:
-                                continue
-                        else:
-                            continue
-                        f1 = 0
-                        f2 = 0
+                    #         # else:
+                    #         #     print("case 2")
+                    #         #     continue
+                    #     else:
+                    #         continue
+                    #     f1 = 0
+                    #     f2 = 0
+                    #     sCount += 1
+                        
 
-                        print(sCount)
+                    #     print(sCount)
+
+                    # ------------------
+
+                    # ------------------
 
                     subprocess.call(["afplay", "beep-06.wav"])
                     self.timer.stop()
