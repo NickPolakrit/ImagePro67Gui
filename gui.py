@@ -745,7 +745,26 @@ class OpencvImg(QDialog):
                     #     print(sCount)
 
                     # ------------------
+                    # for sCount in range(5):
+                    sCount = 0
+                    while sCount < 10:
+                        print("start "+ str(sCount))
+                        Rpic = serialPIC.read()
+                        Radr = serialAD.read()
+                        if Rpic == b'1':
+                            keep = struct.pack('B', 49)
+                            serialAD.write(keep)
+                            print("keep")
+                        elif Rpic == b'0':
+                            paste = struct.pack('B', 48)
+                            serialAD.write(paste)
+                            print("past")
+                        else:
+                            continue
+                        print(sCount)
+                        sCount += 1
 
+                            
                     # ------------------
 
                     subprocess.call(["afplay", "beep-06.wav"])
