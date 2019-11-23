@@ -80,35 +80,35 @@ class OpencvImg(QDialog):
 
 
         self.red_lh.setValue(0)
-        self.red_ls.setValue(43)
-        self.red_lv.setValue(96)
-        self.red_uh.setValue(8)
+        self.red_ls.setValue(30)
+        self.red_lv.setValue(6)
+        self.red_uh.setValue(6)
         self.red_us.setValue(255)
         self.red_uv.setValue(255)
 
 
-        self.green_lh.setValue(35)
-        self.green_ls.setValue(19)
-        self.green_lv.setValue(84)
-        self.green_uh.setValue(89)
-        self.green_us.setValue(207)
-        self.green_uv.setValue(255)
+        self.green_lh.setValue(41)
+        self.green_ls.setValue(21)
+        self.green_lv.setValue(58)
+        self.green_uh.setValue(93)
+        self.green_us.setValue(255)
+        self.green_uv.setValue(246)
 
 
         self.blue_lh.setValue(94)
-        self.blue_ls.setValue(46)
-        self.blue_lv.setValue(11)
+        self.blue_ls.setValue(50)
+        self.blue_lv.setValue(131)
         self.blue_uh.setValue(139)
         self.blue_us.setValue(255)
         self.blue_uv.setValue(255)
 
 
-        self.yellow_lh.setValue(28)
-        self.yellow_ls.setValue(58)
-        self.yellow_lv.setValue(120)
-        self.yellow_uh.setValue(28)
+        self.yellow_lh.setValue(16)
+        self.yellow_ls.setValue(46)
+        self.yellow_lv.setValue(0)
+        self.yellow_uh.setValue(30)
         self.yellow_us.setValue(255)
-        self.yellow_uv.setValue(196)
+        self.yellow_uv.setValue(206)
 
 
         self.black_lh.setValue(0)
@@ -433,6 +433,7 @@ class OpencvImg(QDialog):
                     Crop_card = cv2.resize(Crop_card, (int(500), int(500)))
                     img_name = "crop_card.png"
                     # time.sleep(0.1)
+                    time.sleep(0.2)
                     cv2.imwrite(img_name, Crop_card)
                     imgCrop = cv2.imread("crop_card.png")
                     # cardCount = 0
