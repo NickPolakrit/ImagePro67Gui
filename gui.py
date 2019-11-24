@@ -20,7 +20,7 @@ serialPIC.setRTS(0)
 serialPIC.setDTR(0)
 
 serialAD = serial.Serial(
-    "/dev/cu.usbserial-14320", 115200, 8, 'N', 1, 0, 0, 0, 0, 0)
+    "/dev/cu.usbserial-14520", 115200, 8, 'N', 1, 0, 0, 0, 0, 0)
 
 serialAD.setRTS(0)
 serialAD.setDTR(0)
@@ -111,12 +111,18 @@ class OpencvImg(QDialog):
         self.yellow_uv.setValue(206)
 
 
-        self.black_lh.setValue(0)
+        self.black_lh.setValue(90)
         self.black_ls.setValue(0)
         self.black_lv.setValue(0)
-        self.black_uh.setValue(179)
-        self.black_us.setValue(30)
-        self.black_uv.setValue(120)
+        self.black_uh.setValue(104)
+        self.black_us.setValue(152)
+        self.black_uv.setValue(255)
+        # self.black_lh.setValue(0)
+        # self.black_ls.setValue(0)
+        # self.black_lv.setValue(0)
+        # self.black_uh.setValue(179)
+        # self.black_us.setValue(30)
+        # self.black_uv.setValue(120)
 
 
 
@@ -205,6 +211,8 @@ class OpencvImg(QDialog):
         color_mask = cv2.inRange(hsv, color_lower, color_upper)
         card = cv2.bitwise_and(
             self.imageWarp, self.imageWarp, mask=color_mask)
+        
+
         bFilterC2 = cv2.bilateralFilter(color_mask, 9, 75, 75)
         openingC2 = cv2.morphologyEx(bFilterC2, cv2.MORPH_OPEN, kernel)
         closingC2 = cv2.morphologyEx(openingC2, cv2.MORPH_CLOSE, kernel)
@@ -417,9 +425,10 @@ class OpencvImg(QDialog):
             y = approx.ravel()[1]
             self.debugTextBrowser.append(str(area))
 
-            if 93000 > area > 5000:
+            if 10000 > area > 5000:
                 stateWork = 1
                 if len(approx) == 4 :
+                    time.sleep(1)
                     cnts = cv2.findContours(
                         edged.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
                     cnts = imutils.grab_contours(cnts)
@@ -432,9 +441,20 @@ class OpencvImg(QDialog):
                         self.imageWarp, Approx.reshape(4, 2) * ratio)
                     Crop_card = cv2.resize(Crop_card, (int(500), int(500)))
                     img_name = "crop_card.png"
+
+                    
                     # time.sleep(0.1)
                     cv2.imwrite(img_name, Crop_card)
                     imgCrop = cv2.imread("crop_card.png")
+
+                    # -----------------
+                    clahe = cv2.createCLAHE(clipLimit=3., tileGridSize=(8, 8))
+                    lab = cv2.cvtColor(imgCrop, cv2.COLOR_BGR2LAB)
+                    l, a, b = cv2.split(lab)  # split on 3 different channels
+                    l2 = clahe.apply(l)  # apply CLAHE to the L-channel
+                    lab = cv2.merge((l2, a, b))  # merge channels
+                    imgCrop = cv2.cvtColor(lab, cv2.COLOR_LAB2BGR)
+                    # -----------------
                     # cardCount = 0
                     stateWork = 0
                     countRed = 0
@@ -658,7 +678,7 @@ class OpencvImg(QDialog):
                         time.sleep(0.2)
                         c = struct.pack('B', i)
                         serialPIC.write(c)
-                        self.debugTextBrowser.append(str(i))
+                        # self.debugTextBrowser.append(str(i))
 
 
 
@@ -684,7 +704,7 @@ class OpencvImg(QDialog):
 
                             
                     # ------------------
-
+                    print("------FINISH-------")
                     subprocess.call(["afplay", "beep-06.wav"])
                     self.timer.stop()
                     

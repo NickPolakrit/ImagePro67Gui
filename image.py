@@ -1,6 +1,6 @@
 import cv2
 
-img = cv2.imread('crop_card 2.png', 1)
+img = cv2.imread('crop_card.png', 1)
 cv2.imshow("Original image", img)
 
 # CLAHE (Contrast Limited Adaptive Histogram Equalization)
