@@ -72,7 +72,7 @@ class OpencvImg(QDialog):
         self.y4_slider.setValue(418)
 
         self.card_lh.setValue(0)
-        self.card_ls.setValue(12)
+        self.card_ls.setValue(9)
         self.card_lv.setValue(0)
         self.card_uh.setValue(179)
         self.card_us.setValue(255)
@@ -314,7 +314,7 @@ class OpencvImg(QDialog):
         
         
     def find_card(self):
-        # print("HOME ... !!!")
+        print("find card ... !!!")
         rX = 100
         rY = 100
         gX = 100
@@ -425,7 +425,7 @@ class OpencvImg(QDialog):
             y = approx.ravel()[1]
             self.debugTextBrowser.append(str(area))
 
-            if 10000 > area > 5000:
+            if 11000 > area > 5000:
                 stateWork = 1
                 if len(approx) == 4 :
                     time.sleep(1)
@@ -702,11 +702,18 @@ class OpencvImg(QDialog):
                         # print(sCount)
                         sCount += 1
 
+                    self.timer.stop()
                             
                     # ------------------
+
+                    
+                    time.sleep(8)
                     print("------FINISH-------")
                     subprocess.call(["afplay", "beep-06.wav"])
-                    self.timer.stop()
+
+                    
+
+
                     
         
         
