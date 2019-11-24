@@ -63,9 +63,9 @@ class OpencvImg(QDialog):
         self.capture.set(cv2.CAP_PROP_FRAME_WIDTH, 400)
         
         self.x1_slider.setValue(549)
-        self.y1_slider.setValue(41)
+        self.y1_slider.setValue(13)
         self.x2_slider.setValue(153)
-        self.y2_slider.setValue(36)
+        self.y2_slider.setValue(15)
         self.x3_slider.setValue(587)
         self.y3_slider.setValue(427)
         self.x4_slider.setValue(123)
@@ -95,28 +95,29 @@ class OpencvImg(QDialog):
         self.green_uv.setValue(246)
 
 
-        self.blue_lh.setValue(94)
-        self.blue_ls.setValue(50)
+        self.blue_lh.setValue(109)
+        self.blue_ls.setValue(22)
         self.blue_lv.setValue(131)
         self.blue_uh.setValue(139)
         self.blue_us.setValue(255)
         self.blue_uv.setValue(255)
 
 
-        self.yellow_lh.setValue(16)
+        self.yellow_lh.setValue(17)
         self.yellow_ls.setValue(46)
         self.yellow_lv.setValue(0)
-        self.yellow_uh.setValue(30)
+        self.yellow_uh.setValue(29)
         self.yellow_us.setValue(255)
-        self.yellow_uv.setValue(206)
+        self.yellow_uv.setValue(242)
 
 
         self.black_lh.setValue(90)
         self.black_ls.setValue(0)
         self.black_lv.setValue(0)
-        self.black_uh.setValue(104)
-        self.black_us.setValue(152)
-        self.black_uv.setValue(255)
+        self.black_uh.setValue(106)
+        self.black_us.setValue(83)
+        self.black_uv.setValue(220)
+        # 115 0 0 166 29 243
         # self.black_lh.setValue(0)
         # self.black_ls.setValue(0)
         # self.black_lv.setValue(0)
@@ -314,6 +315,7 @@ class OpencvImg(QDialog):
         
         
     def find_card(self):
+        stateWork = 0
         print("find card ... !!!")
         rX = 100
         rY = 100
@@ -426,7 +428,7 @@ class OpencvImg(QDialog):
             self.debugTextBrowser.append(str(area))
 
             if 11000 > area > 5000:
-                stateWork = 1
+                # stateWork = 1
                 if len(approx) == 4 :
                     time.sleep(1)
                     cnts = cv2.findContours(
@@ -673,43 +675,49 @@ class OpencvImg(QDialog):
                     self.debugTextBrowser.append(str(Send))
 
                     self.displayImage(Outline, imgCrop, 14)
+                    
 
-                    for i in Send:
-                        time.sleep(0.2)
-                        c = struct.pack('B', i)
-                        serialPIC.write(c)
-                        # self.debugTextBrowser.append(str(i))
+                    if stateWork == 0:
+                        print("stateWork = 0")
+                        for i in Send:
+                            time.sleep(0.2)
+                            c = struct.pack('B', i)
+                            serialPIC.write(c)
+                            # self.debugTextBrowser.append(str(i))
+                        # # r g b y black
 
+                        sCount = 0
+                        while sCount < 10:
+                            # print("start "+ str(sCount))
+                            Rpic = serialPIC.read()
+                            Radr = serialAD.read()
+                            if Rpic == b'1':
+                                keep = struct.pack('B', 49)
+                                serialAD.write(keep)
+                                print("keep")
+                            elif Rpic == b'0':
+                                paste = struct.pack('B', 48)
+                                serialAD.write(paste)
+                                print("past")
+                            else:
+                                continue
+                            # print(sCount)
+                            sCount += 1
 
+                        stateWork = 1
 
-                    # # r g b y black
-
-                    sCount = 0
-                    while sCount < 10:
-                        # print("start "+ str(sCount))
-                        Rpic = serialPIC.read()
-                        Radr = serialAD.read()
-                        if Rpic == b'1':
-                            keep = struct.pack('B', 49)
-                            serialAD.write(keep)
-                            print("keep")
-                        elif Rpic == b'0':
-                            paste = struct.pack('B', 48)
-                            serialAD.write(paste)
-                            print("past")
-                        else:
-                            continue
-                        # print(sCount)
-                        sCount += 1
-
-                    self.timer.stop()
+                        self.timer.stop()
+                        time.sleep(8)
+                        print("------FINISH-------")
+                        subprocess.call(["afplay", "beep-06.wav"])
                             
                     # ------------------
 
                     
-                    time.sleep(8)
-                    print("------FINISH-------")
-                    subprocess.call(["afplay", "beep-06.wav"])
+                    
+
+                    else:
+                        pass
 
                     
 
