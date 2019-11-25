@@ -427,7 +427,7 @@ class OpencvImg(QDialog):
             y = approx.ravel()[1]
             self.debugTextBrowser.append(str(area))
 
-            if 11000 > area > 5000:
+            if 14000 > area > 5000:
                 # stateWork = 1
                 if len(approx) == 4 :
                     time.sleep(0.5)
@@ -706,10 +706,11 @@ class OpencvImg(QDialog):
 
                         stateWork = 1
 
-                        self.timer.stop()
+                        
                         time.sleep(8)
-                        print("------FINISH-------" + str(stateWork))
+                        print("------FINISH------- & statework =" + str(stateWork))
                         subprocess.call(["afplay", "beep-06.wav"])
+                        self.timer.stop()
                             
                     # ------------------
 
@@ -719,8 +720,9 @@ class OpencvImg(QDialog):
                     else:
                         pass
 
-        print("stop")
-        self.timer.stop()
+
+                    print("stop")
+                    self.timer.stop()
 
                     
 
