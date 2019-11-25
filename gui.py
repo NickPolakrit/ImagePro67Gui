@@ -717,10 +717,10 @@ class OpencvImg(QDialog):
                     
                     
 
-                    else:
-                        # pass
-                        self.timer.stop()
-                        print("else stop")
+                    # else:
+                    #     # pass
+                    #     self.timer.stop()
+                    #     print("else stop")
 
 
                     print("stop")
