@@ -707,10 +707,11 @@ class OpencvImg(QDialog):
 
                         stateWork = 1
 
-                        self.timer.stop()
+                        
                         time.sleep(8)
                         print("------FINISH-------")
                         subprocess.call(["afplay", "beep-06.wav"])
+                        self.timer.stop()
                     
                             
                     # ------------------
@@ -719,7 +720,7 @@ class OpencvImg(QDialog):
                     
 
                     else:
-                        pass
+                        self.timer.stop()
 
                     print(stateWork)
 
