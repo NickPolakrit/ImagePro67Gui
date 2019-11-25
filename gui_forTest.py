@@ -62,18 +62,18 @@ class OpencvImg(QDialog):
         self.capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 300)
         self.capture.set(cv2.CAP_PROP_FRAME_WIDTH, 400)
         
-        self.x1_slider.setValue(490)
+        self.x1_slider.setValue(95)
         self.y1_slider.setValue(53)
-        self.x2_slider.setValue(97)
-        self.y2_slider.setValue(44)
-        self.x3_slider.setValue(524)
-        self.y3_slider.setValue(643)
-        self.x4_slider.setValue(47)
-        self.y4_slider.setValue(461)
+        self.x2_slider.setValue(491)
+        self.y2_slider.setValue(60)
+        self.x3_slider.setValue(45)
+        self.y3_slider.setValue(458)
+        self.x4_slider.setValue(523)
+        self.y4_slider.setValue(457)
 
-        self.card_lh.setValue(0)
-        self.card_ls.setValue(9)
-        self.card_lv.setValue(0)
+        self.card_lh.setValue(46)
+        self.card_ls.setValue(0)
+        self.card_lv.setValue(127)
         self.card_uh.setValue(179)
         self.card_us.setValue(255)
         self.card_uv.setValue(255)
@@ -169,9 +169,9 @@ class OpencvImg(QDialog):
         self.imageWarp = cv2.flip(self.imageWarp, 1)
         # self.displayImage(self.image, self.imageWarp, 1)
         
-        # Mblurred = cv2.medianBlur(self.imageWarp, 5)
-        Gblur = cv2.GaussianBlur(self.imageWarp,(5,5),0)
-        hsv = cv2.cvtColor(Gblur, cv2.COLOR_BGR2HSV)
+        Mblurred = cv2.medianBlur(self.imageWarp, 5)
+        
+        hsv = cv2.cvtColor(Mblurred, cv2.COLOR_BGR2HSV)
 
         color_lower = np.array([self.card_lh.value(), self.card_ls.value(), self.card_lv.value()], np.uint8)
         color_upper = np.array([self.card_uh.value(), self.card_us.value(), self.card_uv.value()], np.uint8)
@@ -214,7 +214,7 @@ class OpencvImg(QDialog):
         card = cv2.bitwise_and(
             self.imageWarp, self.imageWarp, mask=color_mask)
         
-
+        # Gblur = cv2.GaussianBlur(self.imageWarp,(5,5),0)
         bFilterC2 = cv2.bilateralFilter(color_mask, 9, 75, 75)
         openingC2 = cv2.morphologyEx(bFilterC2, cv2.MORPH_OPEN, kernel)
         closingC2 = cv2.morphologyEx(openingC2, cv2.MORPH_CLOSE, kernel)

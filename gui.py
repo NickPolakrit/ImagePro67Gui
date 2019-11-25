@@ -62,18 +62,18 @@ class OpencvImg(QDialog):
         self.capture.set(cv2.CAP_PROP_FRAME_HEIGHT, 300)
         self.capture.set(cv2.CAP_PROP_FRAME_WIDTH, 400)
         
-        self.x1_slider.setValue(549)
-        self.y1_slider.setValue(13)
-        self.x2_slider.setValue(153)
-        self.y2_slider.setValue(15)
-        self.x3_slider.setValue(587)
-        self.y3_slider.setValue(427)
-        self.x4_slider.setValue(123)
-        self.y4_slider.setValue(418)
+        self.x1_slider.setValue(95)
+        self.y1_slider.setValue(53)
+        self.x2_slider.setValue(491)
+        self.y2_slider.setValue(60)
+        self.x3_slider.setValue(45)
+        self.y3_slider.setValue(458)
+        self.x4_slider.setValue(523)
+        self.y4_slider.setValue(457)
 
-        self.card_lh.setValue(0)
-        self.card_ls.setValue(9)
-        self.card_lv.setValue(0)
+        self.card_lh.setValue(46)
+        self.card_ls.setValue(0)
+        self.card_lv.setValue(127)
         self.card_uh.setValue(179)
         self.card_us.setValue(255)
         self.card_uv.setValue(255)
@@ -166,11 +166,11 @@ class OpencvImg(QDialog):
         self.imageWarp = resultWarp
 
         # self.image = cv2.flip(self.image, 1)
-        self.imageWarp = cv2.flip(self.imageWarp, 1)
+        # self.imageWarp = cv2.flip(self.imageWarp, 1)
         # self.displayImage(self.image, self.imageWarp, 1)
         
-        # Mblurred = cv2.medianBlur(self.imageWarp, 5)
-        hsv = cv2.cvtColor(self.imageWarp, cv2.COLOR_BGR2HSV)
+        Mblurred = cv2.medianBlur(self.imageWarp, 5)
+        hsv = cv2.cvtColor(Mblurred, cv2.COLOR_BGR2HSV)
 
         color_lower = np.array([self.card_lh.value(), self.card_ls.value(), self.card_lv.value()], np.uint8)
         color_upper = np.array([self.card_uh.value(), self.card_us.value(), self.card_uv.value()], np.uint8)
@@ -358,7 +358,7 @@ class OpencvImg(QDialog):
         resultWarp = cv2.warpPerspective(self.notCircle, matrix, (500, 500))
         self.imageWarp = resultWarp
 
-        self.imageWarp = cv2.flip(self.imageWarp, 1)
+        # self.imageWarp = cv2.flip(self.imageWarp, 1)
         # self.displayImage(self.image, self.imageWarp, 1)
 
         Mblurred = cv2.medianBlur(self.imageWarp, 5)
@@ -430,7 +430,7 @@ class OpencvImg(QDialog):
             if 11000 > area > 5000:
                 # stateWork = 1
                 if len(approx) == 4 :
-                    time.sleep(1)
+                    time.sleep(0.5)
                     cnts = cv2.findContours(
                         edged.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
                     cnts = imutils.grab_contours(cnts)
@@ -708,7 +708,7 @@ class OpencvImg(QDialog):
 
                         self.timer.stop()
                         time.sleep(8)
-                        print("------FINISH-------")
+                        print("------FINISH-------" + str(stateWork))
                         subprocess.call(["afplay", "beep-06.wav"])
                             
                     # ------------------
@@ -718,6 +718,9 @@ class OpencvImg(QDialog):
 
                     else:
                         pass
+
+        print("stop")
+        self.timer.stop()
 
                     
 
