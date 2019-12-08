@@ -71,9 +71,9 @@ class OpencvImg(QDialog):
         self.x4_slider.setValue(523)
         self.y4_slider.setValue(457)
 
-        self.card_lh.setValue(46)
-        self.card_ls.setValue(0)
-        self.card_lv.setValue(127)
+        self.card_lh.setValue(0)
+        self.card_ls.setValue(7)
+        self.card_lv.setValue(0)
         self.card_uh.setValue(179)
         self.card_us.setValue(255)
         self.card_uv.setValue(255)
@@ -676,6 +676,7 @@ class OpencvImg(QDialog):
                     self.debugTextBrowser.append(str(Send))
 
                     self.displayImage(Outline, imgCrop, 14)
+                    self.displayImage(Crop_card, Crop_card, 16)
                     
 
                     if stateWork == 0:
@@ -708,7 +709,7 @@ class OpencvImg(QDialog):
                         stateWork = 1
 
                         
-                        time.sleep(8)
+                        # time.sleep(8)
                         print("------FINISH-------")
                         subprocess.call(["afplay", "beep-06.wav"])
                         self.timer.stop()
@@ -806,9 +807,14 @@ class OpencvImg(QDialog):
             self.frame_card3.setPixmap(QPixmap.fromImage(outImageWarp))
             self.frame_card3.setScaledContents(True)
 
-        elif window == 14:
+        elif window == 16:
+
             self.card_output.setPixmap(QPixmap.fromImage(outImageWarp))
             self.card_output.setScaledContents(True)
+
+        elif window == 14:
+            # self.card_output.setPixmap(QPixmap.fromImage(outImageWarp))
+            # self.card_output.setScaledContents(True)
             self.card_output2.setPixmap(QPixmap.fromImage(outImage))
             self.card_output2.setScaledContents(True)
             self.card_output3.setPixmap(QPixmap.fromImage(outImageWarp))
