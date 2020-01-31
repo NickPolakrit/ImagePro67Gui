@@ -19,6 +19,7 @@ gui.py
 
 
 
+
 ![Screenshot](https://github.com/NickPolakrit/imageProcessingModule67/blob/7cfd0b094b2f8aaa410095e08f94ac9a2be3f890/pre8.png)
 ![Screenshot](https://github.com/NickPolakrit/imageProcessingModule67/blob/master/pre1.png)
 ![Screenshot](https://github.com/NickPolakrit/imageProcessingModule67/blob/7cfd0b094b2f8aaa410095e08f94ac9a2be3f890/pre2.png)
@@ -27,6 +28,6 @@ gui.py
 ![Screenshot](https://github.com/NickPolakrit/imageProcessingModule67/blob/master/pre5.png)
 ![Screenshot](https://github.com/NickPolakrit/imageProcessingModule67/blob/master/pre6.png)
 ![Screenshot](https://github.com/NickPolakrit/imageProcessingModule67/blob/master/pre7.png)
-![Screenshot](https://github.com/NickPolakrit/imageProcessingModule67/blob/master/pre8.png)
+
 
 
