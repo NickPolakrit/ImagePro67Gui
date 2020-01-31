@@ -27,7 +27,7 @@ gui.py
 ![Screenshot](https://github.com/NickPolakrit/imageProcessingModule67/blob/master/pre4.png)
 ![Screenshot](https://github.com/NickPolakrit/imageProcessingModule67/blob/master/pre5.png)
 ![Screenshot](https://github.com/NickPolakrit/imageProcessingModule67/blob/master/pre6.png)
-![Screenshot](https://github.com/NickPolakrit/imageProcessingModule67/blob/master/pre7.png)
+
 
 
 
