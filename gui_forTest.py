@@ -127,9 +127,9 @@ class OpencvImg(QDialog):
 
 
 
-        self.timer = QTimer(self)
-        self.timer.timeout.connect(self.update_frame)
-        self.timer.start(5)
+        # self.timer = QTimer(self)
+        # self.timer.timeout.connect(self.update_frame)
+        # self.timer.start(5)
 
 
     def update_frame(self):
